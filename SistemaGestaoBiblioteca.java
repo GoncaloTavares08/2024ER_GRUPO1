@@ -1,14 +1,14 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SistemaGestaoBiblioteca {
     public static void main(String[] args) {
-
+        menu();
     }
 
     private static void menu(){
         Scanner scanner = new Scanner(System.in);
         int opcao;
-
         do {
             System.out.println("\n--- Sistema de Gestão de Biblioteca ---");
             System.out.println("1. Gerir");
