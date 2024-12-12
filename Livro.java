@@ -31,4 +31,16 @@ public class Livro extends Documentos{
         this.autores = autores;
     }
 
+    @Override
+    public String toString() {
+        return "[" +
+                "Título: " + getTitulo() +
+                ", Editora: " + getEditora() +
+                ", Categoria: " + getCategoria() +
+                ", Ano de Edição: " + getAnoEdicao() +
+                ", ISBN: " + getISBN() +
+                ", Autores: " + getAutores() +
+                ']';
+    }
+
 }
