@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Livro extends Documentos{
     private String anoEdicao;
@@ -42,5 +43,19 @@ public class Livro extends Documentos{
                 ", Autores: " + getAutores() +
                 ']';
     }
+
+    public static Livro fromString(String dados) {
+        dados = dados.replace("[", "").replace("]", "").trim();
+        String[] partes = dados.split(", ");
+        String titulo = partes[0].split(": ")[1];
+        String editora = partes[1].split(": ")[1];
+        String categoria = partes[2].split(": ")[1];
+        String anoEdicao = partes[3].split(": ")[1];
+        String ISBN = partes[4].split(": ")[1];
+        String[] autoresArray = partes[5].split(": ")[1].split(", ");
+        ArrayList<String> autores = new ArrayList<>(List.of(autoresArray));
+        return new Livro(titulo, editora, categoria, anoEdicao, ISBN, autores);
+    }
+
 
 }

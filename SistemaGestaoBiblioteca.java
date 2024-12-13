@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class SistemaGestaoBiblioteca {
 
-    private static ArrayList<Livro> livros = new ArrayList<>();
-    private static ArrayList<Jornal> jornais = new ArrayList<>();
-    private static ArrayList<Utente> utentes = new ArrayList<>();
-    private static ArrayList<Reserva> reservas = new ArrayList<>();
-    private static ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+    public static ArrayList<Livro> livros = new ArrayList<>();
+    public static ArrayList<Jornal> jornais = new ArrayList<>();
+    public static ArrayList<Utente> utentes = new ArrayList<>();
+    public static ArrayList<Reserva> reservas = new ArrayList<>();
+    public static ArrayList<Emprestimo> emprestimos = new ArrayList<>();
 
     public static void menu(){
         Scanner scanner = new Scanner(System.in);
@@ -25,7 +25,7 @@ public class SistemaGestaoBiblioteca {
                 case 2 -> pesquisarGeral();
                 case 3 -> mostrarGeral();
                 case 0 -> {
-                    //guardarDados();
+                    Memoria.guardarDados();
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -87,7 +87,6 @@ public class SistemaGestaoBiblioteca {
             }
         } while (opcao != 0);
     }
-
     private static void adicionarLivros() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
@@ -113,7 +112,6 @@ public class SistemaGestaoBiblioteca {
         livros.add(livro);
 
     }
-
     private static void editarLivros() {
         mostrarLivros();
         if (!livros.isEmpty()) {
@@ -183,7 +181,6 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-
     private static void mostrarLivros() {
         if (livros.isEmpty()) {
             System.out.println("Não existem livros registados.");
@@ -194,7 +191,6 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-
     private static void removerLivros() {
         mostrarLivros();
         if (!livros.isEmpty()) {
