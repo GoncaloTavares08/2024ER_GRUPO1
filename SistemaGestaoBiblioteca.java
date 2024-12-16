@@ -41,9 +41,10 @@ public class SistemaGestaoBiblioteca {
             System.out.println("\n--- Menu Gestão ---");
             System.out.println("1. Gerir Livros");
             System.out.println("2. Gerir Jornais");
-            System.out.println("3. Gerir Utentes");
-            System.out.println("4. Gerir Reservas");
-            System.out.println("5. Gerir Empréstimos");
+            System.out.println("3. Gerir Revistas");
+            System.out.println("4. Gerir Utentes");
+            System.out.println("5. Gerir Reservas");
+            System.out.println("6. Gerir Empréstimos");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
@@ -51,9 +52,10 @@ public class SistemaGestaoBiblioteca {
             switch (opcao) {
                 case 1 -> gerirLivros();
                 case 2 -> gerirJornais();
-                //case 3 -> gerirUtentes();
-                //case 4 -> gerirReservas();
-                //case 5 -> gerirEmprestimos();
+                //case 3 -> gerirRevistas();
+                //case 4 -> gerirUtentes();
+                //case 5 -> gerirReservas();
+                //case 6 -> gerirEmprestimos();
                 case 0 -> {
                     menu();
                 }
@@ -240,7 +242,6 @@ public class SistemaGestaoBiblioteca {
             }
         } while (opcao != 0);
     }
-
     private static void adicionarJornais() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
@@ -257,7 +258,6 @@ public class SistemaGestaoBiblioteca {
         Jornal jornal = new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
         jornais.add(jornal);
     }
-
     private static void editarJornais() {
         mostrarJornais();
         if (!jornais.isEmpty()) {
@@ -313,7 +313,6 @@ public class SistemaGestaoBiblioteca {
         }
 
     }
-
     private static void mostrarJornais() {
         if (jornais.isEmpty()) {
             System.out.println("Não existem jornais registados.");
@@ -324,7 +323,6 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-
     private static void removerJornais() {
         mostrarJornais();
         if (!jornais.isEmpty()) {
