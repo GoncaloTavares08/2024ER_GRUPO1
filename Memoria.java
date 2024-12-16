@@ -10,6 +10,7 @@ public class Memoria {
 
     public static void guardarDados() {
         guardarLivros();
+        guardarJornais();
     }
 
     private static void guardarLivros(){
@@ -19,12 +20,24 @@ public class Memoria {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao guardadar livros: " + e.getMessage());
+            System.out.println("Erro ao guardar livros: " + e.getMessage());
+        }
+    }
+
+    private static void guardarJornais() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_JORNAIS))) {
+            for (Jornal jornal : SistemaGestaoBiblioteca.jornais) {
+                writer.write(jornal.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar jornais: " + e.getMessage());
         }
     }
 
     public static void carregarDados() {
         carregarLivros();
+        carregarJornais();
     }
 
     private static void carregarLivros(){
@@ -36,6 +49,18 @@ public class Memoria {
             }
         } catch (IOException e) {
             System.out.println("Erro ao carregar livros: " + e.getMessage());
+        }
+    }
+
+    private static void carregarJornais() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_JORNAIS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Jornal jornal = Jornal.fromString(linha);
+                SistemaGestaoBiblioteca.jornais.add(jornal);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar jornais: " + e.getMessage());
         }
     }
 }
