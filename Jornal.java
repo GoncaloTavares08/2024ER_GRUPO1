@@ -21,4 +21,15 @@ public class Jornal extends Documentos{
     public void setDataPublicacao(String dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
     }
+
+    @Override
+    public String toString() {
+        return "[" +
+                "Título: " + getTitulo() +
+                ", Editora: " + getEditora() +
+                ", Categoria: " + getCategoria() +
+                ", ISSN: " + getISSN() +
+                ", Data de Publicação: " + getDataPublicacao() +
+                ']';
+    }
 }
