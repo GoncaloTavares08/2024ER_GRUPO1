@@ -5,6 +5,7 @@ public class SistemaGestaoBiblioteca {
 
     public static ArrayList<Livro> livros = new ArrayList<>();
     public static ArrayList<Jornal> jornais = new ArrayList<>();
+    public static ArrayList<Revista> revistas = new ArrayList<>();
     public static ArrayList<Utente> utentes = new ArrayList<>();
     public static ArrayList<Reserva> reservas = new ArrayList<>();
     public static ArrayList<Emprestimo> emprestimos = new ArrayList<>();
@@ -30,6 +31,7 @@ public class SistemaGestaoBiblioteca {
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
         } while (opcao != 0);
+        System.exit(0);
     }
 
 
@@ -40,19 +42,21 @@ public class SistemaGestaoBiblioteca {
             System.out.println("\n--- Menu Gestão ---");
             System.out.println("1. Gerir Livros");
             System.out.println("2. Gerir Jornais");
-            System.out.println("3. Gerir Utentes");
-            System.out.println("4. Gerir Reservas");
-            System.out.println("5. Gerir Empréstimos");
+            System.out.println("3. Gerir Revistas");
+            System.out.println("4. Gerir Utentes");
+            System.out.println("5. Gerir Reservas");
+            System.out.println("6. Gerir Empréstimos");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
             System.out.println("");
             switch (opcao) {
                 case 1 -> gerirLivros();
-                //case 2 -> gerirJornais();
-                //case 3 -> gerirUtentes();
-                //case 4 -> gerirReservas();
-                //case 5 -> gerirEmprestimos();
+                case 2 -> gerirJornais();
+                case 3 -> gerirRevistas();
+                case 4 -> gerirUtentes();
+                //case 5 -> gerirReservas();
+                //case 6 -> gerirEmprestimos();
                 case 0 -> {
                     menu();
                 }
@@ -134,7 +138,7 @@ public class SistemaGestaoBiblioteca {
                 } else {
                     System.out.println("Título não pode estar vazio.");
                 }
-                System.out.print("Novo Editora: ");
+                System.out.print("Nova Editora: ");
                 String novoEditora = scanner.nextLine();
                 if (!novoEditora.isEmpty()) {
                     livroEditado.setEditora(novoEditora);
@@ -214,8 +218,394 @@ public class SistemaGestaoBiblioteca {
         }
     }
 
+    private static void gerirJornais() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+        do {
+            System.out.println("\n--- Menu Gestão Jornais ---");
+            System.out.println("1. Adicionar Jornais");
+            System.out.println("2. Editar Jornais");
+            System.out.println("3. Mostrar Jornais");
+            System.out.println("4. Remover Jornais");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            System.out.println("");
+            switch (opcao) {
+                case 1 -> adicionarJornais();
+                case 2 -> editarJornais();
+                case 3 -> mostrarJornais();
+                case 4 -> removerJornais();
+                case 0 -> {
+                    menu();
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 0);
+    }
+    private static void adicionarJornais() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Título: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Editora: ");
+        String editora = scanner.nextLine();
+        System.out.print("Categoria: ");
+        String categoria = scanner.nextLine();
+        System.out.print("ISSN: ");
+        String ISSN = scanner.nextLine();
+        System.out.print("Data de publicação: ");
+        String dataPublicacao = scanner.nextLine();
 
+        Jornal jornal = new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
+        jornais.add(jornal);
+    }
+    private static void editarJornais() {
+        mostrarJornais();
+        if (!jornais.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Título do Jornal a editar: ");
+            String titulo = scanner.nextLine();
+            Jornal jornalEditado = null;
+            for (Jornal jornal : jornais) {
+                if (jornal.getTitulo().equals(titulo)) {
+                    jornalEditado = jornal;
+                    break;
+                }
+            }
+            if (jornalEditado!= null) {
+                System.out.println("\n--- Editar Jornal ---");
+                System.out.print("Novo Título: ");
+                String novoTitulo = scanner.nextLine();
+                if (!novoTitulo.isEmpty()) {
+                    jornalEditado.setTitulo(novoTitulo);
+                } else {
+                    System.out.println("Título não pode estar vazio.");
+                }
+                System.out.print("Nova Editora: ");
+                String novoEditora = scanner.nextLine();
+                if (!novoEditora.isEmpty()) {
+                    jornalEditado.setEditora(novoEditora);
+                } else {
+                    System.out.println("Editora não pode estar vazia.");
+                }
+                System.out.print("Nova Categoria: ");
+                String novaCategoria = scanner.nextLine();
+                if (!novaCategoria.isEmpty()) {
+                    jornalEditado.setCategoria(novaCategoria);
+                } else {
+                    System.out.println("Categoria não pode estar vazia.");
+                }
+                System.out.print("Novo ISSN: ");
+                String novoISSN = scanner.nextLine();
+                if (!novoISSN.isEmpty()) {
+                    jornalEditado.setISSN(novoISSN);
+                } else {
+                    System.out.println("ISSN não pode estar vazio.");
+                }
+                System.out.print("Nova data de publicação: ");
+                String novadataPublicacao = scanner.nextLine();
+                if (!novadataPublicacao.isEmpty()) {
+                    jornalEditado.setDataPublicacao(novadataPublicacao);
+                } else {
+                    System.out.println("Data de publicação não pode estar vazia.");
+                }
+                System.out.println("Jornal editado com sucesso");
+            }
+        }
 
+    }
+    private static void mostrarJornais() {
+        if (jornais.isEmpty()) {
+            System.out.println("Não existem jornais registados.");
+        }else{
+            System.out.println("\n--- Lista de Jornais ---");
+            for (Jornal jornal : jornais) {
+                System.out.println(jornal);
+            }
+        }
+    }
+    private static void removerJornais() {
+        mostrarJornais();
+        if (!jornais.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Título do Jornal a remover: ");
+            String titulo = scanner.nextLine();
+            Jornal jornalRemovido = null;
+            for (Jornal jornal : jornais) {
+                if (jornal.getTitulo().equals(titulo)) {
+                    jornalRemovido = jornal;
+                    break;
+                }
+            }
+            if (jornalRemovido!= null) {
+                jornais.remove(jornalRemovido);
+                System.out.println("Jornal removido com sucesso.");
+            } else {
+                System.out.println("Jornal não encontrado.");
+                removerJornais();
+            }
+        }
+    }
+    private static void gerirRevistas() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+        do {
+            System.out.println("\n--- Menu Gestão Revistas ---");
+            System.out.println("1. Adicionar Revistas");
+            System.out.println("2. Editar Revistas");
+            System.out.println("3. Mostrar Revistas");
+            System.out.println("4. Remover Revistas");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            System.out.println("");
+            switch (opcao) {
+                case 1 -> adicionarRevistas();
+                case 2 -> editarRevistas();
+                case 3 -> mostrarRevistas();
+                case 4 -> removerRevistas();
+                case 0 -> {
+                    menu();
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 0);
+    }
+    private static void adicionarRevistas() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Título: ");
+        String titulo = scanner.nextLine();
+        System.out.print("Editora: ");
+        String editora = scanner.nextLine();
+        System.out.print("Categoria: ");
+        String categoria = scanner.nextLine();
+        System.out.print("ISSN: ");
+        String ISSN = scanner.nextLine();
+        System.out.print("Data de publicação: ");
+        String dataPublicacao = scanner.nextLine();
+
+        Revista revista = new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
+        revistas.add(revista);
+    }
+    private static void editarRevistas() {
+        mostrarRevistas();
+        if (!revistas.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Título da Revista a editar: ");
+            String titulo = scanner.nextLine();
+            Revista revistaEditado = null;
+            for (Revista revista : revistas) {
+                if (revista.getTitulo().equals(titulo)) {
+                    revistaEditado = revista;
+                    break;
+                }
+            }
+            if (revistaEditado!= null) {
+                System.out.println("\n--- Editar Revista ---");
+                System.out.print("Novo Título: ");
+                String novoTitulo = scanner.nextLine();
+                if (!novoTitulo.isEmpty()) {
+                    revistaEditado.setTitulo(novoTitulo);
+                } else {
+                    System.out.println("Título não pode estar vazio.");
+                }
+                System.out.print("Nova Editora: ");
+                String novoEditora = scanner.nextLine();
+                if (!novoEditora.isEmpty()) {
+                    revistaEditado.setEditora(novoEditora);
+                } else {
+                    System.out.println("Editora não pode estar vazia.");
+                }
+                System.out.print("Nova Categoria: ");
+                String novaCategoria = scanner.nextLine();
+                if (!novaCategoria.isEmpty()) {
+                    revistaEditado.setCategoria(novaCategoria);
+                } else {
+                    System.out.println("Categoria não pode estar vazia.");
+                }
+                System.out.print("Novo ISSN: ");
+                String novoISSN = scanner.nextLine();
+                if (!novoISSN.isEmpty()) {
+                    revistaEditado.setISSN(novoISSN);
+                } else {
+                    System.out.println("ISSN não pode estar vazio.");
+                }
+                System.out.print("Nova data de publicação: ");
+                String novadataPublicacao = scanner.nextLine();
+                if (!novadataPublicacao.isEmpty()) {
+                    revistaEditado.setDataPublicacao(novadataPublicacao);
+                } else {
+                    System.out.println("Data de publicação não pode estar vazia.");
+                }
+                System.out.println("Revista editada com sucesso");
+            }
+        }
+
+    }
+    private static void mostrarRevistas() {
+        if (revistas.isEmpty()) {
+            System.out.println("Não existem revistas registadas.");
+        }else{
+            System.out.println("\n--- Lista de Revistas ---");
+            for (Revista revista : revistas) {
+                System.out.println(revista);
+            }
+        }
+    }
+    private static void removerRevistas() {
+        mostrarRevistas();
+        if (!revistas.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Título da Revista a remover: ");
+            String titulo = scanner.nextLine();
+            Revista revistaRemovido = null;
+            for (Revista revista : revistas) {
+                if (revista.getTitulo().equals(titulo)) {
+                    revistaRemovido = revista;
+                    break;
+                }
+            }
+            if (revistaRemovido!= null) {
+                revistas.remove(revistaRemovido);
+                System.out.println("Revista removida com sucesso.");
+            } else {
+                System.out.println("Revista não encontrada.");
+                removerRevistas();
+            }
+        }
+    }
+
+    private static void gerirUtentes() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+        do {
+            System.out.println("\n--- Menu Gestão Utentes ---");
+            System.out.println("1. Adicionar Utentes");
+            System.out.println("2. Editar Utentes");
+            System.out.println("3. Mostrar Utentes");
+            System.out.println("4. Remover Utentes");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            System.out.println("");
+            switch (opcao) {
+                case 1 -> adicionarUtentes();
+                case 2 -> editarUtentes();
+                case 3 -> mostrarUtentes();
+                case 4 -> removerUtentes();
+                case 0 -> {
+                    menu();
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 0);
+    }
+    private static void adicionarUtentes() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("NIF: ");
+        String nif = scanner.nextLine();
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Género (M/F): ");
+        String generoInput = scanner.nextLine().trim().toUpperCase();
+        char genero;
+        if (generoInput.length() == 1 && (generoInput.charAt(0) == 'M' || generoInput.charAt(0) == 'F')) {
+            genero = generoInput.charAt(0);
+        } else {
+            System.out.println("Erro: O género deve ser apenas 'M' ou 'F'.");
+            return;
+        }
+        System.out.print("Contacto: ");
+        String contacto = scanner.nextLine();
+
+        Utente utente = new Utente(nif, nome, genero, contacto);
+        utentes.add(utente);
+    }
+    private static void editarUtentes() {
+        mostrarUtentes();
+        if (!utentes.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("NIF do Utente a editar: ");
+            String nif = scanner.nextLine();
+            Utente utenteEditado = null;
+            for (Utente utente : utentes) {
+                if (utente.getNif().equals(nif)) {
+                    utenteEditado = utente;
+                    break;
+                }
+            }
+            if (utenteEditado!= null) {
+                System.out.println("\n--- Editar Utente ---");
+                System.out.print("Novo NIF: ");
+                String novoNif = scanner.nextLine();
+                if (!novoNif.isEmpty()) {
+                    utenteEditado.setNif(novoNif);
+                } else {
+                    System.out.println("NIF não pode estar vazio.");
+                }
+                System.out.print("Novo Nome: ");
+                String novoNome = scanner.nextLine();
+                if (!novoNome.isEmpty()) {
+                    utenteEditado.setNome(novoNome);
+                } else {
+                    System.out.println("Nome não pode estar vazio.");
+                }
+                System.out.print("Novo Género (M/F): ");
+                String novoGenero = scanner.nextLine();
+                if (!novoGenero.isEmpty() && novoGenero.length() == 1) {
+                    char genero = novoGenero.charAt(0);
+                    if (genero == 'M' || genero == 'F') {
+                        utenteEditado.setGenero(genero);
+                    } else {
+                        System.out.println("Género inválido. Deve ser 'M' ou 'F'.");
+                    }
+                } else {
+                    System.out.println("Género não pode estar vazio.");
+                }
+                System.out.print("Novo Contacto: ");
+                String novoContacto = scanner.nextLine();
+                if (!novoContacto.isEmpty()) {
+                    utenteEditado.setContacto(novoContacto);
+                } else {
+                    System.out.println("Contacto não pode estar vazio.");
+                }
+                System.out.println("Utente editado com sucesso");
+            }
+        }
+
+    }
+    private static void mostrarUtentes() {
+        if (utentes.isEmpty()) {
+            System.out.println("Não existem utentes registados.");
+        }else{
+            System.out.println("\n--- Lista de Utentes ---");
+            for (Utente utente : utentes) {
+                System.out.println(utente);
+            }
+        }
+    }
+    private static void removerUtentes() {
+        mostrarUtentes();
+        if (!utentes.isEmpty()) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("NIF do Utente a remover: ");
+            String nif = scanner.nextLine();
+            Utente utenteRemovido = null;
+            for (Utente utente : utentes) {
+                if (utente.getNif().equals(nif)) {
+                    utenteRemovido = utente;
+                    break;
+                }
+            }
+            if (utenteRemovido!= null) {
+                utentes.remove(utenteRemovido);
+                System.out.println("Utente removido com sucesso.");
+            } else {
+                System.out.println("Utente não encontrado.");
+                removerUtentes();
+            }
+        }
+    }
 
 
     private static void pesquisarGeral() {
