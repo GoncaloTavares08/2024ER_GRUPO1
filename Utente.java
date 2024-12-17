@@ -42,4 +42,24 @@ public class Utente {
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
+
+    @Override
+    public String toString() {
+        return "[" +
+                "NIF: " + getNif() +
+                ", Nome: " + getNome() +
+                ", Género: " + getGenero() +
+                ", Contacto: " + getContacto() +
+                ']';
+    }
+
+    public static Utente fromString(String dados) {
+        dados = dados.replace("[", "").replace("]", "").trim();
+        String[] partes = dados.split(", ");
+        String nif = partes[0].split(": ")[1];
+        String nome = partes[1].split(": ")[1];
+        char genero = partes[2].split(": ")[1].charAt(0);
+        String contacto = partes[3].split(": ")[1];
+        return new Utente(nif, nome, genero, contacto);
+    }
 }

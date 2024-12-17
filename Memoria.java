@@ -11,6 +11,8 @@ public class Memoria {
     public static void guardarDados() {
         guardarLivros();
         guardarJornais();
+        guardarRevistas();
+        guardarUtentes();
     }
 
     private static void guardarLivros(){
@@ -20,7 +22,7 @@ public class Memoria {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao guardar livros: " + e.getMessage());
+            System.out.println("Erro ao guardar os livros: " + e.getMessage());
         }
     }
 
@@ -31,13 +33,37 @@ public class Memoria {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao guardar jornais: " + e.getMessage());
+            System.out.println("Erro ao guardar os jornais: " + e.getMessage());
+        }
+    }
+
+    private static void guardarRevistas() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_REVISTAS))) {
+            for (Revista revista : SistemaGestaoBiblioteca.revistas) {
+                writer.write(revista.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar as revistas: " + e.getMessage());
+        }
+    }
+
+    private static void guardarUtentes() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_UTENTES))) {
+            for (Utente utente : SistemaGestaoBiblioteca.utentes) {
+                writer.write(utente.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar os utentes: " + e.getMessage());
         }
     }
 
     public static void carregarDados() {
         carregarLivros();
         carregarJornais();
+        carregarRevistas();
+        carregarUtentes();
     }
 
     private static void carregarLivros(){
@@ -48,7 +74,7 @@ public class Memoria {
                 SistemaGestaoBiblioteca.livros.add(livro);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao carregar livros: " + e.getMessage());
+            System.out.println("Erro ao carregar os livros: " + e.getMessage());
         }
     }
 
@@ -60,7 +86,31 @@ public class Memoria {
                 SistemaGestaoBiblioteca.jornais.add(jornal);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao carregar jornais: " + e.getMessage());
+            System.out.println("Erro ao carregar os jornais: " + e.getMessage());
+        }
+    }
+
+    private static void carregarRevistas() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_REVISTAS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Revista revista = Revista.fromString(linha);
+                SistemaGestaoBiblioteca.revistas.add(revista);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar as revistas: " + e.getMessage());
+        }
+    }
+
+    private static void carregarUtentes() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_UTENTES))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Utente utente = Utente.fromString(linha);
+                SistemaGestaoBiblioteca.utentes.add(utente);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar os utentes: " + e.getMessage());
         }
     }
 }
