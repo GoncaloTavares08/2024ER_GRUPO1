@@ -11,33 +11,85 @@ public class Memoria {
     public static void guardarDados() {
         guardarLivros();
         guardarJornais();
+        guardarRevistas();
+        guardarUtentes();
+        guardarReservas();
+        guardarEmprestimos();
     }
 
     private static void guardarLivros(){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_LIVROS))) {
             for (Livro livro : SistemaGestaoBiblioteca.livros) {
-                writer.write(livro.toString());
+                writer.write(livro.toFileString());
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao guardar livros: " + e.getMessage());
+            System.out.println("Erro ao guardar os livros: " + e.getMessage());
         }
     }
 
     private static void guardarJornais() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_JORNAIS))) {
             for (Jornal jornal : SistemaGestaoBiblioteca.jornais) {
-                writer.write(jornal.toString());
+                writer.write(jornal.toFileString());
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Erro ao guardar jornais: " + e.getMessage());
+            System.out.println("Erro ao guardar os jornais: " + e.getMessage());
+        }
+    }
+
+    private static void guardarRevistas() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_REVISTAS))) {
+            for (Revista revista : SistemaGestaoBiblioteca.revistas) {
+                writer.write(revista.toFileString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar as revistas: " + e.getMessage());
+        }
+    }
+
+    private static void guardarUtentes() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_UTENTES))) {
+            for (Utente utente : SistemaGestaoBiblioteca.utentes) {
+                writer.write(utente.toFileString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar os utentes: " + e.getMessage());
+        }
+    }
+
+    private static void guardarReservas(){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_RESERVAS))) {
+            for (Reserva reserva : SistemaGestaoBiblioteca.reservas) {
+                writer.write(reserva.toFileString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar as reservas: " + e.getMessage());
+        }
+    }
+
+    private static void guardarEmprestimos(){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_EMPRESTIMOS))) {
+            for (Emprestimo emprestimo : SistemaGestaoBiblioteca.emprestimos) {
+                writer.write(emprestimo.toFileString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar os empréstimos: " + e.getMessage());
         }
     }
 
     public static void carregarDados() {
         carregarLivros();
         carregarJornais();
+        carregarRevistas();
+        carregarUtentes();
+        carregarReservas();
+        carregarEmprestimos();
     }
 
     private static void carregarLivros(){
@@ -48,7 +100,7 @@ public class Memoria {
                 SistemaGestaoBiblioteca.livros.add(livro);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao carregar livros: " + e.getMessage());
+            System.out.println("Erro ao carregar os livros: " + e.getMessage());
         }
     }
 
@@ -60,7 +112,55 @@ public class Memoria {
                 SistemaGestaoBiblioteca.jornais.add(jornal);
             }
         } catch (IOException e) {
-            System.out.println("Erro ao carregar jornais: " + e.getMessage());
+            System.out.println("Erro ao carregar os jornais: " + e.getMessage());
+        }
+    }
+
+    private static void carregarRevistas() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_REVISTAS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Revista revista = Revista.fromString(linha);
+                SistemaGestaoBiblioteca.revistas.add(revista);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar as revistas: " + e.getMessage());
+        }
+    }
+
+    private static void carregarUtentes() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_UTENTES))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Utente utente = Utente.fromString(linha);
+                SistemaGestaoBiblioteca.utentes.add(utente);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar os utentes: " + e.getMessage());
+        }
+    }
+
+    private static void carregarReservas() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_RESERVAS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Reserva reserva = Reserva.fromString(linha);
+                SistemaGestaoBiblioteca.reservas.add(reserva);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar as reservas: " + e.getMessage());
+        }
+    }
+
+    private static void carregarEmprestimos() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_EMPRESTIMOS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Emprestimo emprestimo = Emprestimo.fromString(linha);
+                SistemaGestaoBiblioteca.emprestimos.add(emprestimo);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar os empréstimos: " + e.getMessage());
         }
     }
 }
