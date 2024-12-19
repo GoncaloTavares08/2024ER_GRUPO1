@@ -14,6 +14,7 @@ public class Memoria {
         guardarRevistas();
         guardarUtentes();
         guardarReservas();
+        guardarEmprestimos();
     }
 
     private static void guardarLivros(){
@@ -71,12 +72,24 @@ public class Memoria {
         }
     }
 
+    private static void guardarEmprestimos(){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_EMPRESTIMOS))) {
+            for (Emprestimo emprestimo : SistemaGestaoBiblioteca.emprestimos) {
+                writer.write(emprestimo.toFileString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao guardar os empréstimos: " + e.getMessage());
+        }
+    }
+
     public static void carregarDados() {
         carregarLivros();
         carregarJornais();
         carregarRevistas();
         carregarUtentes();
         carregarReservas();
+        carregarEmprestimos();
     }
 
     private static void carregarLivros(){
@@ -136,6 +149,18 @@ public class Memoria {
             }
         } catch (IOException e) {
             System.out.println("Erro ao carregar as reservas: " + e.getMessage());
+        }
+    }
+
+    private static void carregarEmprestimos() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_EMPRESTIMOS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Emprestimo emprestimo = Emprestimo.fromString(linha);
+                SistemaGestaoBiblioteca.emprestimos.add(emprestimo);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar os empréstimos: " + e.getMessage());
         }
     }
 }
