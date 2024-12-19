@@ -1,4 +1,4 @@
-public class Revista extends Documentos {
+public class Revista extends Documento {
     private String ISSN;
     private String dataPublicacao;
 
@@ -25,21 +25,28 @@ public class Revista extends Documentos {
     public String toString() {
         return "[" +
                 "Título: " + getTitulo() +
-                ", Editora: " + getEditora() +
-                ", Categoria: " + getCategoria() +
-                ", ISSN: " + getISSN() +
-                ", Data de Publicação: " + getDataPublicacao() +
+                "; Editora: " + getEditora() +
+                "; Categoria: " + getCategoria() +
+                "; ISSN: " + getISSN() +
+                "; Data de Publicação: " + getDataPublicacao() +
                 ']';
     }
 
+    public String toFileString(){
+        return getTitulo() +
+                "|" + getEditora() +
+                "|" + getCategoria() +
+                "|" + getISSN() +
+                "|" + getDataPublicacao();
+    }
+
     public static Revista fromString(String dados) {
-        dados = dados.replace("[", "").replace("]", "").trim();
-        String[] partes = dados.split(", ");
-        String titulo = partes[0].split(": ")[1];
-        String editora = partes[1].split(": ")[1];
-        String categoria = partes[2].split(": ")[1];
-        String ISSN = partes[3].split(": ")[1];
-        String dataPublicacao = partes[4].split(": ")[1];
+        String[] partes = dados.split("\\|");
+        String titulo = partes[0];
+        String editora = partes[1];
+        String categoria = partes[2];
+        String ISSN = partes[3];
+        String dataPublicacao = partes[4];
         return new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
     }
 }
