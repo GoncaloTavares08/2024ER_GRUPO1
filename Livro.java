@@ -40,7 +40,7 @@ public class Livro extends Documento {
                 "; Categoria: " + getCategoria() +
                 "; Ano de Edição: " + getAnoEdicao() +
                 "; ISBN: " + getISBN() +
-                "; Autores: " + getAutores().toString().replace("[", "").replace("]", "") +
+                "; Autores: " + getAutores().toString().replace("[", "").replace("]", "").replace(" ", "") +
                 ']';
     }
 
@@ -50,7 +50,7 @@ public class Livro extends Documento {
                 "|" + getCategoria() +
                 "|" + getAnoEdicao() +
                 "|" + getISBN() +
-                "|" + getAutores().toString().replace("[", "").replace("]", "");
+                "|" + getAutores().toString().replace("[", "").replace("]", "").replace(" ", "");
     }
 
     public static Livro fromString(String dados) {
