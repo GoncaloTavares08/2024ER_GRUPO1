@@ -1,9 +1,9 @@
-public class Documentos {
+public class Documento {
     private String titulo;
     private String editora;
     private String categoria;
 
-    public Documentos(String titulo, String editora, String categoria) {
+    public Documento(String titulo, String editora, String categoria) {
         this.titulo = titulo;
         this.editora = editora;
         this.categoria = categoria;

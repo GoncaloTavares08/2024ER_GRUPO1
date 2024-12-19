@@ -1,0 +1,11 @@
+Livro1|Leya|Acao|2021|4257523553|Goncalo, Joao
+Livro2|Porto Editora|Ficcao|2023|9270334092|Joao, Miguel
+Livro3|Editorial Presença|Romance|2020|2374847548|Ana, Maria
+Livro4|Editora Abril|Suspense|2022|9981370632|Pedro, Luis
+Livro5|Bertrand|Aventura|2024|1858345808|Clara, Sofia
+Livro6|Círculo de Leitores|Drama|2025|3322438683|Marta, Paulo
+Livro7|Texto Editores|Fantasia|2021|7416227825|Fernando, Jorge
+Livro8|Editorial Minerva|História|2023|3413232794|Diana, Isabel
+Livro9|Editora Alvorada|Filosofia|2019|8604163980|Manuel, Ricardo
+Livro10|Alpha Books|Ciência|2022|7852418996|Helena, Teresa
+Livro11|Editora Chen|Aventura|2019|543285621X|Diana, Joao
