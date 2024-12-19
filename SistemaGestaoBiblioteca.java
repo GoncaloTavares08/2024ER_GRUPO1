@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -57,7 +60,7 @@ public class SistemaGestaoBiblioteca {
                 case 3 -> gerirRevistas();
                 case 4 -> gerirUtentes();
                 case 5 -> gerirReservas();
-                //case 6 -> gerirEmprestimos();
+                case 6 -> gerirEmprestimos();
                 case 0 -> {
                     menu();
                 }
@@ -721,6 +724,7 @@ public class SistemaGestaoBiblioteca {
 
     }
     private static void mostrarReservas() {
+        transformarReservasParaEmprestimos();
         if (reservas.isEmpty()) {
             System.out.println("Não existem reservas registados.");
         }else{
@@ -835,9 +839,9 @@ public class SistemaGestaoBiblioteca {
                 System.out.print("Nova Data Prevista de Devolução (dd-MM-yyyy): ");
                 String novaDataPrevistaDevolucao = scanner.nextLine();
                 emprestimoEditado.setDataPrevistaDevolucao(novaDataPrevistaDevolucao);
-                System.out.println("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
+                System.out.print("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
                 String novaDataEfetivaDevolucao = scanner.nextLine();
-                emprestimoEditado.setDataPrevistaDevolucao(novaDataEfetivaDevolucao);
+                emprestimoEditado.setDataEfetivaDevolucao(novaDataEfetivaDevolucao);
 
                 System.out.println("Empréstimo editado com sucesso");
             }
@@ -893,6 +897,35 @@ public class SistemaGestaoBiblioteca {
                 return null;
             }
         }
+    }
+
+    public static void transformarReservasParaEmprestimos() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataAtual = LocalDate.now();
+
+        LocalDate dataInicioFormatada;
+
+        ArrayList<Reserva> reservasParaRemover = new ArrayList<>();
+        for (Reserva reserva : reservas) {
+            try {
+                dataInicioFormatada = LocalDate.parse(reserva.getDataInicio(), formatter);
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("A data de início fornecida não está no formato correto 'dd-MM-yyyy'.", e);
+            }
+            if (!dataInicioFormatada.isAfter(dataAtual)) {
+                Emprestimo emprestimo = new Emprestimo(
+                        String.valueOf(emprestimos.size() + 1),
+                        reserva.getUtente(),
+                        reserva.getLivros(),
+                        reserva.getDataInicio(),
+                        reserva.getDataFim()
+                );
+                emprestimos.add(emprestimo);
+                reservasParaRemover.add(reserva);
+            }
+        }
+
+        reservas.removeAll(reservasParaRemover);
     }
 
 

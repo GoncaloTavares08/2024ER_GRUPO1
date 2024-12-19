@@ -8,7 +8,7 @@ public class Emprestimo extends Transacao{
     public Emprestimo(String numero, Utente utente, ArrayList<Livro> livros, String dataInicio, String dataPrevistaDevolucao) {
         super(numero, utente, livros, dataInicio);
         this.dataPrevistaDevolucao = dataPrevistaDevolucao;
-        this.dataEfetivaDevolucao = null;
+        this.dataEfetivaDevolucao = "Nao Devolvido";
     }
 
     public Emprestimo(String numero, Utente utente, ArrayList<Livro> livros, String dataInicio, String dataPrevistaDevolucao, String dataEfetivaDevolucao) {
@@ -39,7 +39,7 @@ public class Emprestimo extends Transacao{
         return "[" +
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
-                "; ISBN dos Livros: " + isbnLivros.toString().replace("[", "").replace("]", "") +
+                "; ISBN dos Livros: " + isbnLivros.toString().replace("[", "").replace("]", "").replace(" ", "") +
                 "; Data de Inicio: " + getDataInicio() +
                 "; Data Prevista Devolução: " + getDataPrevistaDevolucao() +
                 "; Data Efetiva Devolução: " + getDataEfetivaDevolucao() +
@@ -53,7 +53,7 @@ public class Emprestimo extends Transacao{
         }
         return getNumero() +
                 "|" + getUtente().getNif() +
-                "|" + isbnLivros.toString().replace("[", "").replace("]", "") +
+                "|" + isbnLivros.toString().replace("[", "").replace("]", "").replace(" ", "") +
                 "|" + getDataInicio() +
                 "|" + getDataPrevistaDevolucao() +
                 "|" + getDataEfetivaDevolucao();
@@ -78,7 +78,7 @@ public class Emprestimo extends Transacao{
         String dataInicio = partes[3];
         String dataPrevistaDevolucao = partes[4];
         String dataEfetivaDevolucao = partes[5];
-        if (dataEfetivaDevolucao == null) {
+        if (dataEfetivaDevolucao.equals("Nao Devolvido")) {
             return new Emprestimo(numero, utente, livros, dataInicio, dataPrevistaDevolucao);
         }else {
             return new Emprestimo(numero, utente, livros, dataInicio, dataPrevistaDevolucao, dataEfetivaDevolucao);
