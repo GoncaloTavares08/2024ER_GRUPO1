@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class SistemaGestaoBiblioteca {
@@ -55,7 +56,7 @@ public class SistemaGestaoBiblioteca {
                 case 2 -> gerirJornais();
                 case 3 -> gerirRevistas();
                 case 4 -> gerirUtentes();
-                //case 5 -> gerirReservas();
+                case 5 -> gerirReservas();
                 //case 6 -> gerirEmprestimos();
                 case 0 -> {
                     menu();
@@ -608,13 +609,122 @@ public class SistemaGestaoBiblioteca {
     }
 
 
+    private static void gerirReservas() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+        do {
+            System.out.println("\n--- Menu Gestão Reservas ---");
+            System.out.println("1. Adicionar Reservas");
+            System.out.println("2. Editar Reservas");
+            System.out.println("3. Mostrar Reservas");
+            System.out.println("4. Remover Reservas");
+            System.out.println("0. Voltar");
+            System.out.print("Escolha uma opção: ");
+            opcao = scanner.nextInt();
+            System.out.println("");
+            switch (opcao) {
+                case 1 -> adicionarReservas();
+                case 2 -> editarLivros();
+                case 3 -> mostrarReservas();
+                case 4 -> removerLivros();
+                case 0 -> {
+                    menu();
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
+        } while (opcao != 0);
+    }
+    private static void adicionarReservas() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Número da Reserva: ");
+        String numero = scanner.nextLine();
+        mostrarUtentes();
+        System.out.print("NIF do Utente (0 para sair): ");
+        String nifUtente = scanner.nextLine();
+        Utente utente = procurarUtentePorNIF(nifUtente);
+        if (utente == null) {
+            System.out.println("Operação cancelada.");
+            return;
+        }
+        System.out.print("Quantos livros tem a reserva? ");
+        int quantidadeLivros = scanner.nextInt();
+        scanner.nextLine(); // Consumir a quebra de linha
+        ArrayList<Livro> livrosReserva = new ArrayList<>();
+        mostrarLivros();
+        for (int i = 0; i < quantidadeLivros; i++) {
+            System.out.print("ISBN do " + (i + 1) + "º livro (0 para sair): ");
+            String isbnLivro = scanner.nextLine();
+            Livro livro = procurarLivroPorISBN(isbnLivro);
+            if (livro == null) {
+                System.out.println("Operação cancelada.");
+                return;
+            }
+            livrosReserva.add(livro);
+        }
+        System.out.print("Data de Registo (dd-MM-yyyy): ");
+        String dataRegisto = scanner.nextLine();
+        System.out.print("Data de Início (dd-MM-yyyy): ");
+        String dataInicio = scanner.nextLine();
+        System.out.print("Data de Fim (dd-MM-yyyy): ");
+        String dataFim = scanner.nextLine();
+
+        Reserva reserva = new Reserva(numero, utente, livrosReserva, dataInicio, dataRegisto, dataFim);
+        reservas.add(reserva);
+
+        System.out.println("Reserva adicionada com sucesso!");
+    }
+
+
+    private static void mostrarReservas() {
+        if (reservas.isEmpty()) {
+            System.out.println("Não existem reservas registados.");
+        }else{
+            System.out.println("\n--- Lista de Reservas ---");
+            for (Reserva reserva : reservas) {
+                System.out.println(reserva);
+            }
+        }
+    }
+
+
     private static void pesquisarGeral() {
     }
 
     private static void mostrarGeral() {
     }
 
-
+    public static Utente procurarUtentePorNIF(String nif) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            for (Utente utente : utentes) {
+                if (utente.getNif().equals(nif)) {
+                    return utente;
+                }
+            }
+            System.out.println("NIF não encontrado. Tente novamente ou digite '0' para cancelar.");
+            System.out.print("NIF do Utente (0 para sair): ");
+            nif = scanner.nextLine();
+            if (nif.equals("0")) {
+                return null;
+            }
+        }
+    }
+    public static Livro procurarLivroPorISBN(String isbn) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            for (Livro livro : livros) {
+                if (livro.getISBN().equals(isbn)) {
+                    return livro;
+                }
+            }
+            System.out.println("ISBN não encontrado. Tente novamente ou digite '0' para cancelar.");
+            System.out.print("ISBN do Livro (0 para sair): ");
+            isbn = scanner.nextLine();
+            if (isbn.equals("0")) {
+                return null;
+            }
+        }
+    }
 
 
 
