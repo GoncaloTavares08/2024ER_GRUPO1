@@ -33,7 +33,7 @@ public class Reserva extends Transacao{
         return "[" +
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
-                "; ISBN dos Livros: " + isbnLivros.toString().replace("[", "").replace("]", "") +
+                "; ISBN dos Livros: " + isbnLivros.toString().replace("[", "").replace("]", "").replace(" ", "") +
                 "; Data de Registo: " + getDataRegisto() +
                 "; Data de Inicio: " + getDataInicio() +
                 "; Data de Fim: " + getDataFim() +
@@ -47,7 +47,7 @@ public class Reserva extends Transacao{
         }
         return getNumero() +
                 "|" + getUtente().getNif() +
-                "|" + isbnLivros.toString().replace("[", "").replace("]", "") +
+                "|" + isbnLivros.toString().replace("[", "").replace("]", "").replace(" ", "") +
                 "|" + getDataRegisto() +
                 "|" + getDataInicio() +
                 "|" + getDataFim();
