@@ -206,21 +206,29 @@ public class SistemaGestaoBiblioteca {
             System.out.print("Título do Livro a remover: ");
             String titulo = scanner.nextLine();
             Livro livroRemovido = null;
+
             for (Livro livro : livros) {
-                if (livro.getTitulo().equals(titulo)) {
+                if (livro.getTitulo().equalsIgnoreCase(titulo)) {
                     livroRemovido = livro;
                     break;
                 }
             }
-            if (livroRemovido!= null) {
-                livros.remove(livroRemovido);
-                System.out.println("Livro removido com sucesso.");
+
+            // Verifica se o livro está em reservas ou empréstimos
+            ArrayList<Livro> livrosAtivos = listarLivrosAtivosLista();
+            if (livroRemovido != null) {
+                if (livrosAtivos.contains(livroRemovido)) {
+                    System.out.println("Não é possível remover o livro. Ele está associado a uma reserva ou empréstimo.");
+                } else {
+                    livros.remove(livroRemovido);
+                    System.out.println("Livro removido com sucesso.");
+                }
             } else {
                 System.out.println("Livro não encontrado.");
-                removerLivros();
             }
         }
     }
+
 
     private static void gerirJornais() {
         Scanner scanner = new Scanner(System.in);
@@ -595,6 +603,7 @@ public class SistemaGestaoBiblioteca {
             Scanner scanner = new Scanner(System.in);
             System.out.print("NIF do Utente a remover: ");
             String nif = scanner.nextLine();
+
             Utente utenteRemovido = null;
             for (Utente utente : utentes) {
                 if (utente.getNif().equals(nif)) {
@@ -602,15 +611,22 @@ public class SistemaGestaoBiblioteca {
                     break;
                 }
             }
-            if (utenteRemovido!= null) {
-                utentes.remove(utenteRemovido);
-                System.out.println("Utente removido com sucesso.");
+
+            // Verifica se o utente está em reservas ou empréstimos
+            ArrayList<Utente> utentesAtivos = listarUtentesAtivosLista();
+            if (utenteRemovido != null) {
+                if (utentesAtivos.contains(utenteRemovido)) {
+                    System.out.println("Não é possível remover o utente, o mesmo possui reservas ou empréstimos.");
+                } else {
+                    utentes.remove(utenteRemovido);
+                    System.out.println("Utente removido com sucesso.");
+                }
             } else {
                 System.out.println("Utente não encontrado.");
-                removerUtentes();
             }
         }
     }
+
 
     private static void gerirReservas() {
         Scanner scanner = new Scanner(System.in);
@@ -861,9 +877,55 @@ public class SistemaGestaoBiblioteca {
 
 
     private static void pesquisarGeral() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Pesquisa ---");
+        System.out.println("1. Pesquisar por NIF de Utente");
+        System.out.println("2. Pesquisar por ISBN de Livro");
+        System.out.println("2. Pesquisar por ISSN de Jornal");
+        System.out.println("0. Cancelar");
+        System.out.print("Opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // consumir a quebra de linha
+        switch (opcao) {
+            case 1:
+                System.out.print("Insira o NIF a procurar: ");
+                String nif = scanner.nextLine();
+                System.out.println(procurarUtentePorNIF(nif));
+                break;
+            case 2:
+                System.out.print("Insira o ISBN a procurar: ");
+                String isbn = scanner.nextLine();
+                System.out.println(procurarLivroPorISBN(isbn));
+                break;
+            case 3:
+                System.out.print("Insira o ISSN a procurar: ");
+                String issn = scanner.nextLine();
+                System.out.println(procurarJornalPorISSN(issn));
+                break;
+            case 0:
+                menu();
+            default:
+                System.out.println("Opção inválida.");
+        }
     }
 
     private static void mostrarGeral() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Mostrar ---");
+        System.out.println("1. Mostrar Utentes com Reservas/Empréstimos");
+        System.out.println("0. Cancelar");
+        System.out.print("Opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // consumir a quebra de linha
+        switch (opcao) {
+            case 1:
+                listarUtentesAtivos();
+                break;
+            case 0:
+                menu();
+            default:
+                System.out.println("Opção inválida.");
+        }
     }
 
     public static Utente procurarUtentePorNIF(String nif) {
@@ -899,6 +961,23 @@ public class SistemaGestaoBiblioteca {
         }
     }
 
+    public static Jornal procurarJornalPorISSN(String issn) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            for (Jornal jornal : jornais) {
+                if (jornal.getISSN().equals(issn)) {
+                    return jornal;
+                }
+            }
+            System.out.println("ISSN não encontrado. Tente novamente ou digite '0' para cancelar.");
+            System.out.print("ISSN do Jornal (0 para sair): ");
+            issn = scanner.nextLine();
+            if (issn.equals("0")) {
+                return null;
+            }
+        }
+    }
+
     public static void transformarReservasParaEmprestimos() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate dataAtual = LocalDate.now();
@@ -928,7 +1007,71 @@ public class SistemaGestaoBiblioteca {
         reservas.removeAll(reservasParaRemover);
     }
 
+    public static void listarUtentesAtivos() {
+        ArrayList<Utente> utentesAtivos = new ArrayList<>();
 
+        // Adicionar utentes das reservas
+        for (Reserva reserva : reservas) {
+            if (!utentesAtivos.contains(reserva.getUtente())) {
+                utentesAtivos.add(reserva.getUtente());
+            }
+        }
+
+        // Adicionar utentes dos empréstimos
+        for (Emprestimo emprestimo : emprestimos) {
+            if (!utentesAtivos.contains(emprestimo.getUtente())) {
+                utentesAtivos.add(emprestimo.getUtente());
+            }
+        }
+
+        // Mostrar utentes
+        if (utentesAtivos.isEmpty()) {
+            System.out.println("Não há utentes com reservas ou empréstimos.");
+        } else {
+            System.out.println("\n--- Lista de Utentes Ativos ---");
+            for (Utente utente : utentesAtivos) {
+                System.out.println(utente);
+            }
+        }
+    }
+    public static ArrayList<Utente> listarUtentesAtivosLista() {
+        ArrayList<Utente> utentesAtivos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            if (!utentesAtivos.contains(reserva.getUtente())) {
+                utentesAtivos.add(reserva.getUtente());
+            }
+        }
+
+        for (Emprestimo emprestimo : emprestimos) {
+            if (!utentesAtivos.contains(emprestimo.getUtente())) {
+                utentesAtivos.add(emprestimo.getUtente());
+            }
+        }
+
+        return utentesAtivos;
+    }
+    public static ArrayList<Livro> listarLivrosAtivosLista() {
+        ArrayList<Livro> livrosAtivos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            for (Livro livro : reserva.getLivros()) {
+                if (!livrosAtivos.contains(livro)) {
+                    livrosAtivos.add(livro);
+                }
+            }
+        }
+
+        for (Emprestimo emprestimo : emprestimos) {
+            for (Livro livro : emprestimo.getLivros()) {
+                if (!livrosAtivos.contains(livro)) {
+                    livrosAtivos.add(livro);
+                }
+            }
+        }
+
+        return livrosAtivos;
+    }
 
 
 }
