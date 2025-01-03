@@ -1,8 +1,9 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class SistemaGestaoBiblioteca {
@@ -910,9 +911,15 @@ public class SistemaGestaoBiblioteca {
     }
 
     private static void mostrarGeral() {
+        String dataInicial;
+        String dataFinal;
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n--- Mostrar ---");
         System.out.println("1. Mostrar Utentes com Reservas/Empréstimos");
+        System.out.println("2. Mostrar Utentes com Devolucão com atraso superior a X dias");
+        System.out.println("3. Mostrar Emprestimos entre Data X e Data Y");
+        System.out.println("4. Mostrar Emprestimos entre Data X e Data Y por Utente");
+        System.out.println("5. Mostrar Tempo Medio em dias de Emprestimos entre Data X e Data Y");
         System.out.println("0. Cancelar");
         System.out.print("Opção: ");
         int opcao = scanner.nextInt();
@@ -921,12 +928,54 @@ public class SistemaGestaoBiblioteca {
             case 1:
                 listarUtentesAtivos();
                 break;
+            case 2:
+                System.out.print("Insira o número de dias de atraso minimo: ");
+                int dias = scanner.nextInt();
+                scanner.nextLine(); // consumir a quebra de linha
+                listarUtentesDevolucaoAtrasada(dias);
+                break;
+            case 3:
+                System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                dataInicial = scanner.nextLine();
+                System.out.println("Insira a data final (dd-MM-yyyy):");
+                dataFinal = scanner.nextLine();
+                listarTotalEmprestimosIntervaloDatas(dataInicial, dataFinal);
+                break;
+            case 4:
+                System.out.println("Insira o nif do Utente a procurar: ");
+                String nifUtente = scanner.nextLine();
+                while (true) {
+                    for (Utente utente : utentes) {
+                        if (utente.getNif().equals(nifUtente)) {
+                            System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                            dataInicial = scanner.nextLine();
+                            System.out.println("Insira a data final (dd-MM-yyyy):");
+                            dataFinal = scanner.nextLine();
+                            listarTotalEmprestimosIntervaloDatas(dataInicial, dataFinal, nifUtente);
+                            return;
+                        }
+                    }
+                    System.out.println("NIF não encontrado. Tente novamente ou digite '0' para cancelar.");
+                    System.out.print("NIF do Utente (0 para sair): ");
+                    nifUtente = scanner.nextLine();
+                    if (nifUtente.equals("0")) {
+                        mostrarGeral();
+                    }
+                }
+            case 5:
+                System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                dataInicial = scanner.nextLine();
+                System.out.println("Insira a data final (dd-MM-yyyy):");
+                dataFinal = scanner.nextLine();
+                listarMediaDiasEmprestimosIntervaloDatas(dataInicial, dataFinal);
+                break;
             case 0:
                 menu();
             default:
                 System.out.println("Opção inválida.");
         }
     }
+
 
     public static Utente procurarUtentePorNIF(String nif) {
         Scanner scanner = new Scanner(System.in);
@@ -1071,6 +1120,75 @@ public class SistemaGestaoBiblioteca {
         }
 
         return livrosAtivos;
+    }
+
+    public static void listarUtentesDevolucaoAtrasada(int dias) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataAtual = LocalDate.now();
+        for (Reserva reserva : reservas){
+            LocalDate dataFimFormatada = LocalDate.parse(reserva.getDataFim(), formatter);
+            Period periodo = dataFimFormatada.until(dataAtual);
+            if (periodo.getDays() >= dias){
+                System.out.println(reserva.getUtente());
+            }
+        }
+        for (Emprestimo emprestimo : emprestimos){
+            LocalDate dataPrevistaDevolucaoFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+            Period periodo = dataPrevistaDevolucaoFormatada.until(dataAtual);
+            if (periodo.getDays() >= dias){
+                System.out.println(emprestimo.getUtente());
+            }
+        }
+    }
+    public static void listarTotalEmprestimosIntervaloDatas(String dataInicial, String dataFinal){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInseridaFormatada = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInseridaFormatada = LocalDate.parse(dataFinal, formatter);
+        ArrayList<Emprestimo> emprestimosIntervaloDatas = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            LocalDate dataInicioFormatada = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+            LocalDate dataFimFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+            if(dataInicioFormatada.isAfter(dataInicialInseridaFormatada) && dataFimFormatada.isBefore(dataFinalInseridaFormatada)){
+                emprestimosIntervaloDatas.add(emprestimo);
+            }
+        }
+        System.out.println("Existem " + emprestimosIntervaloDatas.size() + " emprestimos feitos dentro desse intevalo de datas.");
+    }
+
+    public static void listarMediaDiasEmprestimosIntervaloDatas(String dataInicial, String dataFinal){
+        long count = 0;
+        long somaDias = 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInseridaFormatada = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInseridaFormatada = LocalDate.parse(dataFinal, formatter);
+        ArrayList<Emprestimo> emprestimosIntervaloDatas = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            LocalDate dataInicioFormatada = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+            LocalDate dataFimFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+            if(dataInicioFormatada.isAfter(dataInicialInseridaFormatada) && dataFimFormatada.isBefore(dataFinalInseridaFormatada)){
+                count++;
+                somaDias += ChronoUnit.DAYS.between(dataInicioFormatada, dataFimFormatada);
+                emprestimosIntervaloDatas.add(emprestimo);
+            }
+        }
+        System.out.println("A media em dias dos emprestimos entre as data indicadas é de " + somaDias/count + " dias.");
+    }
+
+    public static void listarTotalEmprestimosIntervaloDatas(String dataInicial, String dataFinal, String nif){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInseridaFormatada = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInseridaFormatada = LocalDate.parse(dataFinal, formatter);
+        ArrayList<Emprestimo> emprestimosIntervaloDatas = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            if(emprestimo.getUtente().getNif().equals(nif)){
+                LocalDate dataInicioFormatada = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+                LocalDate dataFimFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+                if(dataInicioFormatada.isAfter(dataInicialInseridaFormatada) && dataFimFormatada.isBefore(dataFinalInseridaFormatada)){
+                    emprestimosIntervaloDatas.add(emprestimo);
+                }
+            }
+        }
+        System.out.println("Existem " + emprestimosIntervaloDatas.size() + " emprestimos feitos dentro desse intevalo de datas para o utente com o nif " + nif + ".");
     }
 
 
