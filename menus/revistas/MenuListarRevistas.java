@@ -2,6 +2,7 @@ package menus.revistas;
 
 import menus.Menu;
 import modelos.Biblioteca;
+import modelos.Revista;
 
 public class MenuListarRevistas extends Menu {
     public MenuListarRevistas(Biblioteca biblioteca, String name) {
@@ -10,6 +11,13 @@ public class MenuListarRevistas extends Menu {
 
     @Override
     public void mostrarMenu() {
-        System.out.println(this.name);
+        if (this.biblioteca.getRevistas().isEmpty()) {
+            System.out.println("Não existem revistas registadas.");
+        }else{
+            System.out.println("--- Lista de Revistas ---");
+            for (Revista revista : this.biblioteca.getRevistas()) {
+                System.out.println(revista);
+            }
+        }
     }
 }

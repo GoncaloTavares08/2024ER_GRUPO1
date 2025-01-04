@@ -22,7 +22,7 @@ public class MenuRemoverLivro extends Menu {
             if (livroFoiRemovido) {
                 System.out.println("Livro removido com sucesso.");
             } else {
-                System.out.println("Livro não encontrado.");
+                System.out.println("Livro não pode ser removido. Pode não existir ou estar associado a uma reserva ou empréstimo.");
             }
         }
     }

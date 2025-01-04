@@ -25,10 +25,14 @@ public class Biblioteca {
 
     public boolean removerLivroPorTitulo(String titulo) {
         Livro livroParaRemover = this.getLivroPorTitulo(titulo);
-        if (livroParaRemover == null) {
+        if (livroParaRemover == null || this.livros.contains(livroParaRemover)) {
             return false;
         }
         return this.livros.remove(livroParaRemover);
+    }
+
+    public boolean livroEstaAtivo(Livro livro) {
+        return this.getLivrosAtivos().contains(livro);
     }
 
     public Livro getLivroPorTitulo(String titulo) {
@@ -47,6 +51,28 @@ public class Biblioteca {
             }
         }
         return null;
+    }
+
+    public List<Livro> getLivrosAtivos() {
+        List<Livro> livrosAtivos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            for (Livro livro : reserva.getLivros()) {
+                if (!livrosAtivos.contains(livro)) {
+                    livrosAtivos.add(livro);
+                }
+            }
+        }
+
+        for (Emprestimo emprestimo : emprestimos) {
+            for (Livro livro : emprestimo.getLivros()) {
+                if (!livrosAtivos.contains(livro)) {
+                    livrosAtivos.add(livro);
+                }
+            }
+        }
+
+        return livrosAtivos;
     }
 
     public Utente getUtentePorNif(String nif) {
