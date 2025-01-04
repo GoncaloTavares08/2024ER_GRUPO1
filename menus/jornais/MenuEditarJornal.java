@@ -38,9 +38,9 @@ public class MenuEditarJornal extends Menu {
                     System.out.println("Título não pode estar vazio.");
                 }
                 System.out.print("Nova Editora: ");
-                String novoEditora = scanner.nextLine();
-                if (!novoEditora.isEmpty()) {
-                    jornalEditado.setEditora(novoEditora);
+                String novaEditora = scanner.nextLine();
+                if (!novaEditora.isEmpty()) {
+                    jornalEditado.setEditora(novaEditora);
                 } else {
                     System.out.println("Editora não pode estar vazia.");
                 }

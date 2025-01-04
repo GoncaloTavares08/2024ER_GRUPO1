@@ -2,6 +2,7 @@ package menus.utentes;
 
 import menus.Menu;
 import modelos.Biblioteca;
+import modelos.Utente;
 
 public class MenuListarUtentes extends Menu {
     public MenuListarUtentes(Biblioteca biblioteca, String name) {
@@ -10,6 +11,13 @@ public class MenuListarUtentes extends Menu {
 
     @Override
     public void mostrarMenu() {
-        System.out.println(this.name);
+        if (this.biblioteca.getUtentes().isEmpty()) {
+            System.out.println("Não existem utentes registados.");
+        }else{
+            System.out.println("\n--- Lista de Utentes ---");
+            for (Utente utente : this.biblioteca.getUtentes()) {
+                System.out.println(utente);
+            }
+        }
     }
 }

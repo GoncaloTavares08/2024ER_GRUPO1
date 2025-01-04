@@ -25,14 +25,10 @@ public class Biblioteca {
 
     public boolean removerLivroPorTitulo(String titulo) {
         Livro livroParaRemover = this.getLivroPorTitulo(titulo);
-        if (livroParaRemover == null || this.livros.contains(livroParaRemover)) {
+        if (livroParaRemover == null || this.documentoEstaAtivo(livroParaRemover)) {
             return false;
         }
         return this.livros.remove(livroParaRemover);
-    }
-
-    public boolean livroEstaAtivo(Livro livro) {
-        return this.getLivrosAtivos().contains(livro);
     }
 
     public Livro getLivroPorTitulo(String titulo) {
@@ -53,27 +49,41 @@ public class Biblioteca {
         return null;
     }
 
-    public List<Livro> getLivrosAtivos() {
-        List<Livro> livrosAtivos = new ArrayList<>();
-
-        for (Reserva reserva : reservas) {
-            for (Livro livro : reserva.getLivros()) {
-                if (!livrosAtivos.contains(livro)) {
-                    livrosAtivos.add(livro);
-                }
-            }
-        }
-
-        for (Emprestimo emprestimo : emprestimos) {
-            for (Livro livro : emprestimo.getLivros()) {
-                if (!livrosAtivos.contains(livro)) {
-                    livrosAtivos.add(livro);
-                }
-            }
-        }
-
-        return livrosAtivos;
+    public boolean documentoEstaAtivo(Documento documento) {
+        return this.getDocumentosAtivos().contains(documento);
     }
+
+    public List<Documento> getDocumentosAtivos() {
+        List<Documento> documentosAtivos = new ArrayList<>();
+        List<Transacao> transacoes = this.getTransacoes();
+        for (Transacao transacao : transacoes) {
+            documentosAtivos.addAll(transacao.getDocumentos());
+        }
+
+        return documentosAtivos;
+    }
+
+//    public List<Utente> getUtentesAtivos() {
+//        List<Utente> utentesAtivos = new ArrayList<>();
+//
+//        Utente utenteRemovido = null;
+//        for (Utente utente : utentesAtivos) {
+//            if (utente.getNif().equals(nif)) {
+//                utenteRemovido = utente;
+//                break;
+//            }
+//        }
+//        if (utenteRemovido != null) {
+//            if (utentesAtivos.contains(utenteRemovido)) {
+//                System.out.println("Não é possível remover o utente, o mesmo possui reservas ou empréstimos.");
+//            } else {
+//                utentes.remove(utenteRemovido);
+//                System.out.println("Utente removido com sucesso.");
+//            }
+//        } else {
+//            System.out.println("Utente não encontrado.");
+//        }
+//    }
 
     public Utente getUtentePorNif(String nif) {
         for (Utente utente : this.utentes) {
@@ -88,8 +98,42 @@ public class Biblioteca {
         return this.jornais;
     }
 
+    public Jornal getJornalPorISSN(String issn) {
+        for (Jornal jornal : this.jornais) {
+            if (jornal.getISSN().equals(issn)) {
+                return jornal;
+            }
+        }
+        return null;
+    }
+
+    public boolean removerJornalPorIssn(String issn) {
+        Jornal jornalParaRemover = this.getJornalPorISSN(issn);
+        if (jornalParaRemover == null || this.documentoEstaAtivo(jornalParaRemover)) {
+            return false;
+        }
+        return this.jornais.remove(jornalParaRemover);
+    }
+
     public List<Revista> getRevistas() {
         return this.revistas;
+    }
+
+    public Revista getRevistaPorISSN(String issn) {
+        for (Revista revista : this.revistas) {
+            if (revista.getISSN().equals(issn)) {
+                return revista;
+            }
+        }
+        return null;
+    }
+
+    public boolean removerRevistaPorIssn(String issn) {
+        Revista revistaParaRemover = this.getRevistaPorISSN(issn);
+        if (revistaParaRemover == null || this.documentoEstaAtivo(revistaParaRemover)) {
+            return false;
+        }
+        return this.revistas.remove(revistaParaRemover);
     }
 
     public List<Utente> getUtentes() {
@@ -102,6 +146,12 @@ public class Biblioteca {
 
     public List<Emprestimo> getEmprestimos() {
         return this.emprestimos;
+    }
+
+    public List<Transacao> getTransacoes() {
+        List<Transacao> transacoes = new ArrayList<>(this.emprestimos);
+        transacoes.addAll(this.reservas);
+        return transacoes;
     }
 
 }

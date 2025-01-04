@@ -1,6 +1,7 @@
 package menus.livros;
 
 import menus.Menu;
+import menus.revistas.MenuListarRevistas;
 import modelos.Biblioteca;
 
 import java.util.Scanner;
@@ -12,6 +13,8 @@ public class MenuRemoverLivro extends Menu {
 
     @Override
     public void mostrarMenu() {
+        Menu menuLivros = new MenuListarLivros(biblioteca, "Lista de Livros");
+        menuLivros.mostrarMenu();
         if (!this.biblioteca.temLivros()) {
             System.out.println("Não existem livros no sistema");
         } else {

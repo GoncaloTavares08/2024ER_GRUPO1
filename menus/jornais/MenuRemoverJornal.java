@@ -17,20 +17,13 @@ public class MenuRemoverJornal extends Menu {
         menuJornais.mostrarMenu();
         if (!this.biblioteca.getJornais().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Título do Jornal a remover: ");
-            String titulo = scanner.nextLine();
-            Jornal jornalRemovido = null;
-            for (Jornal jornal : this.biblioteca.getJornais()) {
-                if (jornal.getTitulo().equals(titulo)) {
-                    jornalRemovido = jornal;
-                    break;
-                }
-            }
-            if (jornalRemovido!= null) {
-                this.biblioteca.getJornais().remove(jornalRemovido);
+            System.out.print("ISSN do Jornal a remover: ");
+            String issn = scanner.nextLine();
+            boolean jornalFoiRemovido = this.biblioteca.removerJornalPorIssn(issn);
+            if (jornalFoiRemovido) {
                 System.out.println("Jornal removido com sucesso.");
             } else {
-                System.out.println("Jornal não encontrado.");
+                System.out.println("Jornal não pode ser removido. Pode não existir ou estar associado a uma reserva ou empréstimo.");
             }
         }
     }

@@ -1,6 +1,6 @@
 package modelos;
 
-public class Documento {
+public abstract class Documento {
     private String titulo;
     private String editora;
     private String categoria;

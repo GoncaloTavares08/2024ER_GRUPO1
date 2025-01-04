@@ -1,14 +1,14 @@
 package modelos;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 public class Reserva extends Transacao {
     private LocalDate dataRegisto;
     private LocalDate dataFim;
 
-    public Reserva(String numero, Utente utente, ArrayList<Livro> livros, LocalDate dataInicio, LocalDate dataRegisto, LocalDate dataFim) {
-        super(numero, utente, livros, dataInicio);
+    public Reserva(String numero, Utente utente, List<Documento> documentos, LocalDate dataInicio, LocalDate dataRegisto, LocalDate dataFim) {
+        super(numero, utente, documentos, dataInicio);
         this.dataRegisto = dataRegisto;
         this.dataFim = dataFim;
     }
