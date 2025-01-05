@@ -1,7 +1,6 @@
 package menus.livros;
 
 import menus.Menu;
-import menus.utentes.MenuProcurarUtentePorNif;
 import modelos.Biblioteca;
 
 public class MenuLivros extends Menu {

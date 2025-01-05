@@ -3,7 +3,6 @@ package menus.livros;
 import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Livro;
-import modelos.Utente;
 
 import java.util.Scanner;
 

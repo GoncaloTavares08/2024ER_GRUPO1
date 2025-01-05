@@ -1,7 +1,6 @@
 package menus.livros;
 
 import menus.Menu;
-import menus.revistas.MenuListarRevistas;
 import modelos.Biblioteca;
 
 import java.util.Scanner;

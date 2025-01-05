@@ -2,6 +2,7 @@ package menus.reservas;
 
 import menus.Menu;
 import modelos.Biblioteca;
+import modelos.Reserva;
 
 public class MenuListarReservas extends Menu {
     public MenuListarReservas(Biblioteca biblioteca, String name) {
@@ -10,6 +11,13 @@ public class MenuListarReservas extends Menu {
 
     @Override
     public void mostrarMenu() {
-        System.out.println(this.name);
+        if (this.biblioteca.getReservas().isEmpty()) {
+            System.out.println("Não existem reservas registadas.");
+        }else{
+            System.out.println("\n--- Lista de Reservas ---");
+            for (Reserva reserva : this.biblioteca.getReservas()) {
+                System.out.println(reserva);
+            }
+        }
     }
 }

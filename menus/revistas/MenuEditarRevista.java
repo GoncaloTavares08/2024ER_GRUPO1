@@ -1,9 +1,7 @@
 package menus.revistas;
 
 import menus.Menu;
-import menus.jornais.MenuListarJornais;
 import modelos.Biblioteca;
-import modelos.Jornal;
 import modelos.Revista;
 
 import java.time.LocalDate;

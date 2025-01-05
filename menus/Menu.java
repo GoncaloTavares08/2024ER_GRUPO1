@@ -8,12 +8,12 @@ import java.util.Scanner;
 
 public abstract class Menu {
     protected Biblioteca biblioteca;
-    protected String name;
+    protected String nome;
     protected List<Menu> menus;
 
     protected Menu(Biblioteca biblioteca, String name) {
         this.biblioteca = biblioteca;
-        this.name = name;
+        this.nome = name;
         this.menus = new ArrayList<>();
     }
 
@@ -34,16 +34,16 @@ public abstract class Menu {
         } while (opcao != 0);
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
     private void desenhaMenu() {
-        System.out.println("---" + name + "---");
+        System.out.println("---" + nome + "---");
         for (int index = 0; index < this.menus.size(); index++) {
             int indexOpcao = index + 1;
             Menu menu = this.menus.get(index);
-            System.out.println(indexOpcao + ". " + menu.getName());
+            System.out.println(indexOpcao + ". " + menu.getNome());
         }
         System.out.println("0. Sair");
         System.out.print("Selecione uma opção:");

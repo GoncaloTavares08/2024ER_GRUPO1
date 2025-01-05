@@ -1,7 +1,6 @@
 package menus.utentes;
 
 import menus.Menu;
-import menus.revistas.MenuListarRevistas;
 import modelos.Biblioteca;
 import modelos.Utente;
 
@@ -20,13 +19,8 @@ public class MenuEditarUtente extends Menu {
             Scanner scanner = new Scanner(System.in);
             System.out.print("NIF do Utente a editar: ");
             String nif = scanner.nextLine();
-            Utente utenteEditado = null;
-            for (Utente utente : this.biblioteca.getUtentes()) {
-                if (utente.getNif().equals(nif)) {
-                    utenteEditado = utente;
-                    break;
-                }
-            }
+            Utente utenteEditado = this.biblioteca.getUtentePorNif(nif);
+
             if (utenteEditado!= null) {
                 System.out.println("\n--- Editar Utente ---");
                 System.out.print("Novo NIF: ");

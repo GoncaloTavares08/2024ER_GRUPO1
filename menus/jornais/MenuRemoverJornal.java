@@ -2,7 +2,6 @@ package menus.jornais;
 
 import menus.Menu;
 import modelos.Biblioteca;
-import modelos.Jornal;
 
 import java.util.Scanner;
 

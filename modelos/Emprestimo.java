@@ -19,6 +19,14 @@ public class Emprestimo extends Transacao{
         this.dataEfetivaDevolucao = dataEfetivaDevolucao;
     }
 
+    public boolean estaAtrasado(int numeroDias) {
+        if (dataPrevistaDevolucao != null) {
+            return dataPrevistaDevolucao.plusDays(numeroDias).isBefore(dataEfetivaDevolucao);
+        } else {
+            return dataPrevistaDevolucao.plusDays(numeroDias).isBefore(LocalDate.now());
+        }
+    }
+
     public LocalDate getDataPrevistaDevolucao() {
         return dataPrevistaDevolucao;
     }

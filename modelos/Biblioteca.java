@@ -59,31 +59,37 @@ public class Biblioteca {
         for (Transacao transacao : transacoes) {
             documentosAtivos.addAll(transacao.getDocumentos());
         }
-
         return documentosAtivos;
     }
 
-//    public List<Utente> getUtentesAtivos() {
-//        List<Utente> utentesAtivos = new ArrayList<>();
-//
-//        Utente utenteRemovido = null;
-//        for (Utente utente : utentesAtivos) {
-//            if (utente.getNif().equals(nif)) {
-//                utenteRemovido = utente;
-//                break;
-//            }
-//        }
-//        if (utenteRemovido != null) {
-//            if (utentesAtivos.contains(utenteRemovido)) {
-//                System.out.println("Não é possível remover o utente, o mesmo possui reservas ou empréstimos.");
-//            } else {
-//                utentes.remove(utenteRemovido);
-//                System.out.println("Utente removido com sucesso.");
-//            }
-//        } else {
-//            System.out.println("Utente não encontrado.");
-//        }
-//    }
+    public List<Documento> getDocumentos() {
+        List<Documento> documentos = new ArrayList<>(this.livros);
+        documentos.addAll(this.jornais);
+        documentos.addAll(this.revistas);
+        return documentos;
+    }
+
+    public Documento getDocumentoPorTitulo(String titulo) {
+        for (Documento documento : this.getDocumentos()) {
+            if (documento.getTitulo().equalsIgnoreCase(titulo)) {
+                return documento;
+            }
+        }
+        return null;
+    }
+
+    public boolean utenteEstaAtivo(Utente utente) {
+        return this.getUtentesAtivos().contains(utente);
+    }
+
+    public List<Utente> getUtentesAtivos() {
+        List<Utente> utentesAtivos = new ArrayList<>();
+        List<Transacao> transacoes = this.getTransacoes();
+        for (Transacao transacao : transacoes) {
+            utentesAtivos.add(transacao.getUtente());
+        }
+        return utentesAtivos;
+    }
 
     public Utente getUtentePorNif(String nif) {
         for (Utente utente : this.utentes) {
@@ -92,6 +98,14 @@ public class Biblioteca {
             }
         }
         return null;
+    }
+
+    public boolean removerUtentePorNif(String nif) {
+        Utente utenteParaRemover = this.getUtentePorNif(nif);
+        if (utenteParaRemover == null || this.utenteEstaAtivo(utenteParaRemover)) {
+            return false;
+        }
+        return this.utentes.remove(utenteParaRemover);
     }
 
     public List<Jornal> getJornais() {

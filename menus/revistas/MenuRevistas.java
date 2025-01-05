@@ -8,6 +8,7 @@ public class MenuRevistas extends Menu {
         super(biblioteca,name);
         this.menus.add(new MenuListarRevistas(biblioteca, "Listar Revistas"));
         this.menus.add(new MenuAdicionarRevista(biblioteca, "Adicionar Revista"));
+        this.menus.add(new MenuProcurarRevistaPorIssn(biblioteca, "Procurar Revista por ISSN"));
         this.menus.add(new MenuEditarRevista(biblioteca, "Editar Revista"));
         this.menus.add(new MenuRemoverRevista(biblioteca, "Remover Revista"));
     }
