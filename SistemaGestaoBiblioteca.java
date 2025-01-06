@@ -882,7 +882,7 @@ public class SistemaGestaoBiblioteca {
         System.out.println("\n--- Pesquisa ---");
         System.out.println("1. Pesquisar por NIF de Utente");
         System.out.println("2. Pesquisar por ISBN de Livro");
-        System.out.println("2. Pesquisar por ISSN de Jornal");
+        System.out.println("3. Pesquisar por ISSN de Jornal");
         System.out.println("0. Cancelar");
         System.out.print("Opção: ");
         int opcao = scanner.nextInt();
@@ -920,6 +920,7 @@ public class SistemaGestaoBiblioteca {
         System.out.println("3. Mostrar Emprestimos entre Data X e Data Y");
         System.out.println("4. Mostrar Emprestimos entre Data X e Data Y por Utente");
         System.out.println("5. Mostrar Tempo Medio em dias de Emprestimos entre Data X e Data Y");
+        System.out.println("6. Mostrar Item mais Requesitado entre Data X e Data Y");
         System.out.println("0. Cancelar");
         System.out.print("Opção: ");
         int opcao = scanner.nextInt();
@@ -968,6 +969,13 @@ public class SistemaGestaoBiblioteca {
                 System.out.println("Insira a data final (dd-MM-yyyy):");
                 dataFinal = scanner.nextLine();
                 listarMediaDiasEmprestimosIntervaloDatas(dataInicial, dataFinal);
+                break;
+            case 6:
+                System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                dataInicial = scanner.nextLine();
+                System.out.println("Insira a data final (dd-MM-yyyy):");
+                dataFinal = scanner.nextLine();
+                itemMaisRequisitado(dataInicial, dataFinal);
                 break;
             case 0:
                 menu();
@@ -1191,5 +1199,71 @@ public class SistemaGestaoBiblioteca {
         System.out.println("Existem " + emprestimosIntervaloDatas.size() + " emprestimos feitos dentro desse intevalo de datas para o utente com o nif " + nif + ".");
     }
 
+    public static void itemMaisRequisitado(String dataInicial, String dataFinal) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInserida = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInserida = LocalDate.parse(dataFinal, formatter);
+
+        // Encontrar o item mais requisitado usando ArrayList
+        ArrayList<String> isbnList = new ArrayList<>();
+        ArrayList<Integer> freqList = new ArrayList<>();
+
+        // Filtrar e processar os empréstimos dentro do intervalo de datas
+        for (Emprestimo emprestimo : emprestimos) {
+            LocalDate dataInicioEmprestimo = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+            if (!dataInicioEmprestimo.isBefore(dataInicialInserida) && !dataInicioEmprestimo.isAfter(dataFinalInserida)) {
+                for (Livro livro : emprestimo.getLivros()) {
+                    String isbn = livro.getISBN();
+                    if (isbnList.contains(isbn)) {
+                        int index = isbnList.indexOf(isbn);
+                        freqList.set(index, freqList.get(index) + 1);
+                    } else {
+                        isbnList.add(isbn);
+                        freqList.add(1);
+                    }
+                }
+            }
+        }
+
+        // Filtrar e processar as reservas dentro do intervalo de datas
+        for (Reserva reserva : reservas) {
+            LocalDate dataRegistroReserva = LocalDate.parse(reserva.getDataRegisto(), formatter);
+            if (!dataRegistroReserva.isBefore(dataInicialInserida) && !dataRegistroReserva.isAfter(dataFinalInserida)) {
+                for (Livro livro : reserva.getLivros()) {
+                    String isbn = livro.getISBN();
+                    if (isbnList.contains(isbn)) {
+                        int index = isbnList.indexOf(isbn);
+                        freqList.set(index, freqList.get(index) + 1);
+                    } else {
+                        isbnList.add(isbn);
+                        freqList.add(1);
+                    }
+                }
+            }
+        }
+
+        // Encontrar os ISBNs mais requisitados
+        int maxFrequencia = 0;
+        ArrayList<String> maisRequisitados = new ArrayList<>();
+        for (int i = 0; i < isbnList.size(); i++) {
+            if (freqList.get(i) > maxFrequencia) {
+                maxFrequencia = freqList.get(i);
+                maisRequisitados.clear();
+                maisRequisitados.add(isbnList.get(i));
+            } else if (freqList.get(i) == maxFrequencia) {
+                maisRequisitados.add(isbnList.get(i));
+            }
+        }
+
+        // Apresentar os resultados
+        if (!maisRequisitados.isEmpty()) {
+            System.out.println("Os itens mais requisitados no intervalo de datas são:");
+            for (String isbn : maisRequisitados) {
+                System.out.println("ISBN: " + isbn + " com " + maxFrequencia + " requisições.");
+            }
+        } else {
+            System.out.println("Nenhum item foi requisitado no intervalo de datas especificado.");
+        }
+    }
 
 }
