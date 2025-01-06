@@ -1,5 +1,9 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class SistemaGestaoBiblioteca {
@@ -57,7 +61,7 @@ public class SistemaGestaoBiblioteca {
                 case 3 -> gerirRevistas();
                 case 4 -> gerirUtentes();
                 case 5 -> gerirReservas();
-                //case 6 -> gerirEmprestimos();
+                case 6 -> gerirEmprestimos();
                 case 0 -> {
                     menu();
                 }
@@ -203,21 +207,29 @@ public class SistemaGestaoBiblioteca {
             System.out.print("Título do Livro a remover: ");
             String titulo = scanner.nextLine();
             Livro livroRemovido = null;
+
             for (Livro livro : livros) {
-                if (livro.getTitulo().equals(titulo)) {
+                if (livro.getTitulo().equalsIgnoreCase(titulo)) {
                     livroRemovido = livro;
                     break;
                 }
             }
-            if (livroRemovido!= null) {
-                livros.remove(livroRemovido);
-                System.out.println("Livro removido com sucesso.");
+
+            // Verifica se o livro está em reservas ou empréstimos
+            ArrayList<Livro> livrosAtivos = listarLivrosAtivosLista();
+            if (livroRemovido != null) {
+                if (livrosAtivos.contains(livroRemovido)) {
+                    System.out.println("Não é possível remover o livro. Ele está associado a uma reserva ou empréstimo.");
+                } else {
+                    livros.remove(livroRemovido);
+                    System.out.println("Livro removido com sucesso.");
+                }
             } else {
                 System.out.println("Livro não encontrado.");
-                removerLivros();
             }
         }
     }
+
 
     private static void gerirJornais() {
         Scanner scanner = new Scanner(System.in);
@@ -592,6 +604,7 @@ public class SistemaGestaoBiblioteca {
             Scanner scanner = new Scanner(System.in);
             System.out.print("NIF do Utente a remover: ");
             String nif = scanner.nextLine();
+
             Utente utenteRemovido = null;
             for (Utente utente : utentes) {
                 if (utente.getNif().equals(nif)) {
@@ -599,15 +612,22 @@ public class SistemaGestaoBiblioteca {
                     break;
                 }
             }
-            if (utenteRemovido!= null) {
-                utentes.remove(utenteRemovido);
-                System.out.println("Utente removido com sucesso.");
+
+            // Verifica se o utente está em reservas ou empréstimos
+            ArrayList<Utente> utentesAtivos = listarUtentesAtivosLista();
+            if (utenteRemovido != null) {
+                if (utentesAtivos.contains(utenteRemovido)) {
+                    System.out.println("Não é possível remover o utente, o mesmo possui reservas ou empréstimos.");
+                } else {
+                    utentes.remove(utenteRemovido);
+                    System.out.println("Utente removido com sucesso.");
+                }
             } else {
                 System.out.println("Utente não encontrado.");
-                removerUtentes();
             }
         }
     }
+
 
     private static void gerirReservas() {
         Scanner scanner = new Scanner(System.in);
@@ -721,6 +741,7 @@ public class SistemaGestaoBiblioteca {
 
     }
     private static void mostrarReservas() {
+        transformarReservasParaEmprestimos();
         if (reservas.isEmpty()) {
             System.out.println("Não existem reservas registados.");
         }else{
@@ -835,9 +856,9 @@ public class SistemaGestaoBiblioteca {
                 System.out.print("Nova Data Prevista de Devolução (dd-MM-yyyy): ");
                 String novaDataPrevistaDevolucao = scanner.nextLine();
                 emprestimoEditado.setDataPrevistaDevolucao(novaDataPrevistaDevolucao);
-                System.out.println("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
+                System.out.print("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
                 String novaDataEfetivaDevolucao = scanner.nextLine();
-                emprestimoEditado.setDataPrevistaDevolucao(novaDataEfetivaDevolucao);
+                emprestimoEditado.setDataEfetivaDevolucao(novaDataEfetivaDevolucao);
 
                 System.out.println("Empréstimo editado com sucesso");
             }
@@ -857,10 +878,104 @@ public class SistemaGestaoBiblioteca {
 
 
     private static void pesquisarGeral() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Pesquisa ---");
+        System.out.println("1. Pesquisar por NIF de Utente");
+        System.out.println("2. Pesquisar por ISBN de Livro");
+        System.out.println("2. Pesquisar por ISSN de Jornal");
+        System.out.println("0. Cancelar");
+        System.out.print("Opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // consumir a quebra de linha
+        switch (opcao) {
+            case 1:
+                System.out.print("Insira o NIF a procurar: ");
+                String nif = scanner.nextLine();
+                System.out.println(procurarUtentePorNIF(nif));
+                break;
+            case 2:
+                System.out.print("Insira o ISBN a procurar: ");
+                String isbn = scanner.nextLine();
+                System.out.println(procurarLivroPorISBN(isbn));
+                break;
+            case 3:
+                System.out.print("Insira o ISSN a procurar: ");
+                String issn = scanner.nextLine();
+                System.out.println(procurarJornalPorISSN(issn));
+                break;
+            case 0:
+                menu();
+            default:
+                System.out.println("Opção inválida.");
+        }
     }
 
     private static void mostrarGeral() {
+        String dataInicial;
+        String dataFinal;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- Mostrar ---");
+        System.out.println("1. Mostrar Utentes com Reservas/Empréstimos");
+        System.out.println("2. Mostrar Utentes com Devolucão com atraso superior a X dias");
+        System.out.println("3. Mostrar Emprestimos entre Data X e Data Y");
+        System.out.println("4. Mostrar Emprestimos entre Data X e Data Y por Utente");
+        System.out.println("5. Mostrar Tempo Medio em dias de Emprestimos entre Data X e Data Y");
+        System.out.println("0. Cancelar");
+        System.out.print("Opção: ");
+        int opcao = scanner.nextInt();
+        scanner.nextLine(); // consumir a quebra de linha
+        switch (opcao) {
+            case 1:
+                listarUtentesAtivos();
+                break;
+            case 2:
+                System.out.print("Insira o número de dias de atraso minimo: ");
+                int dias = scanner.nextInt();
+                scanner.nextLine(); // consumir a quebra de linha
+                listarUtentesDevolucaoAtrasada(dias);
+                break;
+            case 3:
+                System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                dataInicial = scanner.nextLine();
+                System.out.println("Insira a data final (dd-MM-yyyy):");
+                dataFinal = scanner.nextLine();
+                listarTotalEmprestimosIntervaloDatas(dataInicial, dataFinal);
+                break;
+            case 4:
+                System.out.println("Insira o nif do Utente a procurar: ");
+                String nifUtente = scanner.nextLine();
+                while (true) {
+                    for (Utente utente : utentes) {
+                        if (utente.getNif().equals(nifUtente)) {
+                            System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                            dataInicial = scanner.nextLine();
+                            System.out.println("Insira a data final (dd-MM-yyyy):");
+                            dataFinal = scanner.nextLine();
+                            listarTotalEmprestimosIntervaloDatas(dataInicial, dataFinal, nifUtente);
+                            return;
+                        }
+                    }
+                    System.out.println("NIF não encontrado. Tente novamente ou digite '0' para cancelar.");
+                    System.out.print("NIF do Utente (0 para sair): ");
+                    nifUtente = scanner.nextLine();
+                    if (nifUtente.equals("0")) {
+                        mostrarGeral();
+                    }
+                }
+            case 5:
+                System.out.println("Insira a data inicial (dd-MM-yyyy):");
+                dataInicial = scanner.nextLine();
+                System.out.println("Insira a data final (dd-MM-yyyy):");
+                dataFinal = scanner.nextLine();
+                listarMediaDiasEmprestimosIntervaloDatas(dataInicial, dataFinal);
+                break;
+            case 0:
+                menu();
+            default:
+                System.out.println("Opção inválida.");
+        }
     }
+
 
     public static Utente procurarUtentePorNIF(String nif) {
         Scanner scanner = new Scanner(System.in);
@@ -895,7 +1010,186 @@ public class SistemaGestaoBiblioteca {
         }
     }
 
+    public static Jornal procurarJornalPorISSN(String issn) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            for (Jornal jornal : jornais) {
+                if (jornal.getISSN().equals(issn)) {
+                    return jornal;
+                }
+            }
+            System.out.println("ISSN não encontrado. Tente novamente ou digite '0' para cancelar.");
+            System.out.print("ISSN do Jornal (0 para sair): ");
+            issn = scanner.nextLine();
+            if (issn.equals("0")) {
+                return null;
+            }
+        }
+    }
 
+    public static void transformarReservasParaEmprestimos() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataAtual = LocalDate.now();
+
+        LocalDate dataInicioFormatada;
+
+        ArrayList<Reserva> reservasParaRemover = new ArrayList<>();
+        for (Reserva reserva : reservas) {
+            try {
+                dataInicioFormatada = LocalDate.parse(reserva.getDataInicio(), formatter);
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("A data de início fornecida não está no formato correto 'dd-MM-yyyy'.", e);
+            }
+            if (!dataInicioFormatada.isAfter(dataAtual)) {
+                Emprestimo emprestimo = new Emprestimo(
+                        String.valueOf(emprestimos.size() + 1),
+                        reserva.getUtente(),
+                        reserva.getLivros(),
+                        reserva.getDataInicio(),
+                        reserva.getDataFim()
+                );
+                emprestimos.add(emprestimo);
+                reservasParaRemover.add(reserva);
+            }
+        }
+
+        reservas.removeAll(reservasParaRemover);
+    }
+
+    public static void listarUtentesAtivos() {
+        ArrayList<Utente> utentesAtivos = new ArrayList<>();
+
+        // Adicionar utentes das reservas
+        for (Reserva reserva : reservas) {
+            if (!utentesAtivos.contains(reserva.getUtente())) {
+                utentesAtivos.add(reserva.getUtente());
+            }
+        }
+
+        // Adicionar utentes dos empréstimos
+        for (Emprestimo emprestimo : emprestimos) {
+            if (!utentesAtivos.contains(emprestimo.getUtente())) {
+                utentesAtivos.add(emprestimo.getUtente());
+            }
+        }
+
+        // Mostrar utentes
+        if (utentesAtivos.isEmpty()) {
+            System.out.println("Não há utentes com reservas ou empréstimos.");
+        } else {
+            System.out.println("\n--- Lista de Utentes Ativos ---");
+            for (Utente utente : utentesAtivos) {
+                System.out.println(utente);
+            }
+        }
+    }
+    public static ArrayList<Utente> listarUtentesAtivosLista() {
+        ArrayList<Utente> utentesAtivos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            if (!utentesAtivos.contains(reserva.getUtente())) {
+                utentesAtivos.add(reserva.getUtente());
+            }
+        }
+
+        for (Emprestimo emprestimo : emprestimos) {
+            if (!utentesAtivos.contains(emprestimo.getUtente())) {
+                utentesAtivos.add(emprestimo.getUtente());
+            }
+        }
+
+        return utentesAtivos;
+    }
+    public static ArrayList<Livro> listarLivrosAtivosLista() {
+        ArrayList<Livro> livrosAtivos = new ArrayList<>();
+
+        for (Reserva reserva : reservas) {
+            for (Livro livro : reserva.getLivros()) {
+                if (!livrosAtivos.contains(livro)) {
+                    livrosAtivos.add(livro);
+                }
+            }
+        }
+
+        for (Emprestimo emprestimo : emprestimos) {
+            for (Livro livro : emprestimo.getLivros()) {
+                if (!livrosAtivos.contains(livro)) {
+                    livrosAtivos.add(livro);
+                }
+            }
+        }
+
+        return livrosAtivos;
+    }
+
+    public static void listarUtentesDevolucaoAtrasada(int dias) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataAtual = LocalDate.now();
+        for (Reserva reserva : reservas){
+            LocalDate dataFimFormatada = LocalDate.parse(reserva.getDataFim(), formatter);
+            Period periodo = dataFimFormatada.until(dataAtual);
+            if (periodo.getDays() >= dias){
+                System.out.println(reserva.getUtente());
+            }
+        }
+        for (Emprestimo emprestimo : emprestimos){
+            LocalDate dataPrevistaDevolucaoFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+            Period periodo = dataPrevistaDevolucaoFormatada.until(dataAtual);
+            if (periodo.getDays() >= dias){
+                System.out.println(emprestimo.getUtente());
+            }
+        }
+    }
+    public static void listarTotalEmprestimosIntervaloDatas(String dataInicial, String dataFinal){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInseridaFormatada = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInseridaFormatada = LocalDate.parse(dataFinal, formatter);
+        ArrayList<Emprestimo> emprestimosIntervaloDatas = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            LocalDate dataInicioFormatada = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+            LocalDate dataFimFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+            if(dataInicioFormatada.isAfter(dataInicialInseridaFormatada) && dataFimFormatada.isBefore(dataFinalInseridaFormatada)){
+                emprestimosIntervaloDatas.add(emprestimo);
+            }
+        }
+        System.out.println("Existem " + emprestimosIntervaloDatas.size() + " emprestimos feitos dentro desse intevalo de datas.");
+    }
+
+    public static void listarMediaDiasEmprestimosIntervaloDatas(String dataInicial, String dataFinal){
+        long count = 0;
+        long somaDias = 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInseridaFormatada = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInseridaFormatada = LocalDate.parse(dataFinal, formatter);
+        ArrayList<Emprestimo> emprestimosIntervaloDatas = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            LocalDate dataInicioFormatada = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+            LocalDate dataFimFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+            if(dataInicioFormatada.isAfter(dataInicialInseridaFormatada) && dataFimFormatada.isBefore(dataFinalInseridaFormatada)){
+                count++;
+                somaDias += ChronoUnit.DAYS.between(dataInicioFormatada, dataFimFormatada);
+                emprestimosIntervaloDatas.add(emprestimo);
+            }
+        }
+        System.out.println("A media em dias dos emprestimos entre as data indicadas é de " + somaDias/count + " dias.");
+    }
+
+    public static void listarTotalEmprestimosIntervaloDatas(String dataInicial, String dataFinal, String nif){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataInicialInseridaFormatada = LocalDate.parse(dataInicial, formatter);
+        LocalDate dataFinalInseridaFormatada = LocalDate.parse(dataFinal, formatter);
+        ArrayList<Emprestimo> emprestimosIntervaloDatas = new ArrayList<>();
+        for (Emprestimo emprestimo : emprestimos){
+            if(emprestimo.getUtente().getNif().equals(nif)){
+                LocalDate dataInicioFormatada = LocalDate.parse(emprestimo.getDataInicio(), formatter);
+                LocalDate dataFimFormatada = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+                if(dataInicioFormatada.isAfter(dataInicialInseridaFormatada) && dataFimFormatada.isBefore(dataFinalInseridaFormatada)){
+                    emprestimosIntervaloDatas.add(emprestimo);
+                }
+            }
+        }
+        System.out.println("Existem " + emprestimosIntervaloDatas.size() + " emprestimos feitos dentro desse intevalo de datas para o utente com o nif " + nif + ".");
+    }
 
 
 }
