@@ -3,13 +3,13 @@ import java.util.ArrayList;
 public class Transacao {
     private String numero;
     private Utente utente;
-    private ArrayList<Livro> livros;
+    private ArrayList<Documento> documentos;
     private String dataInicio;
 
-    public Transacao(String numero, Utente utente, ArrayList<Livro> livros, String dataInicio) {
+    public Transacao(String numero, Utente utente, ArrayList<Documento> documentos, String dataInicio) {
         this.numero = numero;
         this.utente = utente;
-        this.livros = livros;
+        this.documentos = documentos;
         this.dataInicio = dataInicio;
     }
 
@@ -25,11 +25,11 @@ public class Transacao {
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
-    public ArrayList<Livro> getLivros() {
-        return livros;
+    public ArrayList<Documento> getDocumentos() {
+        return documentos;
     }
-    public void setLivros(ArrayList<Livro> livros) {
-        this.livros = livros;
+    public void setDocumentos(ArrayList<Documento> documentos) {
+        this.documentos = documentos;
     }
     public String getDataInicio() {
         return dataInicio;

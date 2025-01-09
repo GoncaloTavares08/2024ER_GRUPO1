@@ -5,13 +5,13 @@ public class Emprestimo extends Transacao{
     private String dataEfetivaDevolucao;
 
 
-    public Emprestimo(String numero, Utente utente, ArrayList<Livro> livros, String dataInicio, String dataPrevistaDevolucao) {
+    public Emprestimo(String numero, Utente utente, ArrayList<Documento> livros, String dataInicio, String dataPrevistaDevolucao) {
         super(numero, utente, livros, dataInicio);
         this.dataPrevistaDevolucao = dataPrevistaDevolucao;
         this.dataEfetivaDevolucao = "Nao Devolvido";
     }
 
-    public Emprestimo(String numero, Utente utente, ArrayList<Livro> livros, String dataInicio, String dataPrevistaDevolucao, String dataEfetivaDevolucao) {
+    public Emprestimo(String numero, Utente utente, ArrayList<Documento> livros, String dataInicio, String dataPrevistaDevolucao, String dataEfetivaDevolucao) {
         super(numero, utente, livros, dataInicio);
         this.dataPrevistaDevolucao = dataPrevistaDevolucao;
         this.dataEfetivaDevolucao = dataEfetivaDevolucao;
@@ -32,14 +32,14 @@ public class Emprestimo extends Transacao{
 
     @Override
     public String toString() {
-        ArrayList<String> isbnLivros = new ArrayList<>();
-        for (Livro livro : getLivros()) {
-            isbnLivros.add(livro.getISBN());
+        ArrayList<String> idDocumentos = new ArrayList<>();
+        for (Documento documento : getDocumentos()) {
+            idDocumentos.add(documento.getIdentificador());
         }
         return "[" +
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
-                "; ISBN dos Livros: " + isbnLivros.toString().replace("[", "").replace("]", "").replace(" ", "") +
+                "; ISBN dos Livros: " + idDocumentos.toString().replace("[", "").replace("]", "").replace(" ", "") +
                 "; Data de Inicio: " + getDataInicio() +
                 "; Data Prevista Devolução: " + getDataPrevistaDevolucao() +
                 "; Data Efetiva Devolução: " + getDataEfetivaDevolucao() +
@@ -47,13 +47,13 @@ public class Emprestimo extends Transacao{
     }
 
     public String toFileString(){
-        ArrayList<String> isbnLivros = new ArrayList<>();
-        for (Livro livro : getLivros()) {
-            isbnLivros.add(livro.getISBN());
+        ArrayList<String> idDocumentos = new ArrayList<>();
+        for (Documento documento : getDocumentos()) {
+            idDocumentos.add(documento.getIdentificador());
         }
         return getNumero() +
                 "|" + getUtente().getNif() +
-                "|" + isbnLivros.toString().replace("[", "").replace("]", "").replace(" ", "") +
+                "|" + idDocumentos.toString().replace("[", "").replace("]", "").replace(" ", "") +
                 "|" + getDataInicio() +
                 "|" + getDataPrevistaDevolucao() +
                 "|" + getDataEfetivaDevolucao();
@@ -67,21 +67,21 @@ public class Emprestimo extends Transacao{
         if (utente == null) {
             throw new IllegalArgumentException("Utente com NIF " + nif + " não encontrado.");
         }
-        ArrayList<Livro> livros = new ArrayList<>();
-        for (String isbn : partes[2].split(",")) {
-            Livro livro = SistemaGestaoBiblioteca.procurarLivroPorISBN(isbn.trim());
-            if (livro == null) {
-                throw new IllegalArgumentException("Livro com ISBN " + isbn + " não encontrado.");
+        ArrayList<Documento> documentos = new ArrayList<>();
+        for (String id : partes[2].split(",")) {
+            Documento documento = SistemaGestaoBiblioteca.procurarDocumentoPorIdentificador(id.trim());
+            if (documento == null) {
+                throw new IllegalArgumentException("Documento com identificador " + id + " não encontrado.");
             }
-            livros.add(livro);
+            documentos.add(documento);
         }
         String dataInicio = partes[3];
         String dataPrevistaDevolucao = partes[4];
         String dataEfetivaDevolucao = partes[5];
         if (dataEfetivaDevolucao.equals("Nao Devolvido")) {
-            return new Emprestimo(numero, utente, livros, dataInicio, dataPrevistaDevolucao);
+            return new Emprestimo(numero, utente, documentos, dataInicio, dataPrevistaDevolucao);
         }else {
-            return new Emprestimo(numero, utente, livros, dataInicio, dataPrevistaDevolucao, dataEfetivaDevolucao);
+            return new Emprestimo(numero, utente, documentos, dataInicio, dataPrevistaDevolucao, dataEfetivaDevolucao);
         }
     }
 }
