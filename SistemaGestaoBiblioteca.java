@@ -206,22 +206,19 @@ public class SistemaGestaoBiblioteca {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Título do Livro a remover: ");
             String titulo = scanner.nextLine();
-            Livro livroRemovido = null;
+            Documento documentoRemovido = null;
 
             for (Livro livro : livros) {
                 if (livro.getTitulo().equalsIgnoreCase(titulo)) {
-                    livroRemovido = livro;
+                    documentoRemovido = livro;
                     break;
                 }
             }
-
-            // Verifica se o livro está em reservas ou empréstimos
-            ArrayList<Livro> livrosAtivos = listarLivrosAtivosLista();
-            if (livroRemovido != null) {
-                if (livrosAtivos.contains(livroRemovido)) {
+            if (documentoRemovido != null) {
+                if (documentoEstaAtivo(documentoRemovido)) {
                     System.out.println("Não é possível remover o livro. Ele está associado a uma reserva ou empréstimo.");
                 } else {
-                    livros.remove(livroRemovido);
+                    livros.remove(documentoRemovido);
                     System.out.println("Livro removido com sucesso.");
                 }
             } else {
@@ -229,7 +226,6 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-
 
     private static void gerirJornais() {
         Scanner scanner = new Scanner(System.in);
@@ -506,7 +502,7 @@ public class SistemaGestaoBiblioteca {
                 case 1 -> adicionarUtentes();
                 case 2 -> editarUtentes();
                 case 3 -> mostrarUtentes();
-                case 4 -> removerUtentes();
+                //case 4 -> removerUtentes();
                 case 0 -> {
                     menu();
                 }
@@ -598,7 +594,7 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-    private static void removerUtentes() {
+    private  void removerUtentes() {
         mostrarUtentes();
         if (!utentes.isEmpty()) {
             Scanner scanner = new Scanner(System.in);
@@ -664,20 +660,19 @@ public class SistemaGestaoBiblioteca {
             System.out.println("Operação cancelada.");
             return;
         }
-        System.out.print("Quantos livros tem a reserva? ");
-        int quantidadeLivros = scanner.nextInt();
+        System.out.print("Quantos documentos deseja reservar? ");
+        int quantidade = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha
-        ArrayList<Livro> livrosReserva = new ArrayList<>();
-        mostrarLivros();
-        for (int i = 0; i < quantidadeLivros; i++) {
-            System.out.print("ISBN do " + (i + 1) + "º livro (0 para sair): ");
-            String isbnLivro = scanner.nextLine();
-            Livro livro = procurarLivroPorISBN(isbnLivro);
-            if (livro == null) {
-                System.out.println("Operação cancelada.");
+        ArrayList<Documento> documentos = new ArrayList<>();
+        for (int i = 0; i < quantidade; i++) {
+            System.out.print("Identificador (ISBN/ISSN) do documento " + (i + 1) + ": ");
+            String id = scanner.nextLine();
+            Documento doc = procurarDocumentoPorIdentificador(id);
+            if (doc == null) {
+                System.out.println("Documento não encontrado. Operação cancelada.");
                 return;
             }
-            livrosReserva.add(livro);
+            documentos.add(doc);
         }
         System.out.print("Data de Registo (dd-MM-yyyy): ");
         String dataRegisto = scanner.nextLine();
@@ -686,11 +681,12 @@ public class SistemaGestaoBiblioteca {
         System.out.print("Data de Fim (dd-MM-yyyy): ");
         String dataFim = scanner.nextLine();
 
-        Reserva reserva = new Reserva(numero, utente, livrosReserva, dataInicio, dataRegisto, dataFim);
+        Reserva reserva = new Reserva(numero, utente, documentos, dataInicio, dataRegisto, dataFim);
         reservas.add(reserva);
 
         System.out.println("Reserva adicionada com sucesso!");
     }
+
     private static void editarReservas() {
         mostrarReservas();
         if (!reservas.isEmpty()) {
@@ -704,7 +700,7 @@ public class SistemaGestaoBiblioteca {
                     break;
                 }
             }
-            if (reservaEditada!= null) {
+            if (reservaEditada != null) {
                 System.out.println("\n--- Editar Reserva ---");
                 System.out.print("Novo NIF: ");
                 String novoNif = scanner.nextLine();
@@ -713,20 +709,25 @@ public class SistemaGestaoBiblioteca {
                 } else {
                     System.out.println("NIF não pode estar vazio.");
                 }
-                System.out.print("Novo Número de Livros: ");
-                int novoNumLivros = scanner.nextInt();
-                if (novoNumLivros > 0) {
-                    ArrayList<Livro> livros = new ArrayList<>();
+                System.out.print("Novo Número de Documentos: ");
+                int novoNumDocumentos = scanner.nextInt();
+                if (novoNumDocumentos > 0) {
+                    ArrayList<Documento> documentos = new ArrayList<>();
                     scanner.nextLine(); // consumir o newline do scanner
-                    livros.clear();
-                    for (int i = 0; i < novoNumLivros; i++) {
-                        System.out.print("ISBN do " + (i + 1) + "º Livro: ");
-                        String novoLivro = scanner.nextLine();
-                        livros.add(procurarLivroPorISBN(novoLivro));
+                    documentos.clear();
+                    for (int i = 0; i < novoNumDocumentos; i++) {
+                        System.out.print("Identificador (ISBN/ISSN) do documento " + (i + 1) + ": ");
+                        String id = scanner.nextLine();
+                        Documento doc = procurarDocumentoPorIdentificador(id);
+                        documentos.add(doc);
+                        if (doc == null) {
+                            System.out.println("Documento não encontrado. Operação cancelada.");
+                            return;
+                        }
                     }
-                    reservaEditada.setLivros(livros);
+                    reservaEditada.setDocumentos(documentos);
                 } else {
-                    System.out.println("Número de Livros não pode estar vazio.");
+                    System.out.println("Número de Documentos não pode estar vazio.");
                 }
                 System.out.print("Nova Data de Início (dd-MM-yyyy): ");
                 String novaDataInicio = scanner.nextLine();
@@ -738,7 +739,6 @@ public class SistemaGestaoBiblioteca {
                 System.out.println("Reserva editada com sucesso");
             }
         }
-
     }
     private static void mostrarReservas() {
         transformarReservasParaEmprestimos();
@@ -788,27 +788,26 @@ public class SistemaGestaoBiblioteca {
             System.out.println("Operação cancelada.");
             return;
         }
-        System.out.print("Quantos livros tem o Empréstimo? ");
-        int quantidadeLivros = scanner.nextInt();
+        System.out.print("Quantos documentos tem o Emprestimo? ");
+        int quantidade = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha
-        ArrayList<Livro> livrosEmprestimo = new ArrayList<>();
-        mostrarLivros();
-        for (int i = 0; i < quantidadeLivros; i++) {
-            System.out.print("ISBN do " + (i + 1) + "º livro (0 para sair): ");
-            String isbnLivro = scanner.nextLine();
-            Livro livro = procurarLivroPorISBN(isbnLivro);
-            if (livro == null) {
-                System.out.println("Operação cancelada.");
+        ArrayList<Documento> documentos = new ArrayList<>();
+        for (int i = 0; i < quantidade; i++) {
+            System.out.print("Identificador (ISBN/ISSN) do documento " + (i + 1) + ": ");
+            String id = scanner.nextLine();
+            Documento doc = procurarDocumentoPorIdentificador(id);
+            if (doc == null) {
+                System.out.println("Documento não encontrado. Operação cancelada.");
                 return;
             }
-            livrosEmprestimo.add(livro);
+            documentos.add(doc);
         }
         System.out.print("Data de Início (dd-MM-yyyy): ");
         String dataInicio = scanner.nextLine();
         System.out.print("Data Prevista de Devolução (dd-MM-yyyy): ");
         String dataPrevistaDevolucao = scanner.nextLine();
 
-        Emprestimo emprestimo = new Emprestimo(numero, utente, livrosEmprestimo, dataInicio, dataPrevistaDevolucao);
+        Emprestimo emprestimo = new Emprestimo(numero, utente, documentos, dataInicio, dataPrevistaDevolucao);
         emprestimos.add(emprestimo);
 
         System.out.println("Empréstimo adicionado com sucesso!");
@@ -835,20 +834,25 @@ public class SistemaGestaoBiblioteca {
                 } else {
                     System.out.println("NIF não pode estar vazio.");
                 }
-                System.out.print("Novo Número de Livros: ");
-                int novoNumLivros = scanner.nextInt();
-                if (novoNumLivros > 0) {
-                    ArrayList<Livro> livros = new ArrayList<>();
+                System.out.print("Novo Número de Documentos: ");
+                int novoNumDocumentos = scanner.nextInt();
+                if (novoNumDocumentos > 0) {
+                    ArrayList<Documento> documentos = new ArrayList<>();
                     scanner.nextLine(); // consumir o newline do scanner
-                    livros.clear();
-                    for (int i = 0; i < novoNumLivros; i++) {
-                        System.out.print("ISBN do " + (i + 1) + "º Livro: ");
-                        String novoLivro = scanner.nextLine();
-                        livros.add(procurarLivroPorISBN(novoLivro));
+                    documentos.clear();
+                    for (int i = 0; i < novoNumDocumentos; i++) {
+                        System.out.print("Identificador (ISBN/ISSN) do documento " + (i + 1) + ": ");
+                        String id = scanner.nextLine();
+                        Documento doc = procurarDocumentoPorIdentificador(id);
+                        documentos.add(doc);
+                        if (doc == null) {
+                            System.out.println("Documento não encontrado. Operação cancelada.");
+                            return;
+                        }
                     }
-                    emprestimoEditado.setLivros(livros);
+                    emprestimoEditado.setDocumentos(documentos);
                 } else {
-                    System.out.println("Número de Livros não pode estar vazio.");
+                    System.out.println("Número de Documentos não pode estar vazio.");
                 }
                 System.out.print("Nova Data de Início (dd-MM-yyyy): ");
                 String novaDataInicio = scanner.nextLine();
@@ -1035,7 +1039,7 @@ public class SistemaGestaoBiblioteca {
         }
     }
 
-    public static void transformarReservasParaEmprestimos() {
+   public static void transformarReservasParaEmprestimos() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate dataAtual = LocalDate.now();
 
@@ -1052,7 +1056,7 @@ public class SistemaGestaoBiblioteca {
                 Emprestimo emprestimo = new Emprestimo(
                         String.valueOf(emprestimos.size() + 1),
                         reserva.getUtente(),
-                        reserva.getLivros(),
+                        reserva.getDocumentos(),
                         reserva.getDataInicio(),
                         reserva.getDataFim()
                 );
@@ -1060,7 +1064,6 @@ public class SistemaGestaoBiblioteca {
                 reservasParaRemover.add(reserva);
             }
         }
-
         reservas.removeAll(reservasParaRemover);
     }
 
@@ -1091,7 +1094,7 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-    public static ArrayList<Utente> listarUtentesAtivosLista() {
+    public  ArrayList<Utente> listarUtentesAtivosLista() {
         ArrayList<Utente> utentesAtivos = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
@@ -1108,26 +1111,30 @@ public class SistemaGestaoBiblioteca {
 
         return utentesAtivos;
     }
-    public static ArrayList<Livro> listarLivrosAtivosLista() {
-        ArrayList<Livro> livrosAtivos = new ArrayList<>();
+
+    public static boolean documentoEstaAtivo(Documento documento){
+        return listarDocumentosAtivosLista().contains(documento);
+    }
+    public static ArrayList<Documento> listarDocumentosAtivosLista() {
+        ArrayList<Documento> documentosAtivos = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
-            for (Livro livro : reserva.getLivros()) {
-                if (!livrosAtivos.contains(livro)) {
-                    livrosAtivos.add(livro);
+            for (Documento documento : reserva.getDocumentos()) {
+                if (!documentosAtivos.contains(documento)) {
+                    documentosAtivos.add(documento);
                 }
             }
         }
 
         for (Emprestimo emprestimo : emprestimos) {
-            for (Livro livro : emprestimo.getLivros()) {
-                if (!livrosAtivos.contains(livro)) {
-                    livrosAtivos.add(livro);
+            for (Documento documento : emprestimo.getDocumentos()) {
+                if (!documentosAtivos.contains(documento)) {
+                    documentosAtivos.add(documento);
                 }
             }
         }
 
-        return livrosAtivos;
+        return documentosAtivos;
     }
 
     public static void listarUtentesDevolucaoAtrasada(int dias) {
@@ -1205,20 +1212,20 @@ public class SistemaGestaoBiblioteca {
         LocalDate dataFinalInserida = LocalDate.parse(dataFinal, formatter);
 
         // Encontrar o item mais requisitado usando ArrayList
-        ArrayList<String> isbnList = new ArrayList<>();
+        ArrayList<String> idList = new ArrayList<>();
         ArrayList<Integer> freqList = new ArrayList<>();
 
         // Filtrar e processar os empréstimos dentro do intervalo de datas
         for (Emprestimo emprestimo : emprestimos) {
             LocalDate dataInicioEmprestimo = LocalDate.parse(emprestimo.getDataInicio(), formatter);
             if (!dataInicioEmprestimo.isBefore(dataInicialInserida) && !dataInicioEmprestimo.isAfter(dataFinalInserida)) {
-                for (Livro livro : emprestimo.getLivros()) {
-                    String isbn = livro.getISBN();
-                    if (isbnList.contains(isbn)) {
-                        int index = isbnList.indexOf(isbn);
+                for (Documento documento : emprestimo.getDocumentos()) {
+                    String id = documento.getIdentificador();
+                    if (idList.contains(id)) {
+                        int index = idList.indexOf(id);
                         freqList.set(index, freqList.get(index) + 1);
                     } else {
-                        isbnList.add(isbn);
+                        idList.add(id);
                         freqList.add(1);
                     }
                 }
@@ -1229,13 +1236,13 @@ public class SistemaGestaoBiblioteca {
         for (Reserva reserva : reservas) {
             LocalDate dataRegistroReserva = LocalDate.parse(reserva.getDataRegisto(), formatter);
             if (!dataRegistroReserva.isBefore(dataInicialInserida) && !dataRegistroReserva.isAfter(dataFinalInserida)) {
-                for (Livro livro : reserva.getLivros()) {
-                    String isbn = livro.getISBN();
-                    if (isbnList.contains(isbn)) {
-                        int index = isbnList.indexOf(isbn);
+                for (Documento documento : reserva.getDocumentos()) {
+                    String id = documento.getIdentificador();
+                    if (idList.contains(id)) {
+                        int index = idList.indexOf(id);
                         freqList.set(index, freqList.get(index) + 1);
                     } else {
-                        isbnList.add(isbn);
+                        idList.add(id);
                         freqList.add(1);
                     }
                 }
@@ -1245,13 +1252,13 @@ public class SistemaGestaoBiblioteca {
         // Encontrar os ISBNs mais requisitados
         int maxFrequencia = 0;
         ArrayList<String> maisRequisitados = new ArrayList<>();
-        for (int i = 0; i < isbnList.size(); i++) {
+        for (int i = 0; i < idList.size(); i++) {
             if (freqList.get(i) > maxFrequencia) {
                 maxFrequencia = freqList.get(i);
                 maisRequisitados.clear();
-                maisRequisitados.add(isbnList.get(i));
+                maisRequisitados.add(idList.get(i));
             } else if (freqList.get(i) == maxFrequencia) {
-                maisRequisitados.add(isbnList.get(i));
+                maisRequisitados.add(idList.get(i));
             }
         }
 
@@ -1259,11 +1266,31 @@ public class SistemaGestaoBiblioteca {
         if (!maisRequisitados.isEmpty()) {
             System.out.println("Os itens mais requisitados no intervalo de datas são:");
             for (String isbn : maisRequisitados) {
-                System.out.println("ISBN: " + isbn + " com " + maxFrequencia + " requisições.");
+                System.out.println("ID: " + isbn + " com " + maxFrequencia + " requisições.");
             }
         } else {
             System.out.println("Nenhum item foi requisitado no intervalo de datas especificado.");
         }
     }
-
+    
+    public static Documento procurarDocumentoPorIdentificador(String identificador) {
+    for (Documento documento : livros) {
+        if (documento.getIdentificador().equals(identificador)) {
+            return documento;
+        }
+    }
+    for (Documento documento : revistas) {
+        if (documento.getIdentificador().equals(identificador)) {
+            return documento;
+        }
+    }
+    for (Documento documento : jornais) {
+        if (documento.getIdentificador().equals(identificador)) {
+            return documento;
+        }
+    }
+    return null;
+    }
 }
+
+

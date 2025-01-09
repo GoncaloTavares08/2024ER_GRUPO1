@@ -66,4 +66,8 @@ public class Livro extends Documento {
     }
 
 
+    @Override
+    public String getIdentificador() {
+        return ISBN;
+    }
 }
