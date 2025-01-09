@@ -1,4 +1,4 @@
-public abstract class Documento {
+public class Documento {
     private String titulo;
     private String editora;
     private String categoria;
@@ -8,8 +8,6 @@ public abstract class Documento {
         this.editora = editora;
         this.categoria = categoria;
     }
-
-    public abstract String getIdentificador();
 
     public String getTitulo() {
         return titulo;
@@ -34,5 +32,4 @@ public abstract class Documento {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-
 }
