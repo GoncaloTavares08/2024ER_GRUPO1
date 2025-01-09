@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class SistemaGestaoBiblioteca {
@@ -502,7 +503,7 @@ public class SistemaGestaoBiblioteca {
                 case 1 -> adicionarUtentes();
                 case 2 -> editarUtentes();
                 case 3 -> mostrarUtentes();
-                //case 4 -> removerUtentes();
+                case 4 -> removerUtentes();
                 case 0 -> {
                     menu();
                 }
@@ -594,7 +595,7 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-    private  void removerUtentes() {
+    private static void removerUtentes() {
         mostrarUtentes();
         if (!utentes.isEmpty()) {
             Scanner scanner = new Scanner(System.in);
@@ -649,6 +650,7 @@ public class SistemaGestaoBiblioteca {
         } while (opcao != 0);
     }
     private static void adicionarReservas() {
+        ArrayList<Reserva> reservasNovas = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         System.out.print("Número da Reserva: ");
         String numero = scanner.nextLine();
@@ -660,6 +662,13 @@ public class SistemaGestaoBiblioteca {
             System.out.println("Operação cancelada.");
             return;
         }
+        System.out.print("Data de Registo (dd-MM-yyyy): ");
+        String dataRegisto = scanner.nextLine();
+        System.out.print("Data de Início (dd-MM-yyyy): ");
+        String dataInicio = scanner.nextLine();
+        System.out.print("Data de Fim (dd-MM-yyyy): ");
+        String dataFim = scanner.nextLine();
+
         System.out.print("Quantos documentos deseja reservar? ");
         int quantidade = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha
@@ -668,23 +677,53 @@ public class SistemaGestaoBiblioteca {
             System.out.print("Identificador (ISBN/ISSN) do documento " + (i + 1) + ": ");
             String id = scanner.nextLine();
             Documento doc = procurarDocumentoPorIdentificador(id);
+            //Procurar documento dentro dos ficheiros reservas e emprestimos .txt, se estiver presente verificar se a sua data de inicio inseirda agora é depois da data fim presente no ficheiro
+            for(Reserva reserva : reservas) {
+                ArrayList<Documento> documentosReserva = reserva.getDocumentos();
+                for(Documento documento : documentosReserva){
+                    String idDocumento = documento.getIdentificador();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                    LocalDate dataInicioFormatada = LocalDate.parse(dataInicio, formatter);
+                    LocalDate dataFimReserva = LocalDate.parse(reserva.getDataFim(), formatter);
+                    if(Objects.equals(idDocumento, id)) {
+                        if(dataInicioFormatada.isAfter(dataFimReserva)) {
+                            documentos.add(doc);
+                            Reserva reservaNova = new Reserva(numero, utente, documentos, dataInicio, dataRegisto, dataFim);
+                            reservasNovas.add(reservaNova);
+                        }else{
+                            System.out.println("Este Documento não está disponivel para a data selecionada.");
+                        }
+                    }
+                }
+            }
+            for (Emprestimo emprestimo : emprestimos){
+                ArrayList<Documento> documentosEmprestimo = emprestimo.getDocumentos();
+                for(Documento documento : documentosEmprestimo){
+                    String idDocumento = documento.getIdentificador();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                    LocalDate dataInicioFormatada = LocalDate.parse(dataInicio, formatter);
+                    LocalDate dataFimEmprestimo = LocalDate.parse(emprestimo.getDataPrevistaDevolucao(), formatter);
+                    if(Objects.equals(idDocumento, id)) {
+                        if (dataInicioFormatada.isAfter(dataFimEmprestimo)) {
+                            documentos.add(doc);
+                            Reserva reservaNova = new Reserva(numero, utente, documentos, dataInicio, dataRegisto, dataFim);
+                            reservasNovas.add(reservaNova);
+                        }else{
+                            System.out.println("Este Documento não está disponivel para a data selecionada.");
+                        }
+                    }
+                }
+            }
             if (doc == null) {
                 System.out.println("Documento não encontrado. Operação cancelada.");
                 return;
             }
-            documentos.add(doc);
+            //documentos.add(doc);
+            for (Reserva reservaNova : reservasNovas) {
+                reservas.add(reservaNova);
+                System.out.println("Reserva adicionada com sucesso!");
+            }
         }
-        System.out.print("Data de Registo (dd-MM-yyyy): ");
-        String dataRegisto = scanner.nextLine();
-        System.out.print("Data de Início (dd-MM-yyyy): ");
-        String dataInicio = scanner.nextLine();
-        System.out.print("Data de Fim (dd-MM-yyyy): ");
-        String dataFim = scanner.nextLine();
-
-        Reserva reserva = new Reserva(numero, utente, documentos, dataInicio, dataRegisto, dataFim);
-        reservas.add(reserva);
-
-        System.out.println("Reserva adicionada com sucesso!");
     }
 
     private static void editarReservas() {
@@ -887,10 +926,12 @@ public class SistemaGestaoBiblioteca {
         System.out.println("1. Pesquisar por NIF de Utente");
         System.out.println("2. Pesquisar por ISBN de Livro");
         System.out.println("3. Pesquisar por ISSN de Jornal");
+        System.out.println("4. Pesquisar por ISSN de Revista");
         System.out.println("0. Cancelar");
         System.out.print("Opção: ");
         int opcao = scanner.nextInt();
         scanner.nextLine(); // consumir a quebra de linha
+        String issn;
         switch (opcao) {
             case 1:
                 System.out.print("Insira o NIF a procurar: ");
@@ -904,8 +945,13 @@ public class SistemaGestaoBiblioteca {
                 break;
             case 3:
                 System.out.print("Insira o ISSN a procurar: ");
-                String issn = scanner.nextLine();
+                issn = scanner.nextLine();
                 System.out.println(procurarJornalPorISSN(issn));
+                break;
+            case 4:
+                System.out.print("Insira o ISSN a procurar: ");
+                issn = scanner.nextLine();
+                System.out.println(procurarRevistaPorISSN(issn));
                 break;
             case 0:
                 menu();
@@ -1039,6 +1085,23 @@ public class SistemaGestaoBiblioteca {
         }
     }
 
+    public static Revista procurarRevistaPorISSN(String issn) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            for (Revista revista : revistas) {
+                if (revista.getISSN().equals(issn)) {
+                    return revista;
+                }
+            }
+            System.out.println("ISSN não encontrado. Tente novamente ou digite '0' para cancelar.");
+            System.out.print("ISSN da Revista (0 para sair): ");
+            issn = scanner.nextLine();
+            if (issn.equals("0")) {
+                return null;
+            }
+        }
+    }
+
    public static void transformarReservasParaEmprestimos() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate dataAtual = LocalDate.now();
@@ -1094,7 +1157,7 @@ public class SistemaGestaoBiblioteca {
             }
         }
     }
-    public  ArrayList<Utente> listarUtentesAtivosLista() {
+    public static ArrayList<Utente> listarUtentesAtivosLista() {
         ArrayList<Utente> utentesAtivos = new ArrayList<>();
 
         for (Reserva reserva : reservas) {
