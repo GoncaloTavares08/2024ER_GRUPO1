@@ -8,6 +8,7 @@ public class MenuEmprestimos extends Menu {
         super(biblioteca, name);
         this.menus.add(new MenuListarEmprestimos(biblioteca, "Listar Empréstimos"));
         this.menus.add(new MenuTotalEmprestimosPorData(biblioteca, "Total de Empréstimos por Data"));
+        this.menus.add(new MenuMostrarTempoMedioDuracaoEmprestimosPorData(biblioteca, "Média de duração de Empréstimos por Data"));
         this.menus.add(new MenuAdicionarEmprestimo(biblioteca, "Adicionar Empréstimo"));
         this.menus.add(new MenuEditarEmprestimo(biblioteca, "Editar Empréstimo"));
     }
