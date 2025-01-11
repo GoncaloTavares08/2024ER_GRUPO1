@@ -3,6 +3,7 @@ package menus.revistas;
 import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Revista;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,9 +26,7 @@ public class MenuAdicionarRevista extends Menu {
         System.out.print("ISSN: ");
         String ISSN = scanner.nextLine();
         System.out.print("Data de publicação (dd-MM-yyyy): ");
-        String dataPublicacaoString = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate dataPublicacao = LocalDate.parse(dataPublicacaoString, formatter);
+        LocalDate dataPublicacao = Leitores.lerData(scanner);
 
         Revista revista = new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
         this.biblioteca.getRevistas().add(revista);

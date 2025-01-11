@@ -19,7 +19,7 @@ public class Biblioteca {
         this.revistas = Memoria.carregarRevistas();
         this.utentes = Memoria.carregarUtentes();
         this.emprestimos = Memoria.carregarEmprestimos(this);
-        //this.reservas = Memoria.carregarReservas(this);
+        this.reservas = Memoria.carregarReservas(this);
     }
 
     public List<Livro> getLivros() {

@@ -3,6 +3,7 @@ package menus.jornais;
 import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Jornal;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +29,7 @@ public class MenuEditarJornal extends Menu {
                     break;
                 }
             }
-            if (jornalEditado!= null) {
+            if (jornalEditado != null) {
                 System.out.println("\n--- Editar Jornal ---");
                 System.out.print("Novo Título: ");
                 String novoTitulo = scanner.nextLine();
@@ -59,15 +60,8 @@ public class MenuEditarJornal extends Menu {
                     System.out.println("ISSN não pode estar vazio.");
                 }
                 System.out.print("Nova data de publicação (dd-MM-yyyy): ");
-
-                try {
-                    String novaDataPublicacaoString = scanner.nextLine();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate novaDataPublicacao = LocalDate.parse(novaDataPublicacaoString, formatter);
-                    jornalEditado.setDataPublicacao(novaDataPublicacao);
-                } catch (Exception e) {
-                    System.out.println("Data de publicação inválida.");
-                }
+                LocalDate novaDataPublicacao = Leitores.lerData(scanner);
+                jornalEditado.setDataPublicacao(novaDataPublicacao);
                 System.out.println("Jornal editado com sucesso");
             } else {
                 System.out.println("Jornal não encontrado.");

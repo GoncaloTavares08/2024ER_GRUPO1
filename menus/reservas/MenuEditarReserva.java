@@ -4,6 +4,7 @@ import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Documento;
 import modelos.Reserva;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +46,7 @@ public class MenuEditarReserva extends Menu {
                 if (novoNumDocumentos > 0) {
                     List<Documento> documentos = new ArrayList<>();
                     scanner.nextLine(); // consumir o newline do scanner
-                    documentos.clear();
+                    reservaEditada.getDocumentos().clear();
                     for (int i = 0; i < novoNumDocumentos; i++) {
                         System.out.print("Título do " + (i + 1) + "º documento:");
                         String titulo = scanner.nextLine();
@@ -57,18 +58,13 @@ public class MenuEditarReserva extends Menu {
                     System.out.println("Número de documentos não pode estar vazio.");
                 }
                 System.out.print("Nova Data de Início (dd-MM-yyyy): ");
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    String novaDataInicioString = scanner.nextLine();
-                    LocalDate novaDataInicio = LocalDate.parse(novaDataInicioString, formatter);
-                    reservaEditada.setDataInicio(novaDataInicio);
-                    System.out.print("Nova Data de Fim (dd-MM-yyyy): ");
-                    String novaDataFimString = scanner.nextLine();
-                    LocalDate novaDataFim = LocalDate.parse(novaDataFimString, formatter);
-                    reservaEditada.setDataFim(novaDataFim);
-                } catch (Exception e) {
-                    System.out.println("Pelo menos uma das datas introduzidas é inválida.");
-                }
+                LocalDate novaDataInicio = Leitores.lerData(scanner);
+                reservaEditada.setDataInicio(novaDataInicio);
+
+                System.out.print("Nova Data de Fim (dd-MM-yyyy): ");
+                LocalDate novaDataFim = Leitores.lerData(scanner);
+                reservaEditada.setDataFim(novaDataFim);
+
                 System.out.println("Reserva editada com sucesso");
             }
         }

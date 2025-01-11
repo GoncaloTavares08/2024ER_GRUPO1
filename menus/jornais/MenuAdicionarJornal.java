@@ -3,6 +3,7 @@ package menus.jornais;
 import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Jornal;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,9 +26,7 @@ public class MenuAdicionarJornal extends Menu {
         System.out.print("ISSN: ");
         String ISSN = scanner.nextLine();
         System.out.print("Data de publicação (dd-MM-yyyy): ");
-        String dataString = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate dataPublicacao = LocalDate.parse(dataString, formatter);
+        LocalDate dataPublicacao = Leitores.lerData(scanner);
 
         Jornal jornal = new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
         this.biblioteca.getJornais().add(jornal);

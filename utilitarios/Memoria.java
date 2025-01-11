@@ -117,9 +117,43 @@ public class Memoria {
         }
     }
 
-//    public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
-//
-//    }
+    public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
+            List<Reserva> reservas = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_RESERVAS))) {
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                Reserva reserva = carregarReserva(linha, biblioteca);
+                reservas.add(reserva);
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar as reservas: " + e.getMessage());
+        }
+        return reservas;
+    }
+
+    private static Reserva carregarReserva(String dados, Biblioteca biblioteca){
+        String[] partes = dados.split("\\|");
+        String numero = partes[0];
+        String nif = partes[1];
+        Utente utente = biblioteca.getUtentePorNif(nif);
+        if (utente == null) {
+            throw new IllegalArgumentException("Utente com NIF " + nif + " não encontrado.");
+        }
+        List<Documento> documentos = new ArrayList<>();
+        for (String titulo : partes[2].split(",")) {
+            Documento documento = biblioteca.getDocumentoPorTitulo(titulo.trim());
+            if (documento == null) {
+                throw new IllegalArgumentException("Documento com titulo " + titulo + " não encontrado.");
+            }
+            documentos.add(documento);
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataRegisto = LocalDate.parse(partes[3], formatter);
+        LocalDate dataInicio = LocalDate.parse(partes[4], formatter);
+        LocalDate dataFim = LocalDate.parse(partes[5], formatter);
+
+        return new Reserva(numero, utente, documentos, dataRegisto, dataInicio, dataFim);
+    }
 
     public static void guardaDados(Biblioteca biblioteca) {
         guardarLivros(biblioteca);

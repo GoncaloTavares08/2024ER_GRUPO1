@@ -5,6 +5,7 @@ import modelos.Biblioteca;
 import modelos.Documento;
 import modelos.Reserva;
 import modelos.Utente;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -45,17 +46,13 @@ public class MenuAdicionarReserva extends Menu {
         }
 
         System.out.print("Data de Registo (dd-MM-yyyy): ");
-        String dataRegistoString = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate dataRegisto = LocalDate.parse(dataRegistoString, formatter);
+        LocalDate dataRegisto = Leitores.lerData(scanner);
 
         System.out.print("Data de Início (dd-MM-yyyy): ");
-        String dataInicioString = scanner.nextLine();
-        LocalDate dataInicio = LocalDate.parse(dataInicioString, formatter);
+        LocalDate dataInicio = Leitores.lerData(scanner);
 
         System.out.print("Data de Fim (dd-MM-yyyy): ");
-        String dataFimString = scanner.nextLine();
-        LocalDate dataFim = LocalDate.parse(dataFimString, formatter);
+        LocalDate dataFim = Leitores.lerData(scanner);
 
         Reserva reserva = new Reserva(UUID.randomUUID().toString(), utente, documentosParaReserva, dataInicio, dataRegisto, dataFim);
         this.biblioteca.getReservas().add(reserva);

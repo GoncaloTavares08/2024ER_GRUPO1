@@ -8,8 +8,6 @@ public class MenuEmprestimos extends Menu {
         super(biblioteca, name);
         this.menus.add(new MenuListarEmprestimos(biblioteca, "Listar Emprestimos"));
         this.menus.add(new MenuAdicionarEmprestimo(biblioteca, "Adicionar Emprestimo"));
-        this.menus.add(new MenuAdicionarEmprestimo(biblioteca, "Editar Emprestimo"));
-        this.menus.add(new MenuAdicionarEmprestimo(biblioteca, "Remover Emprestimo"));
+        this.menus.add(new MenuEditarEmprestimo(biblioteca, "Editar Emprestimo"));
     }
-
 }

@@ -5,6 +5,7 @@ import modelos.Biblioteca;
 import modelos.Documento;
 import modelos.Emprestimo;
 import modelos.Utente;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,13 +44,10 @@ public class MenuAdicionarEmprestimo extends Menu {
             documentosParaEmprestimo.add(documento);
         }
         System.out.print("Data de Início (dd-MM-yyyy): ");
-        String dataInicioString = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate dataInicio = LocalDate.parse(dataInicioString, formatter);
+        LocalDate dataInicio = Leitores.lerData(scanner);
 
         System.out.print("Data Prevista de Devolução (dd-MM-yyyy): ");
-        String dataPrevistaDevolucaoString = scanner.nextLine();
-        LocalDate dataPrevistaDevolucao = LocalDate.parse(dataPrevistaDevolucaoString, formatter);
+        LocalDate dataPrevistaDevolucao = Leitores.lerData(scanner);
 
         Emprestimo emprestimo = new Emprestimo(UUID.randomUUID().toString(), utente, documentosParaEmprestimo, dataInicio, dataPrevistaDevolucao);
         this.biblioteca.getEmprestimos().add(emprestimo);

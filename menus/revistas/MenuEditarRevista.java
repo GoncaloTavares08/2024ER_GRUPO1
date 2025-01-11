@@ -3,6 +3,7 @@ package menus.revistas;
 import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Revista;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +29,7 @@ public class MenuEditarRevista extends Menu {
                     break;
                 }
             }
-            if (revistaEditada!= null) {
+            if (revistaEditada != null) {
                 System.out.println("\n--- Editar Revista ---");
                 System.out.print("Novo Título: ");
                 String novoTitulo = scanner.nextLine();
@@ -59,15 +60,8 @@ public class MenuEditarRevista extends Menu {
                     System.out.println("ISSN não pode estar vazio.");
                 }
                 System.out.print("Nova data de publicação (dd-MM-yyyy): ");
-
-                try {
-                    String novaDataPublicacaoString = scanner.nextLine();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate novaDataPublicacao = LocalDate.parse(novaDataPublicacaoString, formatter);
-                    revistaEditada.setDataPublicacao(novaDataPublicacao);
-                } catch (Exception e) {
-                    System.out.println("Data de publicação inválida.");
-                }
+                LocalDate novaDataPublicacao = Leitores.lerData(scanner);
+                revistaEditada.setDataPublicacao(novaDataPublicacao);
                 System.out.println("Revista editada com sucesso");
             } else {
                 System.out.println("Revista não encontrada.");

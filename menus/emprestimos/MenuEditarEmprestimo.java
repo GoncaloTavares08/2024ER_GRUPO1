@@ -4,6 +4,7 @@ import menus.Menu;
 import modelos.Biblioteca;
 import modelos.Documento;
 import modelos.Emprestimo;
+import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -57,24 +58,16 @@ public class MenuEditarEmprestimo extends Menu {
                     System.out.println("Número de documentos não pode estar vazio.");
                 }
                 System.out.print("Nova Data de Início (dd-MM-yyyy): ");
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    String novaDataInicioString = scanner.nextLine();
-                    LocalDate novaDataInicio = LocalDate.parse(novaDataInicioString, formatter);
-                    emprestimoEditado.setDataInicio(novaDataInicio);
+                LocalDate novaDataInicio = Leitores.lerData(scanner);
+                emprestimoEditado.setDataInicio(novaDataInicio);
 
-                    System.out.print("Nova Data Prevista de Devolução (dd-MM-yyyy): ");
-                    String novaDataPrevistaDevolucaoString = scanner.nextLine();
-                    LocalDate novaDataPrevistaDevolucao = LocalDate.parse(novaDataPrevistaDevolucaoString, formatter);
-                    emprestimoEditado.setDataPrevistaDevolucao(novaDataPrevistaDevolucao);
+                System.out.print("Nova Data Prevista de Devolução (dd-MM-yyyy): ");
+                LocalDate novaDataPrevistaDevolucao = Leitores.lerData(scanner);
+                emprestimoEditado.setDataPrevistaDevolucao(novaDataPrevistaDevolucao);
 
-                    System.out.print("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
-                    String novaDataEfetivaDevolucaoString = scanner.nextLine();
-                    LocalDate novaDataEfetivaDevolucao = LocalDate.parse(novaDataEfetivaDevolucaoString, formatter);
-                    emprestimoEditado.setDataEfetivaDevolucao(novaDataEfetivaDevolucao);
-                } catch (Exception e) {
-                    System.out.println("Pelo menos uma das datas introduzidas é inválida.");
-                }
+                System.out.print("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
+                LocalDate novaDataEfetivaDevolucao = Leitores.lerData(scanner);
+                emprestimoEditado.setDataEfetivaDevolucao(novaDataEfetivaDevolucao);
                 System.out.println("Empréstimo editado com sucesso");
             }
         }
