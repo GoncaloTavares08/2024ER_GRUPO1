@@ -10,6 +10,7 @@ public class MenuUtentes extends Menu {
         this.menus.add(new MenuListarUtentesAtivos(biblioteca, "Listar Utentes Ativos"));
         this.menus.add(new MenuAdicionarUtente(biblioteca, "Adicionar Utente"));
         this.menus.add(new MenuProcurarUtentePorNif(biblioteca, "Procurar Utente por NIF"));
+        this.menus.add(new MenuListarTransacoesPorUtentePorDatas(biblioteca, "Procurar Transações por Utente e data"));
         this.menus.add(new MenuEditarUtente(biblioteca, "Editar Utente"));
         this.menus.add(new MenuRemoverUtente(biblioteca, "Remover Utente"));
     }

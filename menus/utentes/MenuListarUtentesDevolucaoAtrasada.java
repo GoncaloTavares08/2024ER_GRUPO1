@@ -7,8 +7,8 @@ import modelos.Emprestimo;
 import java.util.List;
 import java.util.Scanner;
 
-public class ListarUtentesDevolucaoAtrasada extends Menu {
-    public ListarUtentesDevolucaoAtrasada(Biblioteca biblioteca, String name) {
+public class MenuListarUtentesDevolucaoAtrasada extends Menu {
+    public MenuListarUtentesDevolucaoAtrasada(Biblioteca biblioteca, String name) {
         super(biblioteca, name);
     }
 
