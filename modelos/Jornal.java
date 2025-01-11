@@ -59,4 +59,8 @@ public class Jornal extends Documento{
         return new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
     }
 
+    @Override
+    public String getIdentificadorDocumento() {
+        return this.ISSN;
+    }
 }

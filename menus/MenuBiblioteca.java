@@ -1,6 +1,7 @@
 package menus;
 
 import menus.emprestimos.MenuEmprestimos;
+import menus.estatisticas.MenuEstatisticas;
 import menus.jornais.MenuJornais;
 import menus.livros.MenuLivros;
 import menus.reservas.MenuReservas;
@@ -18,5 +19,6 @@ public class MenuBiblioteca extends Menu {
         menus.add(new MenuUtentes(biblioteca,"Utentes"));
         menus.add(new MenuReservas(biblioteca,"Reservas"));
         menus.add(new MenuEmprestimos(biblioteca,"Empréstimos"));
+        menus.add(new MenuEstatisticas(biblioteca,"Estatísticas"));
     }
 }

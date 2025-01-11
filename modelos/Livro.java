@@ -75,4 +75,8 @@ public class Livro extends Documento{
         return new Livro(titulo, editora, categoria, anoEdicao, ISBN, autores);
     }
 
+    @Override
+    public String getIdentificadorDocumento() {
+        return this.ISBN;
+    }
 }

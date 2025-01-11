@@ -34,5 +34,7 @@ public abstract class Documento {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+
+    public abstract String getIdentificadorDocumento();
 }
 

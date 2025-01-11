@@ -58,4 +58,9 @@ public class Revista extends Documento{
         LocalDate dataPublicacao = LocalDate.parse(partes[4], formatter);
         return new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
     }
+
+    @Override
+    public String getIdentificadorDocumento() {
+        return this.ISSN;
+    }
 }
