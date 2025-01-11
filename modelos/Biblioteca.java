@@ -13,7 +13,7 @@ public class Biblioteca {
     private List<Reserva> reservas = new ArrayList<>();
     private List<Emprestimo> emprestimos = new ArrayList<>();
 
-    public Biblioteca(){
+    public Biblioteca() {
         this.livros = Memoria.carregarLivros();
         this.jornais = Memoria.carregarJornais();
         this.revistas = Memoria.carregarRevistas();
@@ -26,7 +26,7 @@ public class Biblioteca {
         return this.livros;
     }
 
-    public boolean temLivros(){
+    public boolean temLivros() {
         return !this.livros.isEmpty();
     }
 
@@ -169,6 +169,15 @@ public class Biblioteca {
         return this.reservas;
     }
 
+    public Reserva getReservasPorNumero(String numero) {
+        for (Reserva reserva : this.reservas) {
+            if (reserva.getNumero().equals(numero)) {
+                return reserva;
+            }
+        }
+        return null;
+    }
+
     public List<Emprestimo> getEmprestimos() {
         return this.emprestimos;
     }
@@ -179,4 +188,11 @@ public class Biblioteca {
         return transacoes;
     }
 
+    public boolean removerReservaPorNumero(String numeroReserva) {
+        Reserva reserva = this.getReservasPorNumero(numeroReserva);
+        if (reserva != null) {
+            return this.reservas.remove(reserva);
+        }
+        return false;
+    }
 }
