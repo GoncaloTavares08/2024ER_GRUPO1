@@ -29,6 +29,12 @@ public class MenuAdicionarEmprestimo extends Menu {
             System.out.println("Utente não existe.");
             return;
         }
+        System.out.print("Data de Início (dd-MM-yyyy): ");
+        LocalDate dataInicio = Leitores.lerData(scanner);
+
+        System.out.print("Data Prevista de Devolução (dd-MM-yyyy): ");
+        LocalDate dataPrevistaDevolucao = Leitores.lerData(scanner);
+
         System.out.print("Quantos documentos tem o Empréstimo? ");
         int quantidadeDocumentos = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha
@@ -41,13 +47,13 @@ public class MenuAdicionarEmprestimo extends Menu {
                 System.out.println("Operação cancelada.");
                 return;
             }
-            documentosParaEmprestimo.add(documento);
+            if (this.biblioteca.documentoEstaLivreNoPeriodo(documento, dataInicio, dataPrevistaDevolucao)) {
+                documentosParaEmprestimo.add(documento);
+            } else {
+                System.out.println("Documento não está disponivel para a data selecionada.");
+                return;
+            }
         }
-        System.out.print("Data de Início (dd-MM-yyyy): ");
-        LocalDate dataInicio = Leitores.lerData(scanner);
-
-        System.out.print("Data Prevista de Devolução (dd-MM-yyyy): ");
-        LocalDate dataPrevistaDevolucao = Leitores.lerData(scanner);
 
         Emprestimo emprestimo = new Emprestimo(UUID.randomUUID().toString(), utente, documentosParaEmprestimo, dataInicio, dataPrevistaDevolucao);
         this.biblioteca.getEmprestimos().add(emprestimo);

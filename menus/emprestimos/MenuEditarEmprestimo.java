@@ -7,7 +7,6 @@ import modelos.Emprestimo;
 import utilitarios.Leitores;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -41,22 +40,6 @@ public class MenuEditarEmprestimo extends Menu {
                 } else {
                     System.out.println("NIF não pode estar vazio.");
                 }
-
-                int novoNumDocumentos = scanner.nextInt();
-                if (novoNumDocumentos > 0) {
-                    List<Documento> documentos = new ArrayList<>();
-                    scanner.nextLine(); // consumir o newline do scanner
-                    documentos.clear();
-                    for (int i = 0; i < novoNumDocumentos; i++) {
-                        System.out.print("Título do " + (i + 1) + "º documento:");
-                        String titulo = scanner.nextLine();
-                        Documento documento = this.biblioteca.getDocumentoPorTitulo(titulo);
-                        documentos.add(documento);
-                    }
-                    emprestimoEditado.setDocumentos(documentos);
-                } else {
-                    System.out.println("Número de documentos não pode estar vazio.");
-                }
                 System.out.print("Nova Data de Início (dd-MM-yyyy): ");
                 LocalDate novaDataInicio = Leitores.lerData(scanner);
                 emprestimoEditado.setDataInicio(novaDataInicio);
@@ -68,6 +51,27 @@ public class MenuEditarEmprestimo extends Menu {
                 System.out.print("Nova Data Efetiva de Devolução (dd-MM-yyyy): ");
                 LocalDate novaDataEfetivaDevolucao = Leitores.lerData(scanner);
                 emprestimoEditado.setDataEfetivaDevolucao(novaDataEfetivaDevolucao);
+
+                int novoNumDocumentos = scanner.nextInt();
+                if (novoNumDocumentos > 0) {
+                    List<Documento> documentos = new ArrayList<>();
+                    scanner.nextLine(); // consumir o newline do scanner
+                    documentos.clear();
+                    for (int i = 0; i < novoNumDocumentos; i++) {
+                        System.out.print("Título do " + (i + 1) + "º documento:");
+                        String titulo = scanner.nextLine();
+                        Documento documento = this.biblioteca.getDocumentoPorTitulo(titulo);
+                        if (this.biblioteca.documentoEstaLivreNoPeriodo(documento, novaDataInicio, novaDataPrevistaDevolucao)) {
+                            documentos.add(documento);
+                        } else {
+                            System.out.println("Documento não está disponivel para a data selecionada.");
+                            return;
+                        }
+                    }
+                    emprestimoEditado.setDocumentos(documentos);
+                } else {
+                    System.out.println("Número de documentos não pode estar vazio.");
+                }
                 System.out.println("Empréstimo editado com sucesso");
             }
         }

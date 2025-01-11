@@ -6,4 +6,3 @@
 6|1234|Livro6|20-12-2024|05-01-2025|Nao Devolvido
 bf365961-1a05-4fff-a499-661e153d0579|1234|O Regional|10-12-2024|30-12-2024|Nao Devolvido
 c2cba083-54b0-4661-8224-f6c58e0db7b4|1235|O Esportivo|10-01-2025|20-01-2025|Nao Devolvido
-9|8912|Diário do Futuro|10-01-2025|30-01-2025|Nao Devolvido
