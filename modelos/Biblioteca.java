@@ -2,6 +2,7 @@ package modelos;
 
 import utilitarios.Memoria;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class Biblioteca {
         this.utentes = Memoria.carregarUtentes();
         this.emprestimos = Memoria.carregarEmprestimos(this);
         this.reservas = Memoria.carregarReservas(this);
+        this.transformarReservasParaEmprestimos();
     }
 
     public List<Livro> getLivros() {
@@ -194,5 +196,23 @@ public class Biblioteca {
             return this.reservas.remove(reserva);
         }
         return false;
+    }
+
+    private void transformarReservasParaEmprestimos() {
+        LocalDate dataAtual = LocalDate.now();
+
+        for (Reserva reserva : this.reservas) {
+            if (reserva.getDataInicio().isBefore(dataAtual)) {
+                Emprestimo emprestimo = new Emprestimo(
+                        String.valueOf(this.emprestimos.size() + 1),
+                        reserva.getUtente(),
+                        reserva.getDocumentos(),
+                        reserva.getDataInicio(),
+                        reserva.getDataFim()
+                );
+                this.emprestimos.add(emprestimo);
+                this.reservas.remove(reserva);
+            }
+        }
     }
 }
