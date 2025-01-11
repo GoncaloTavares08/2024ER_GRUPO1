@@ -215,4 +215,25 @@ public class Biblioteca {
             }
         }
     }
+
+    public boolean documentoEstaLivreNoPeriodo(Documento documento, LocalDate dataInicio, LocalDate dataFim) {
+        List<Transacao> transacoes = this.transacoesNoPeriodo(dataInicio, dataFim);
+        for (Transacao transacao : transacoes) {
+            if (transacao.getDocumentos().contains(documento)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private List<Transacao> transacoesNoPeriodo(LocalDate dataInicio, LocalDate dataFim) {
+        List<Transacao> transacoes = this.getTransacoes();
+        List<Transacao> transacoesNoPeriodo = new ArrayList<>();
+        for (Transacao transacao : transacoes) {
+            if(transacao.estaAtivaEntre(dataInicio, dataFim)) {
+                transacoesNoPeriodo.add(transacao);
+            }
+        }
+        return transacoesNoPeriodo;
+    }
 }

@@ -29,6 +29,14 @@ public class MenuAdicionarReserva extends Menu {
             System.out.println("Utente não existe.");
             return;
         }
+        LocalDate dataRegisto = LocalDate.now();
+
+        System.out.print("Data de Início (dd-MM-yyyy): ");
+        LocalDate dataInicio = Leitores.lerData(scanner);
+
+        System.out.print("Data de Fim (dd-MM-yyyy): ");
+        LocalDate dataFim = Leitores.lerData(scanner);
+
         System.out.print("Quantos documentos tem a reserva? ");
         int quantidadeDocumentos = scanner.nextInt();
         scanner.nextLine(); // Consumir a quebra de linha
@@ -41,22 +49,17 @@ public class MenuAdicionarReserva extends Menu {
                 System.out.println("Operação cancelada.");
                 return;
             }
-            documentosParaReserva.add(documento);
-            //FALTA VER SE O DOCUMENTO ESTÁ OU NÃO DISPONIVEL PARA RESERVA
+            if (this.biblioteca.documentoEstaLivreNoPeriodo(documento, dataInicio, dataFim)) {
+                documentosParaReserva.add(documento);
+            } else {
+                System.out.println("Documento não está disponivel para a data selecionada.");
+                return;
+            }
         }
-
-        System.out.print("Data de Registo (dd-MM-yyyy): ");
-        LocalDate dataRegisto = Leitores.lerData(scanner);
-
-        System.out.print("Data de Início (dd-MM-yyyy): ");
-        LocalDate dataInicio = Leitores.lerData(scanner);
-
-        System.out.print("Data de Fim (dd-MM-yyyy): ");
-        LocalDate dataFim = Leitores.lerData(scanner);
-
         Reserva reserva = new Reserva(UUID.randomUUID().toString(), utente, documentosParaReserva, dataInicio, dataRegisto, dataFim);
         this.biblioteca.getReservas().add(reserva);
 
         System.out.println("Reserva adicionada com sucesso!");
     }
 }
+

@@ -80,4 +80,9 @@ public class Emprestimo extends Transacao {
         }
         return output;
     }
+
+    @Override
+    public LocalDate getDataFim() {
+        return getDataPrevistaDevolucao();
+    }
 }

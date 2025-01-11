@@ -41,6 +41,16 @@ public class MenuEditarReserva extends Menu {
                 } else {
                     System.out.println("NIF não pode estar vazio.");
                 }
+
+                System.out.print("Nova Data de Início (dd-MM-yyyy): ");
+                LocalDate novaDataInicio = Leitores.lerData(scanner);
+                reservaEditada.setDataInicio(novaDataInicio);
+
+                System.out.print("Nova Data de Fim (dd-MM-yyyy): ");
+                LocalDate novaDataFim = Leitores.lerData(scanner);
+                reservaEditada.setDataFim(novaDataFim);
+
+
                 System.out.print("Novo Número de Documentos: ");
                 int novoNumDocumentos = scanner.nextInt();
                 if (novoNumDocumentos > 0) {
@@ -51,19 +61,18 @@ public class MenuEditarReserva extends Menu {
                         System.out.print("Título do " + (i + 1) + "º documento:");
                         String titulo = scanner.nextLine();
                         Documento documento = this.biblioteca.getDocumentoPorTitulo(titulo);
-                        documentos.add(documento);
+                        if (this.biblioteca.documentoEstaLivreNoPeriodo(documento, novaDataInicio, novaDataFim)) {
+                            documentos.add(documento);
+                        } else {
+                            System.out.println("Documento não está disponivel para a data selecionada.");
+                            return;
+                        }
                     }
                     reservaEditada.setDocumentos(documentos);
                 } else {
                     System.out.println("Número de documentos não pode estar vazio.");
                 }
-                System.out.print("Nova Data de Início (dd-MM-yyyy): ");
-                LocalDate novaDataInicio = Leitores.lerData(scanner);
-                reservaEditada.setDataInicio(novaDataInicio);
 
-                System.out.print("Nova Data de Fim (dd-MM-yyyy): ");
-                LocalDate novaDataFim = Leitores.lerData(scanner);
-                reservaEditada.setDataFim(novaDataFim);
 
                 System.out.println("Reserva editada com sucesso");
             }

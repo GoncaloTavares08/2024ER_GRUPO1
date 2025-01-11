@@ -3,7 +3,7 @@ package modelos;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Transacao {
+public abstract class Transacao {
     protected String numero;
     protected Utente utente;
     protected List<Documento> documentos;
@@ -39,6 +39,13 @@ public class Transacao {
     }
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
+    }
+
+    public abstract LocalDate getDataFim();
+
+    public boolean estaAtivaEntre(LocalDate periodoInicio, LocalDate periodoFim) {
+        return (dataInicio.isBefore(periodoFim) || dataInicio.isEqual(periodoFim)) &&
+                (this.getDataFim().isAfter(periodoInicio) || this.getDataFim().isEqual(periodoInicio));
     }
 
 }
