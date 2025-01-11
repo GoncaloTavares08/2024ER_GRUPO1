@@ -1,5 +1,6 @@
 package modelos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Livro extends Documento{
@@ -14,6 +15,8 @@ public class Livro extends Documento{
         this.ISBN = ISBN;
         this.autores = autores;
     }
+
+
 
     public int getAnoEdicao() {
         return anoEdicao;
@@ -49,6 +52,27 @@ public class Livro extends Documento{
                 "; ISBN: " + getISBN() +
                 "; Autores: " + getAutores().toString().replace("[", "").replace("]", "").replace(" ", "") +
                 ']';
+    }
+
+    public String toFileString(){
+        return getTitulo() +
+                "|" + getEditora() +
+                "|" + getCategoria() +
+                "|" + getAnoEdicao() +
+                "|" + getISBN() +
+                "|" + getAutores().toString().replace("[", "").replace("]", "").replace(" ", "");
+    }
+
+    public static Livro fromString(String linha) {
+        String[] partes = linha.split("\\|");
+        String titulo = partes[0];
+        String editora = partes[1];
+        String categoria = partes[2];
+        int anoEdicao = Integer.parseInt(partes[3]);
+        String ISBN = partes[4];
+        String[] autoresArray = partes[5].split(",");
+        List<String> autores = new ArrayList<>(List.of(autoresArray));
+        return new Livro(titulo, editora, categoria, anoEdicao, ISBN, autores);
     }
 
 }

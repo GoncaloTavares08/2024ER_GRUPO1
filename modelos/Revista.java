@@ -1,6 +1,7 @@
 package modelos;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Revista extends Documento{
     private String ISSN;
@@ -26,5 +27,35 @@ public class Revista extends Documento{
 
     public void setDataPublicacao(LocalDate dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
+    }
+
+    @Override
+    public String toString() {
+        return "[" +
+                "Título: " + getTitulo() +
+                "; Editora: " + getEditora() +
+                "; Categoria: " + getCategoria() +
+                "; ISSN: " + getISSN() +
+                "; Data de Publicação: " + getDataPublicacao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
+                ']';
+    }
+
+    public String toFileString(){
+        return getTitulo() +
+                "|" + getEditora() +
+                "|" + getCategoria() +
+                "|" + getISSN() +
+                "|" + getDataPublicacao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+
+    public static Revista fromString(String dados) {
+        String[] partes = dados.split("\\|");
+        String titulo = partes[0];
+        String editora = partes[1];
+        String categoria = partes[2];
+        String ISSN = partes[3];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataPublicacao = LocalDate.parse(partes[4], formatter);
+        return new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
     }
 }

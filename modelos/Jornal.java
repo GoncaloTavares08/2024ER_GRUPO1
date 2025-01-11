@@ -40,4 +40,23 @@ public class Jornal extends Documento{
                 ']';
     }
 
+    public String toFileString(){
+        return getTitulo() +
+                "|" + getEditora() +
+                "|" + getCategoria() +
+                "|" + getISSN() +
+                "|" + getDataPublicacao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+
+    public static Jornal fromString(String dados) {
+        String[] partes = dados.split("\\|");
+        String titulo = partes[0];
+        String editora = partes[1];
+        String categoria = partes[2];
+        String ISSN = partes[3];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate dataPublicacao = LocalDate.parse(partes[4], formatter);
+        return new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
+    }
+
 }

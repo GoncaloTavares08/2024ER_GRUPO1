@@ -9,3 +9,4 @@ Livro8|Editorial Minerva|História|2023|3413232794|Diana,Isabel
 Livro9|Editora Alvorada|Filosofia|2019|8604163980|Manuel,Ricardo
 Livro10|Alpha Books|Ciência|2022|7852418996|Helena,Teresa
 Livro11|Editora Chen|Aventura|2019|543285621X|Diana,Joao
+Livro 12|Porto editora|ficcao|2024|1234|Joao

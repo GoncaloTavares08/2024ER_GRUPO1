@@ -47,4 +47,20 @@ public class Utente {
                 "; Contacto: " + getContacto() +
                 ']';
     }
+
+    public String toFileString(){
+        return getNif() +
+                "|" + getNome() +
+                "|" + getGenero() +
+                "|" + getContacto();
+    }
+
+    public static Utente fromString(String dados) {
+        String[] partes = dados.split("\\|");
+        String nif = partes[0];
+        String nome = partes[1];
+        char genero = partes[2].charAt(0);
+        String contacto = partes[3];
+        return new Utente(nif, nome, genero, contacto);
+    }
 }

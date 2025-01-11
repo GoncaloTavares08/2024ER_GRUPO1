@@ -1,9 +1,9 @@
 package modelos;
 
 public abstract class Documento {
-    private String titulo;
-    private String editora;
-    private String categoria;
+    protected String titulo;
+    protected String editora;
+    protected String categoria;
 
     public Documento(String titulo, String editora, String categoria) {
         this.titulo = titulo;

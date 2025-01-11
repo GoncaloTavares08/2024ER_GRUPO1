@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Transacao {
-    private String numero;
-    private Utente utente;
-    private List<Documento> documentos;
-    private LocalDate dataInicio;
+    protected String numero;
+    protected Utente utente;
+    protected List<Documento> documentos;
+    protected LocalDate dataInicio;
 
     public Transacao(String numero, Utente utente, List<Documento> documentos, LocalDate dataInicio) {
         this.numero = numero;

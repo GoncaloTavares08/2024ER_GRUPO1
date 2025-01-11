@@ -1,5 +1,7 @@
 package modelos;
 
+import utilitarios.Memoria;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,15 @@ public class Biblioteca {
     private List<Utente> utentes = new ArrayList<>();
     private List<Reserva> reservas = new ArrayList<>();
     private List<Emprestimo> emprestimos = new ArrayList<>();
+
+    public Biblioteca(){
+        this.livros = Memoria.carregarLivros();
+        this.jornais = Memoria.carregarJornais();
+        this.revistas = Memoria.carregarRevistas();
+        this.utentes = Memoria.carregarUtentes();
+        this.emprestimos = Memoria.carregarEmprestimos(this);
+        //this.reservas = Memoria.carregarReservas(this);
+    }
 
     public List<Livro> getLivros() {
         return this.livros;
