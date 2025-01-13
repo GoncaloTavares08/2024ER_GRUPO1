@@ -13,12 +13,14 @@ public class Biblioteca {
     private List<Utente> utentes = new ArrayList<>();
     private List<Reserva> reservas = new ArrayList<>();
     private List<Emprestimo> emprestimos = new ArrayList<>();
+    private String diretorio;
 
-    public Biblioteca() {
-        this.livros = Memoria.carregarLivros();
-        this.jornais = Memoria.carregarJornais();
-        this.revistas = Memoria.carregarRevistas();
-        this.utentes = Memoria.carregarUtentes();
+    public Biblioteca(String diretorio) {
+        this.diretorio = diretorio;
+        this.livros = Memoria.carregarLivros(this.diretorio);
+        this.jornais = Memoria.carregarJornais(this.diretorio);
+        this.revistas = Memoria.carregarRevistas(this.diretorio);
+        this.utentes = Memoria.carregarUtentes(this.diretorio);
         this.emprestimos = Memoria.carregarEmprestimos(this);
         this.reservas = Memoria.carregarReservas(this);
         this.transformarReservasParaEmprestimos();
@@ -235,5 +237,8 @@ public class Biblioteca {
             }
         }
         return transacoesNoPeriodo;
+    }
+    public String getDiretorio() {
+        return this.diretorio;
     }
 }

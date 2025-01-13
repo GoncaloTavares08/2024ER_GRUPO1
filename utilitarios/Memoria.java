@@ -2,7 +2,6 @@ package utilitarios;
 
 import modelos.*;
 
-import javax.print.Doc;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,17 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Memoria {
-    private static final String FICHEIRO_LIVROS = "ficheiros/livros.txt";
-    private static final String FICHEIRO_JORNAIS = "ficheiros/jornais.txt";
-    private static final String FICHEIRO_REVISTAS = "ficheiros/revistas.txt";
-    private static final String FICHEIRO_UTENTES = "ficheiros/utentes.txt";
-    private static final String FICHEIRO_RESERVAS = "ficheiros/reservas.txt";
-    private static final String FICHEIRO_EMPRESTIMOS = "ficheiros/emprestimos.txt";
+    private static final String FICHEIRO_LIVROS = "livros.txt";
+    private static final String FICHEIRO_JORNAIS = "jornais.txt";
+    private static final String FICHEIRO_REVISTAS = "revistas.txt";
+    private static final String FICHEIRO_UTENTES = "utentes.txt";
+    private static final String FICHEIRO_RESERVAS = "reservas.txt";
+    private static final String FICHEIRO_EMPRESTIMOS = "emprestimos.txt";
 
 
-    public static List<Livro> carregarLivros() {
+    public static List<Livro> carregarLivros(String diretorio) {
         List<Livro> livros = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_LIVROS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_LIVROS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Livro livro = Livro.fromString(linha);
@@ -32,9 +31,9 @@ public class Memoria {
         return livros;
     }
 
-    public static List<Jornal> carregarJornais() {
+    public static List<Jornal> carregarJornais(String diretorio) {
         List<Jornal> jornais = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_JORNAIS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_JORNAIS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Jornal jornal = Jornal.fromString(linha);
@@ -46,9 +45,9 @@ public class Memoria {
         return jornais;
     }
 
-    public static List<Revista> carregarRevistas() {
+    public static List<Revista> carregarRevistas(String diretorio) {
         List<Revista> revistas = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_REVISTAS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_REVISTAS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Revista revista = Revista.fromString(linha);
@@ -60,9 +59,9 @@ public class Memoria {
         return revistas;
     }
 
-    public static List<Utente> carregarUtentes() {
+    public static List<Utente> carregarUtentes(String diretorio) {
         List<Utente> utentes = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_UTENTES))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_UTENTES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Utente utente = Utente.fromString(linha);
@@ -76,7 +75,7 @@ public class Memoria {
 
     public static List<Emprestimo> carregarEmprestimos(Biblioteca biblioteca) {
         List<Emprestimo> emprestimos = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_EMPRESTIMOS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Emprestimo emprestimo = carregarEmprestimo(linha, biblioteca);
@@ -119,7 +118,7 @@ public class Memoria {
 
     public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
             List<Reserva> reservas = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIRO_RESERVAS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Reserva reserva = carregarReserva(linha, biblioteca);
@@ -165,7 +164,7 @@ public class Memoria {
     }
 
     private static void guardarLivros(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_LIVROS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_LIVROS))) {
             for (Livro livro : biblioteca.getLivros()) {
                 writer.write(livro.toFileString());
                 writer.newLine();
@@ -176,7 +175,7 @@ public class Memoria {
     }
 
     private static void guardarJornais(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_JORNAIS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_JORNAIS))) {
             for (Jornal jornal : biblioteca.getJornais()) {
                 writer.write(jornal.toFileString());
                 writer.newLine();
@@ -187,7 +186,7 @@ public class Memoria {
     }
 
     private static void guardarRevistas(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_REVISTAS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_REVISTAS))) {
             for (Revista revista : biblioteca.getRevistas()) {
                 writer.write(revista.toFileString());
                 writer.newLine();
@@ -198,7 +197,7 @@ public class Memoria {
     }
 
     private static void guardarUtentes(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_UTENTES))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_UTENTES))) {
             for (Utente utente : biblioteca.getUtentes()) {
                 writer.write(utente.toFileString());
                 writer.newLine();
@@ -209,7 +208,7 @@ public class Memoria {
     }
 
     private static void guardarEmprestimos(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_EMPRESTIMOS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
             for (Emprestimo emprestimo : biblioteca.getEmprestimos()) {
                 writer.write(emprestimo.toFileString());
                 writer.newLine();
@@ -220,7 +219,7 @@ public class Memoria {
     }
 
     private static void guardarReservas(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIRO_RESERVAS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
             for (Reserva reserva : biblioteca.getReservas()) {
                 writer.write(reserva.toFileString());
                 writer.newLine();
