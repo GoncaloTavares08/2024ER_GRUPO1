@@ -38,7 +38,7 @@ public abstract class Menu {
         return nome;
     }
 
-    private void desenhaMenu() {
+    public void desenhaMenu() {
         System.out.println("---" + nome + "---");
         for (int index = 0; index < this.menus.size(); index++) {
             int indexOpcao = index + 1;

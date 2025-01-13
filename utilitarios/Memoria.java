@@ -3,12 +3,15 @@ package utilitarios;
 import modelos.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Memoria {
+    private static final String FICHEIROS_BASE = "ficheiros/";
     private static final String FICHEIRO_LIVROS = "livros.txt";
     private static final String FICHEIRO_JORNAIS = "jornais.txt";
     private static final String FICHEIRO_REVISTAS = "revistas.txt";
@@ -16,10 +19,50 @@ public class Memoria {
     private static final String FICHEIRO_RESERVAS = "reservas.txt";
     private static final String FICHEIRO_EMPRESTIMOS = "emprestimos.txt";
 
+    private static final String[] FICHEIROS_OBRIGATORIOS = {
+            FICHEIRO_LIVROS, FICHEIRO_JORNAIS, FICHEIRO_REVISTAS,
+            FICHEIRO_UTENTES, FICHEIRO_RESERVAS, FICHEIRO_EMPRESTIMOS
+    };
+
+    public static void garantirDiretorioEficheirosExistem(String diretorio) {
+        try {
+            // Garante que o diretório existe
+            Files.createDirectories(Paths.get(FICHEIROS_BASE + diretorio));
+            // Garante que os ficheiros obrigatórios existem
+            for (String ficheiro : FICHEIROS_OBRIGATORIOS) {
+                File file = new File(FICHEIROS_BASE + diretorio + "/" + ficheiro);
+                if (!file.exists()) {
+                    file.createNewFile(); // Cria um ficheiro vazio
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erro ao criar diretório ou ficheiros: " + e.getMessage());
+        }
+    }
+
+    public static List<Biblioteca> carregarBibliotecas() {
+        List<Biblioteca> bibliotecas = new ArrayList<>();
+        File diretorioBibliotecas = new File(FICHEIROS_BASE);
+        if (diretorioBibliotecas.exists()) {
+            for (File arquivo : diretorioBibliotecas.listFiles()) {
+                if (arquivo.isDirectory()) {
+                    bibliotecas.add(new Biblioteca(arquivo.getName()));
+                }
+            }
+        }
+        return bibliotecas;
+    }
+
+    public static void criarBiblioteca(String nomeBiblioteca) {
+        File diretorioBiblioteca = new File(FICHEIROS_BASE + nomeBiblioteca);
+        if (!diretorioBiblioteca.exists()) {
+            diretorioBiblioteca.mkdir();
+        }
+    }
 
     public static List<Livro> carregarLivros(String diretorio) {
         List<Livro> livros = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_LIVROS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_LIVROS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Livro livro = Livro.fromString(linha);
@@ -33,7 +76,7 @@ public class Memoria {
 
     public static List<Jornal> carregarJornais(String diretorio) {
         List<Jornal> jornais = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_JORNAIS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_JORNAIS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Jornal jornal = Jornal.fromString(linha);
@@ -47,7 +90,7 @@ public class Memoria {
 
     public static List<Revista> carregarRevistas(String diretorio) {
         List<Revista> revistas = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_REVISTAS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_REVISTAS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Revista revista = Revista.fromString(linha);
@@ -61,7 +104,7 @@ public class Memoria {
 
     public static List<Utente> carregarUtentes(String diretorio) {
         List<Utente> utentes = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + diretorio + "/" + FICHEIRO_UTENTES))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_UTENTES))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Utente utente = Utente.fromString(linha);
@@ -75,7 +118,7 @@ public class Memoria {
 
     public static List<Emprestimo> carregarEmprestimos(Biblioteca biblioteca) {
         List<Emprestimo> emprestimos = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Emprestimo emprestimo = carregarEmprestimo(linha, biblioteca);
@@ -96,10 +139,10 @@ public class Memoria {
             throw new IllegalArgumentException("Utente com NIF " + nif + " não encontrado.");
         }
         List<Documento> documentos = new ArrayList<>();
-        for (String titulo : partes[2].split(",")) {
-            Documento documento = biblioteca.getDocumentoPorTitulo(titulo.trim());
+        for (String id : partes[2].split(",")) {
+            Documento documento = biblioteca.getDocumentoPorIdentificador(id.trim());
             if (documento == null) {
-                throw new IllegalArgumentException("Documento com titulo " + titulo + " não encontrado.");
+                throw new IllegalArgumentException("Documento com id " + id + " não encontrado.");
             }
             documentos.add(documento);
         }
@@ -118,7 +161,7 @@ public class Memoria {
 
     public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
             List<Reserva> reservas = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
                 Reserva reserva = carregarReserva(linha, biblioteca);
@@ -139,10 +182,10 @@ public class Memoria {
             throw new IllegalArgumentException("Utente com NIF " + nif + " não encontrado.");
         }
         List<Documento> documentos = new ArrayList<>();
-        for (String titulo : partes[2].split(",")) {
-            Documento documento = biblioteca.getDocumentoPorTitulo(titulo.trim());
+        for (String id : partes[2].split(",")) {
+            Documento documento = biblioteca.getDocumentoPorIdentificador(id.trim());
             if (documento == null) {
-                throw new IllegalArgumentException("Documento com titulo " + titulo + " não encontrado.");
+                throw new IllegalArgumentException("Documento com ID " + id + " não encontrado.");
             }
             documentos.add(documento);
         }
@@ -164,7 +207,7 @@ public class Memoria {
     }
 
     private static void guardarLivros(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_LIVROS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_LIVROS))) {
             for (Livro livro : biblioteca.getLivros()) {
                 writer.write(livro.toFileString());
                 writer.newLine();
@@ -175,7 +218,7 @@ public class Memoria {
     }
 
     private static void guardarJornais(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_JORNAIS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_JORNAIS))) {
             for (Jornal jornal : biblioteca.getJornais()) {
                 writer.write(jornal.toFileString());
                 writer.newLine();
@@ -186,7 +229,7 @@ public class Memoria {
     }
 
     private static void guardarRevistas(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_REVISTAS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_REVISTAS))) {
             for (Revista revista : biblioteca.getRevistas()) {
                 writer.write(revista.toFileString());
                 writer.newLine();
@@ -197,7 +240,7 @@ public class Memoria {
     }
 
     private static void guardarUtentes(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_UTENTES))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_UTENTES))) {
             for (Utente utente : biblioteca.getUtentes()) {
                 writer.write(utente.toFileString());
                 writer.newLine();
@@ -208,7 +251,7 @@ public class Memoria {
     }
 
     private static void guardarEmprestimos(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
             for (Emprestimo emprestimo : biblioteca.getEmprestimos()) {
                 writer.write(emprestimo.toFileString());
                 writer.newLine();
@@ -219,7 +262,7 @@ public class Memoria {
     }
 
     private static void guardarReservas(Biblioteca biblioteca) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("ficheiros/" + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
             for (Reserva reserva : biblioteca.getReservas()) {
                 writer.write(reserva.toFileString());
                 writer.newLine();

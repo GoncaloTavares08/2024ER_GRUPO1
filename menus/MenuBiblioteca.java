@@ -8,6 +8,9 @@ import menus.reservas.MenuReservas;
 import menus.revistas.MenuRevistas;
 import menus.utentes.MenuUtentes;
 import modelos.Biblioteca;
+import utilitarios.Memoria;
+
+import java.util.Scanner;
 
 public class MenuBiblioteca extends Menu {
 
@@ -21,4 +24,5 @@ public class MenuBiblioteca extends Menu {
         menus.add(new MenuEmprestimos(biblioteca,"Empréstimos"));
         menus.add(new MenuEstatisticas(biblioteca,"Estatísticas"));
     }
+
 }

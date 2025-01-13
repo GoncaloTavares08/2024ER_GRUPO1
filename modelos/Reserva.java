@@ -38,9 +38,9 @@ public class Reserva extends Transacao {
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
                 "; ISBN dos Livros: " + titulosDocumentos.toString().replace("[", "").replace("]", "") +
-                "; Data de Registo: " + getDataRegisto() +
-                "; Data de Inicio: " + getDataInicio() +
-                "; Data de Fim: " + getDataFim() +
+                "; Data de Registo: " + getDataRegisto().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
+                "; Data de Inicio: " + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
+                "; Data de Fim: " + getDataFim().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 ']';
     }
 

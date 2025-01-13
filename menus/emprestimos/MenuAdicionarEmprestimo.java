@@ -8,11 +8,9 @@ import modelos.Utente;
 import utilitarios.Leitores;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class MenuAdicionarEmprestimo extends Menu {
     public MenuAdicionarEmprestimo(Biblioteca biblioteca, String nome) {
@@ -40,9 +38,9 @@ public class MenuAdicionarEmprestimo extends Menu {
         scanner.nextLine(); // Consumir a quebra de linha
         List<Documento> documentosParaEmprestimo = new ArrayList<>();
         for (int i = 0; i < quantidadeDocumentos; i++) {
-            System.out.print("Título do " + (i + 1) + "º documento:");
-            String titulo = scanner.nextLine();
-            Documento documento = this.biblioteca.getDocumentoPorTitulo(titulo);
+            System.out.print("ID do " + (i + 1) + "º documento:");
+            String id = scanner.nextLine();
+            Documento documento = this.biblioteca.getDocumentoPorIdentificador(id);
             if (documento == null) {
                 System.out.println("Operação cancelada.");
                 return;
@@ -55,7 +53,7 @@ public class MenuAdicionarEmprestimo extends Menu {
             }
         }
 
-        Emprestimo emprestimo = new Emprestimo(UUID.randomUUID().toString(), utente, documentosParaEmprestimo, dataInicio, dataPrevistaDevolucao);
+        Emprestimo emprestimo = new Emprestimo(String.valueOf(this.biblioteca.getEmprestimos().size()+1), utente, documentosParaEmprestimo, dataInicio, dataPrevistaDevolucao);
         this.biblioteca.getEmprestimos().add(emprestimo);
 
         System.out.println("Empréstimo adicionado com sucesso!");

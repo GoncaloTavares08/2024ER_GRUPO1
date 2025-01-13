@@ -17,13 +17,13 @@ public class Biblioteca {
 
     public Biblioteca(String diretorio) {
         this.diretorio = diretorio;
+        Memoria.garantirDiretorioEficheirosExistem(diretorio);
         this.livros = Memoria.carregarLivros(this.diretorio);
         this.jornais = Memoria.carregarJornais(this.diretorio);
         this.revistas = Memoria.carregarRevistas(this.diretorio);
         this.utentes = Memoria.carregarUtentes(this.diretorio);
         this.emprestimos = Memoria.carregarEmprestimos(this);
         this.reservas = Memoria.carregarReservas(this);
-        this.transformarReservasParaEmprestimos();
     }
 
     public List<Livro> getLivros() {
@@ -84,9 +84,19 @@ public class Biblioteca {
         return documentos;
     }
 
-    public Documento getDocumentoPorTitulo(String titulo) {
-        for (Documento documento : this.getDocumentos()) {
-            if (documento.getTitulo().equalsIgnoreCase(titulo)) {
+    public Documento getDocumentoPorIdentificador(String id) {
+        for (Documento documento : this.livros) {
+            if(documento.getIdentificadorDocumento().equals(id)){
+                return documento;
+            }
+        }
+        for (Documento documento : this.revistas) {
+            if(documento.getIdentificadorDocumento().equals(id)){
+                return documento;
+            }
+        }
+        for (Documento documento : this.jornais) {
+            if(documento.getIdentificadorDocumento().equals(id)){
                 return documento;
             }
         }
@@ -200,9 +210,9 @@ public class Biblioteca {
         return false;
     }
 
-    private void transformarReservasParaEmprestimos() {
+    public void transformarReservasParaEmprestimos() {
         LocalDate dataAtual = LocalDate.now();
-
+        List<Reserva> reservasParaRemover = new ArrayList<>();
         for (Reserva reserva : this.reservas) {
             if (reserva.getDataInicio().isBefore(dataAtual)) {
                 Emprestimo emprestimo = new Emprestimo(
@@ -213,10 +223,12 @@ public class Biblioteca {
                         reserva.getDataFim()
                 );
                 this.emprestimos.add(emprestimo);
-                this.reservas.remove(reserva);
+                reservasParaRemover.add(reserva);
             }
         }
+        this.reservas.removeAll(reservasParaRemover);
     }
+
 
     public boolean documentoEstaLivreNoPeriodo(Documento documento, LocalDate dataInicio, LocalDate dataFim) {
         List<Transacao> transacoes = this.transacoesNoPeriodo(dataInicio, dataFim);

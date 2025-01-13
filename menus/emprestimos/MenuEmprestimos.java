@@ -11,5 +11,6 @@ public class MenuEmprestimos extends Menu {
         this.menus.add(new MenuMostrarTempoMedioDuracaoEmprestimosPorData(biblioteca, "Média de duração de Empréstimos por Data"));
         this.menus.add(new MenuAdicionarEmprestimo(biblioteca, "Adicionar Empréstimo"));
         this.menus.add(new MenuEditarEmprestimo(biblioteca, "Editar Empréstimo"));
+        this.menus.add(new MenuDevolverEmprestimo(biblioteca, "Devolver Empréstimo"));
     }
 }

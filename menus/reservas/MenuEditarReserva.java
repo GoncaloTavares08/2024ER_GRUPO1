@@ -58,9 +58,9 @@ public class MenuEditarReserva extends Menu {
                     scanner.nextLine(); // consumir o newline do scanner
                     reservaEditada.getDocumentos().clear();
                     for (int i = 0; i < novoNumDocumentos; i++) {
-                        System.out.print("Título do " + (i + 1) + "º documento:");
-                        String titulo = scanner.nextLine();
-                        Documento documento = this.biblioteca.getDocumentoPorTitulo(titulo);
+                        System.out.print("ID do " + (i + 1) + "º documento:");
+                        String id = scanner.nextLine();
+                        Documento documento = this.biblioteca.getDocumentoPorIdentificador(id);
                         if (this.biblioteca.documentoEstaLivreNoPeriodo(documento, novaDataInicio, novaDataFim)) {
                             documentos.add(documento);
                         } else {

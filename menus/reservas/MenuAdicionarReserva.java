@@ -8,11 +8,9 @@ import modelos.Utente;
 import utilitarios.Leitores;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class MenuAdicionarReserva extends Menu {
     public MenuAdicionarReserva(Biblioteca biblioteca, String name) {
@@ -42,9 +40,9 @@ public class MenuAdicionarReserva extends Menu {
         scanner.nextLine(); // Consumir a quebra de linha
         List<Documento> documentosParaReserva = new ArrayList<>();
         for (int i = 0; i < quantidadeDocumentos; i++) {
-            System.out.print("Título do " + (i + 1) + "º documento:");
-            String titulo = scanner.nextLine();
-            Documento documento = this.biblioteca.getDocumentoPorTitulo(titulo);
+            System.out.print("ID do " + (i + 1) + "º documento:");
+            String id = scanner.nextLine();
+            Documento documento = this.biblioteca.getDocumentoPorIdentificador(id);
             if (documento == null) {
                 System.out.println("Operação cancelada.");
                 return;
@@ -56,7 +54,7 @@ public class MenuAdicionarReserva extends Menu {
                 return;
             }
         }
-        Reserva reserva = new Reserva(UUID.randomUUID().toString(), utente, documentosParaReserva, dataInicio, dataRegisto, dataFim);
+        Reserva reserva = new Reserva(String.valueOf(this.biblioteca.getReservas().size()+1), utente, documentosParaReserva, dataInicio, dataRegisto, dataFim);
         this.biblioteca.getReservas().add(reserva);
 
         System.out.println("Reserva adicionada com sucesso!");
