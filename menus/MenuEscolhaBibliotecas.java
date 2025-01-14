@@ -10,11 +10,10 @@ public class MenuEscolhaBibliotecas {
         List<Biblioteca> bibliotecasExistentes = Memoria.carregarBibliotecas();
 
         while (true) {
-            System.out.println("Escolha uma opção:");
+            System.out.println("--- Bibliotecas ---");
             System.out.println("1. Criar nova biblioteca");
             System.out.println("2. Escolher biblioteca existente");
             System.out.print("Opção: ");
-
             int opcao = scanner.nextInt();
             scanner.nextLine(); // Consumir a nova linha
 

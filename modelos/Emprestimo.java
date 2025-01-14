@@ -48,14 +48,14 @@ public class Emprestimo extends Transacao {
 
     @Override
     public String toString() {
-        List<String> titulosDocumentos = new ArrayList<>();
+        List<String> idDocumentos = new ArrayList<>();
         for (Documento documento : getDocumentos()) {
-            titulosDocumentos.add(documento.getTitulo());
+            idDocumentos.add(documento.getIdentificadorDocumento());
         }
         return "[" +
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
-                "; ISBN dos Livros: " + titulosDocumentos.toString().replace("[", "").replace("]", "") +
+                "; ISBN dos Livros: " + idDocumentos.toString().replace("[", "").replace("]", "") +
                 "; Data de Inicio: " + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data Prevista Devolução: " + getDataPrevistaDevolucao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data Efetiva Devolução: " + getDataEfetivaDevolucao() +
@@ -63,13 +63,13 @@ public class Emprestimo extends Transacao {
     }
 
     public String toFileString() {
-        ArrayList<String> titulosDocumentos = new ArrayList<>();
+        ArrayList<String> idDocumentos = new ArrayList<>();
         for (Documento documento : this.documentos) {
-            titulosDocumentos.add(documento.getTitulo());
+            idDocumentos.add(documento.getIdentificadorDocumento());
         }
         String output = getNumero() +
                 "|" + getUtente().getNif() +
-                "|" + titulosDocumentos.toString().replace("[", "").replace("]", "") +
+                "|" + idDocumentos.toString().replace("[", "").replace("]", "") +
                 "|" + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "|" + getDataPrevistaDevolucao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 

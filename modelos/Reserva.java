@@ -30,14 +30,14 @@ public class Reserva extends Transacao {
 
     @Override
     public String toString() {
-        List<String> titulosDocumentos = new ArrayList<>();
+        List<String> idDocumentos = new ArrayList<>();
         for (Documento documento : getDocumentos()) {
-            titulosDocumentos.add(documento.getTitulo());
+            idDocumentos.add(documento.getIdentificadorDocumento());
         }
         return "[" +
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
-                "; ISBN dos Livros: " + titulosDocumentos.toString().replace("[", "").replace("]", "") +
+                "; ISBN dos Livros: " + idDocumentos.toString().replace("[", "").replace("]", "") +
                 "; Data de Registo: " + getDataRegisto().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data de Inicio: " + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data de Fim: " + getDataFim().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
@@ -45,13 +45,13 @@ public class Reserva extends Transacao {
     }
 
     public String toFileString() {
-        ArrayList<String> titulosDocumentos = new ArrayList<>();
+        ArrayList<String> idDocumentos = new ArrayList<>();
         for (Documento documento : this.documentos) {
-            titulosDocumentos.add(documento.getTitulo());
+            idDocumentos.add(documento.getIdentificadorDocumento());
         }
         return getNumero() +
                 "|" + getUtente().getNif() +
-                "|" + titulosDocumentos.toString().replace("[", "").replace("]", "") +
+                "|" + idDocumentos.toString().replace("[", "").replace("]", "") +
                 "|" + getDataRegisto().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "|" + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "|" + getDataFim().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
