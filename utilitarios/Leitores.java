@@ -61,4 +61,33 @@ public class Leitores {
         }
         return string;
     }
+
+    public static int lerNumeroInteiro(Scanner sc) {
+        int numero = 0;
+        boolean eValido = false;
+        while (!eValido) {
+            try {
+                numero = sc.nextInt();
+                eValido = true;
+            } catch (Exception e) {
+                System.out.print("Valor inválido, introduza novamente:");
+            }
+            sc.nextLine();
+        }
+        return numero;
+    }
+
+    public static char lerGenero(Scanner sc) {
+        char genero = ' ';
+        boolean eValido = false;
+        while (!eValido) {
+            genero = sc.nextLine().charAt(0);
+            if (genero == 'M' || genero == 'F') {
+                eValido = true;
+            } else {
+                System.out.println("Erro! O género deve ser apenas 'M' ou 'F'.");
+            }
+        }
+        return genero;
+    }
 }
