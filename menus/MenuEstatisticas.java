@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuEstatisticas extends Menu {
-    public MenuEstatisticas(Biblioteca biblioteca, String name) {
-        super(biblioteca, name);
+public class MenuEstatisticas{
+    private Biblioteca biblioteca;
+
+    public MenuEstatisticas(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     protected void gerirEstatisticas(){

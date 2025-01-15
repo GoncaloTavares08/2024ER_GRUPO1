@@ -1,4 +1,3 @@
-import menus.Menu;
 import menus.MenuBiblioteca;
 import menus.MenuEscolhaBibliotecas;
 import modelos.Biblioteca;
@@ -8,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
         Biblioteca biblioteca = MenuEscolhaBibliotecas.escolherOuCriarBiblioteca();
         biblioteca.transformarReservasParaEmprestimos();
-        Menu menu = new MenuBiblioteca(biblioteca, biblioteca.getDiretorio());
-        menu.mostrarMenu();
+        MenuBiblioteca menuBiblioteca = new MenuBiblioteca(biblioteca);
+        menuBiblioteca.gerirGeral();
         Memoria.guardaDados(biblioteca);
     }
 }

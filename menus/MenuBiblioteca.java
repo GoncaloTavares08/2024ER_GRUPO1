@@ -4,14 +4,14 @@ import modelos.Biblioteca;
 
 import java.util.Scanner;
 
-public class MenuBiblioteca extends Menu {
+public class MenuBiblioteca {
+    private Biblioteca biblioteca;
 
-    public MenuBiblioteca(Biblioteca biblioteca,String name) {
-        super(biblioteca, name);
-        gerirGeral();
+    public MenuBiblioteca(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
-    public void gerirGeral(){
+    public void gerirGeral() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
         do {
@@ -28,13 +28,13 @@ public class MenuBiblioteca extends Menu {
             opcao = scanner.nextInt();
             System.out.println("");
             switch (opcao) {
-                case 1 -> new MenuLivros(biblioteca, "Livros").gerirLivros();
-                case 2 -> new MenuJornais(biblioteca, "Jornais").gerirJornais();
-                case 3 -> new MenuRevistas(biblioteca, "Revistas").gerirRevistas();
-                case 4 -> new MenuUtentes(biblioteca, "Utentes").gerirUtentes();
-                case 5 -> new MenuReservas(biblioteca, "Reservas").gerirReservas();
-                case 6 -> new MenuEmprestimos(biblioteca, "Empréstimos").gerirEmprestimos();
-                case 7 -> new MenuEstatisticas(biblioteca, "Estatísticas").gerirEstatisticas();
+                case 1 -> new MenuLivros(biblioteca).gerirLivros();
+                case 2 -> new MenuJornais(biblioteca).gerirJornais();
+                case 3 -> new MenuRevistas(biblioteca).gerirRevistas();
+                case 4 -> new MenuUtentes(biblioteca).gerirUtentes();
+                case 5 -> new MenuReservas(biblioteca).gerirReservas();
+                case 6 -> new MenuEmprestimos(biblioteca).gerirEmprestimos();
+                case 7 -> new MenuEstatisticas(biblioteca).gerirEstatisticas();
                 case 0 -> {
                     return;
                 }
