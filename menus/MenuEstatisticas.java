@@ -2,10 +2,13 @@ package menus;
 
 import modelos.Biblioteca;
 import modelos.Documento;
+import modelos.Emprestimo;
 import modelos.Transacao;
 import utilitarios.Leitores;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -22,13 +25,17 @@ public class MenuEstatisticas{
         int opcao;
         do {
             System.out.println("\n--- Menu Gestão Emprestimos ---");
-            System.out.println("1. Mostrar Documento mais Requisitado");
+            System.out.println("1. Mostrar Documento mais Requisitado num Intervalo de Datas");
+            System.out.println("2. Mostrar Tempo Médio de Empréstimos num Intervalo de Datas");
+            System.out.println("3. Mostrar Total Empréstimos num Intervalo de Datas");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> documentoMaisRequisitado();
+                case 2 -> mostrarTempoMedioEmprestimos();
+                case 3 -> mostrarTotalEmprestimos();
                 case 0 -> {
                     return;
                 }
@@ -83,5 +90,44 @@ public class MenuEstatisticas{
         } else {
             System.out.println("Nenhum item foi requisitado no intervalo de datas especificado.");
         }
+    }
+
+    private void mostrarTempoMedioEmprestimos(){
+        int count = 0;
+        long somaDias = 0;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Introduza a data de início:");
+        LocalDate dataInicio = Leitores.lerData(scanner);
+        System.out.print("Introduza a data de fim:");
+        LocalDate dataFim = Leitores.lerData(scanner);
+        for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
+            if(dataInicio.isBefore(emprestimo.getDataInicio()) && dataFim.isAfter(emprestimo.getDataInicio())){
+                count++;
+                somaDias += ChronoUnit.DAYS.between(emprestimo.getDataInicio(), emprestimo.getDataPrevistaDevolucao());
+            }
+        }
+        if (count == 0){
+            System.out.println("Não existem empréstimos nas datas indicadas.");
+        }else{
+            System.out.println("A média em dias dos empréstimos entre as datas indicadas é de " + somaDias/count + " dias.");
+        }
+
+    }
+
+    private void mostrarTotalEmprestimos(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Introduza a data de início:");
+        LocalDate dataInicio = Leitores.lerData(scanner);
+        System.out.print("Introduza a data de fim:");
+        LocalDate dataFim = Leitores.lerData(scanner);
+
+        int totalEmprestimos = 0;
+        for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
+            if (dataInicio.isBefore(emprestimo.getDataInicio()) && dataFim.isAfter(emprestimo.getDataInicio())) {
+                totalEmprestimos++;
+            }
+        }
+        System.out.println("Total de empréstimos para o intervalo " + dataInicio.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " e " + dataFim.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ": " + totalEmprestimos);
+
     }
 }

@@ -1,12 +1,10 @@
-Livro1|Leya|Acao|2021|4257523553|Goncalo,Joao
-Livro2|Porto Editora|Ficcao|2023|9270334092|Joao,Miguel
-Livro3|Editorial Presença|Romance|2020|2374847548|Ana,Maria
-Livro4|Editora Abril|Suspense|2022|9981370632|Pedro,Luis
-Livro5|Bertrand|Aventura|2024|1858345808|Clara,Sofia
-Livro6|Círculo de Leitores|Drama|2025|3322438683|Marta,Paulo
-Livro7|Texto Editores|Fantasia|2021|7416227825|Fernando,Jorge
-Livro8|Editorial Minerva|História|2023|3413232794|Diana,Isabel
-Livro9|Editora Alvorada|Filosofia|2019|8604163980|Manuel,Ricardo
-Livro10|Alpha Books|Ciência|2022|7852418996|Helena,Teresa
-Livro11|Editora Chen|Aventura|2019|543285621X|Diana,Joao
-Livro 12|Porto editora|ficcao|2024|1234|Joao
+O Homem que Mordeu o Cão|Objetiva|Ação|2021|9789898775375|NunoMarkl
+As Novas Aventuras de Sherlock Holmes|Porto Editora|Ficção|2023|9788569250111|JoãoVentura
+A Sociedade Literária da Tarte de Casca de Batata|Editorial Presença|Romance|2020|9789896720155|MaryAnnShaffer,AnnieBarrows
+A Última Festa|Editorial Presença|Suspense|2022|9789897775116|LucyFoley
+A Casa dos Espíritos|Dom Quixote|Aventura|2024|9789720044457|IsabelAllende
+Os Pilares da Terra|Editorial Presença|Drama|2025|9789722369886|KenFollett
+O Nome do Vento|Saída de Emergência|Fantasia|2021|9789895576715|PatrickRothfuss
+D. Maria II: Tudo por um Reino|Planeta|História|2023|9789896263690|IsabelStilwell
+Assim Falava Zaratustra|Relógio D’Água|Filosofia|2019|9789726656562|FriedrichNietzsche
+Breves Respostas às Grandes Perguntas|Gradiva|Ciência|2022|9789895322701|StephenHawking

@@ -28,7 +28,7 @@ public class MenuReservas{
             System.out.println("4. Remover Reservas");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> adicionarReservas();
@@ -45,7 +45,7 @@ public class MenuReservas{
     private void adicionarReservas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF do Utente:");
-        String nif = scanner.nextLine();
+        String nif = Leitores.lerStringNaoVazia(scanner);
         Utente utente = this.biblioteca.getUtentePorNif(nif);
         if (utente == null) {
             System.out.println("Utente não existe.");
@@ -60,12 +60,11 @@ public class MenuReservas{
         LocalDate dataFim = Leitores.lerData(scanner);
 
         System.out.print("Quantos documentos tem a reserva? ");
-        int quantidadeDocumentos = scanner.nextInt();
-        scanner.nextLine(); // Consumir a quebra de linha
+        int quantidadeDocumentos = Leitores.lerNumeroInteiro(scanner);
         List<Documento> documentosParaReserva = new ArrayList<>();
         for (int i = 0; i < quantidadeDocumentos; i++) {
             System.out.print("ID do " + (i + 1) + "º documento:");
-            String id = scanner.nextLine();
+            String id = Leitores.lerStringNaoVazia(scanner);
             Documento documento = this.biblioteca.getDocumentoPorIdentificador(id);
             if (documento == null) {
                 System.out.println("Operação cancelada.");
@@ -89,7 +88,7 @@ public class MenuReservas{
         if (!this.biblioteca.getReservas().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Número da Reserva a editar: ");
-            String numero = scanner.nextLine();
+            String numero = Leitores.lerStringNaoVazia(scanner);
             Reserva reservaEditada = null;
             for (Reserva reserva : this.biblioteca.getReservas()) {
                 if (reserva.getNumero().equals(numero)) {
@@ -100,12 +99,8 @@ public class MenuReservas{
             if (reservaEditada != null) {
                 System.out.println("\n--- Editar Reserva ---");
                 System.out.print("Novo NIF: ");
-                String novoNif = scanner.nextLine();
-                if (!novoNif.isEmpty()) {
-                    reservaEditada.setUtente(this.biblioteca.getUtentePorNif(novoNif));
-                } else {
-                    System.out.println("NIF não pode estar vazio.");
-                }
+                String novoNif = Leitores.lerStringNaoVazia(scanner);
+                reservaEditada.setUtente(this.biblioteca.getUtentePorNif(novoNif));
 
                 System.out.print("Nova Data de Início (dd-MM-yyyy): ");
                 LocalDate novaDataInicio = Leitores.lerData(scanner);
@@ -117,14 +112,13 @@ public class MenuReservas{
 
 
                 System.out.print("Novo Número de Documentos: ");
-                int novoNumDocumentos = scanner.nextInt();
+                int novoNumDocumentos = Leitores.lerNumeroInteiro(scanner);
                 if (novoNumDocumentos > 0) {
                     List<Documento> documentos = new ArrayList<>();
-                    scanner.nextLine(); // consumir o newline do scanner
                     reservaEditada.getDocumentos().clear();
                     for (int i = 0; i < novoNumDocumentos; i++) {
                         System.out.print("ID do " + (i + 1) + "º documento:");
-                        String id = scanner.nextLine();
+                        String id = Leitores.lerStringNaoVazia(scanner);
                         Documento documento = this.biblioteca.getDocumentoPorIdentificador(id);
                         if (this.biblioteca.documentoEstaLivreNoPeriodo(documento, novaDataInicio, novaDataFim)) {
                             documentos.add(documento);
@@ -162,7 +156,7 @@ public class MenuReservas{
         } else {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Número da Reserva a remover: ");
-            String numeroReserva = scanner.nextLine();
+            String numeroReserva = Leitores.lerStringNaoVazia(scanner);
             boolean reservaFoiRemovida = this.biblioteca.removerReservaPorNumero(numeroReserva);
             if (reservaFoiRemovida) {
                 System.out.println("Reserva removida com sucesso.");

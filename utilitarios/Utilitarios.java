@@ -64,7 +64,6 @@ public class Utilitarios {
             return false;
         }
 
-        // Cálculo do check-digit para o ISSN
         int sum = 0;
         for (int i = 0; i < 7; i++) {
             sum += (8 - i) * (issn.charAt(i) - '0');
