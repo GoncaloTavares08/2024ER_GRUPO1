@@ -27,7 +27,7 @@ public class MenuLivros {
             System.out.println("5. Procurar Livro por ISBN");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> adicionarLivros();

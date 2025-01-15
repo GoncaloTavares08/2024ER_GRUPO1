@@ -1,1 +1,6 @@
-Revista 1|CM|Desporto|12|31-12-2024
+Revista da Manhã|Correio da Manhã|Notícias|15416100|18-12-2024
+Revista Regional|Gazeta das Caldas|Economia|2707711X|15-12-2024
+Revista de Notícias|Diário de Notícias|Tecnologia|2581897X|19-12-2024
+Revista da Bola|A Bola|Desporto|00216070|17-12-2024
+Revista Visão|Visão|Artes|10615601|16-12-2024
+National Geographic Portugal|National Geographic|Ambiente|23069198|20-12-2024

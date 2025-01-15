@@ -26,7 +26,7 @@ public class MenuRevistas {
             System.out.println(("5. Procurar Revista por ISSN"));
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> adicionarRevistas();
@@ -44,11 +44,11 @@ public class MenuRevistas {
     private void adicionarRevistas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
-        String titulo = scanner.nextLine();
+        String titulo = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Editora: ");
-        String editora = scanner.nextLine();
+        String editora = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Categoria: ");
-        String categoria = scanner.nextLine();
+        String categoria = Leitores.lerStringNaoVazia(scanner);
         System.out.print("ISSN: ");
         String ISSN = Leitores.lerISSN(scanner);
         System.out.print("Data de publicação (dd-MM-yyyy): ");
@@ -62,7 +62,7 @@ public class MenuRevistas {
         if (!this.biblioteca.getRevistas().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Título da Revista a editar: ");
-            String titulo = scanner.nextLine();
+            String titulo = Leitores.lerStringNaoVazia(scanner);
             Revista revistaEditada = null;
             for (Revista revista : this.biblioteca.getRevistas()) {
                 if (revista.getTitulo().equals(titulo)) {
@@ -73,30 +73,17 @@ public class MenuRevistas {
             if (revistaEditada != null) {
                 System.out.println("\n--- Editar Revista ---");
                 System.out.print("Novo Título: ");
-                String novoTitulo = scanner.nextLine();
-                if (!novoTitulo.isEmpty()) {
-                    revistaEditada.setTitulo(novoTitulo);
-                } else {
-                    System.out.println("Título não pode estar vazio.");
-                }
+                String novoTitulo = Leitores.lerStringNaoVazia(scanner);
+                revistaEditada.setTitulo(novoTitulo);
                 System.out.print("Nova Editora: ");
-                String novaEditora = scanner.nextLine();
-                if (!novaEditora.isEmpty()) {
-                    revistaEditada.setEditora(novaEditora);
-                } else {
-                    System.out.println("Editora não pode estar vazia.");
-                }
+                String novaEditora = Leitores.lerStringNaoVazia(scanner);
+                revistaEditada.setEditora(novaEditora);
                 System.out.print("Nova Categoria: ");
-                String novaCategoria = scanner.nextLine();
-                if (!novaCategoria.isEmpty()) {
-                    revistaEditada.setCategoria(novaCategoria);
-                } else {
-                    System.out.println("Categoria não pode estar vazia.");
-                }
+                String novaCategoria = Leitores.lerStringNaoVazia(scanner);
+                revistaEditada.setCategoria(novaCategoria);
                 System.out.print("Novo ISSN: ");
                 String novoISSN = Leitores.lerISSN(scanner);
                 revistaEditada.setISSN(novoISSN);
-
                 System.out.print("Nova data de publicação (dd-MM-yyyy): ");
                 LocalDate novaDataPublicacao = Leitores.lerData(scanner);
                 revistaEditada.setDataPublicacao(novaDataPublicacao);
@@ -122,7 +109,7 @@ public class MenuRevistas {
         if (!this.biblioteca.getRevistas().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("ISSN do Revista a remover: ");
-            String issn = scanner.nextLine();
+            String issn = Leitores.lerStringNaoVazia(scanner);
             boolean revistaFoiRemovido = this.biblioteca.removerRevistaPorIssn(issn);
             if (revistaFoiRemovido) {
                 System.out.println("Revista removida com sucesso.");

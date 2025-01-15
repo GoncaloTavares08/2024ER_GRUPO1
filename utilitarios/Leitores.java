@@ -81,7 +81,7 @@ public class Leitores {
         char genero = ' ';
         boolean eValido = false;
         while (!eValido) {
-            genero = sc.nextLine().charAt(0);
+            genero = sc.nextLine().toUpperCase().charAt(0);
             if (genero == 'M' || genero == 'F') {
                 eValido = true;
             } else {

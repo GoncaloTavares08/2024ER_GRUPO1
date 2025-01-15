@@ -26,15 +26,13 @@ public class MenuUtentes{
             System.out.println("2. Editar Utentes");
             System.out.println("3. Mostrar Utentes");
             System.out.println("4. Mostrar Utentes Ativos");
-            System.out.println("5. Mostrar com Devolução Atrasada");
+            System.out.println("5. Mostrar Utentes com Devolução Atrasada");
             System.out.println("6. Remover Utentes");
             System.out.println("7. Procurar Utente por NIF");
             System.out.println("8. Procurar Transações por Utente e Data");
-
-
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> adicionarUtentes();
@@ -55,13 +53,13 @@ public class MenuUtentes{
     private void adicionarUtentes() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF: ");
-        String nif = scanner.nextLine();
+        String nif = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Nome: ");
-        String nome = scanner.nextLine();
+        String nome = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Género (M/F): ");
         char genero = Leitores.lerGenero(scanner);
         System.out.print("Contacto: ");
-        String contacto = scanner.nextLine();
+        String contacto = Leitores.lerStringNaoVazia(scanner);
 
         Utente utente = new Utente(nif, nome, genero, contacto);
         this.biblioteca.getUtentes().add(utente);
@@ -71,7 +69,7 @@ public class MenuUtentes{
         if (!this.biblioteca.getUtentes().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("NIF do Utente a editar: ");
-            String nif = scanner.nextLine();
+            String nif = Leitores.lerStringNaoVazia(scanner);
             Utente utenteEditado = null;
             for (Utente utente : this.biblioteca.getUtentes()) {
                 if (utente.getNif().equals(nif)) {
@@ -82,30 +80,18 @@ public class MenuUtentes{
             if (utenteEditado!= null) {
                 System.out.println("\n--- Editar Utente ---");
                 System.out.print("Novo NIF: ");
-                String novoNif = scanner.nextLine();
-                if (!novoNif.isEmpty()) {
-                    utenteEditado.setNif(novoNif);
-                } else {
-                    System.out.println("NIF não pode estar vazio.");
-                }
+                String novoNif = Leitores.lerStringNaoVazia(scanner);
+                utenteEditado.setNif(novoNif);
                 System.out.print("Novo Nome: ");
-                String novoNome = scanner.nextLine();
-                if (!novoNome.isEmpty()) {
-                    utenteEditado.setNome(novoNome);
-                } else {
-                    System.out.println("Nome não pode estar vazio.");
-                }
+                String novoNome = Leitores.lerStringNaoVazia(scanner);
+                utenteEditado.setNome(novoNome);
                 System.out.print("Novo Género (M/F): ");
                 char novoGenero = Leitores.lerGenero(scanner);
                 utenteEditado.setGenero(novoGenero);
-
                 System.out.print("Novo Contacto: ");
-                String novoContacto = scanner.nextLine();
-                if (!novoContacto.isEmpty()) {
-                    utenteEditado.setContacto(novoContacto);
-                } else {
-                    System.out.println("Contacto não pode estar vazio.");
-                }
+                String novoContacto = Leitores.lerStringNaoVazia(scanner);
+                utenteEditado.setContacto(novoContacto);
+
                 System.out.println("Utente editado com sucesso");
             }
         }
@@ -126,7 +112,7 @@ public class MenuUtentes{
         if (!this.biblioteca.getUtentes().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("NIF do Utente a remover: ");
-            String nif = scanner.nextLine();
+            String nif = Leitores.lerStringNaoVazia(scanner);
 
             Utente utenteRemovido = null;
             for (Utente utente : this.biblioteca.getUtentes()) {
@@ -165,7 +151,7 @@ public class MenuUtentes{
     private void listarUtentesDevolucaoAtrasada(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quantos dias a devolução está atrasada?");
-        int diasAtrasados = scanner.nextInt();
+        int diasAtrasados = Leitores.lerNumeroInteiro(scanner);
         scanner.nextLine();
         List<Emprestimo> emprestimos = this.biblioteca.getEmprestimos();
         for (Emprestimo emprestimo : emprestimos) {
@@ -178,7 +164,7 @@ public class MenuUtentes{
     private void procurarUtentePorNIF(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o NIF do utente");
-        String nif = scanner.nextLine();
+        String nif = Leitores.lerStringNaoVazia(scanner);
         Utente utente = this.biblioteca.getUtentePorNif(nif);
         if (utente != null) {
             System.out.println(utente);
@@ -190,7 +176,7 @@ public class MenuUtentes{
     private void listarTransacoesPorUtentePorDatas(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o NIF do utente:");
-        String nif = scanner.nextLine();
+        String nif = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Introduza a data de início:");
         LocalDate dataInicio = Leitores.lerData(scanner);
         System.out.print("Introduza a data de fim:");

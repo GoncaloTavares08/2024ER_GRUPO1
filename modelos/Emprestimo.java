@@ -55,7 +55,7 @@ public class Emprestimo extends Transacao {
         return "[" +
                 "Número: " + getNumero() +
                 "; NIF do Utente: " + getUtente().getNif() +
-                "; ISBN dos Livros: " + idDocumentos.toString().replace("[", "").replace("]", "") +
+                "; ID dos Documentos: " + idDocumentos.toString().replace("[", "").replace("]", "") +
                 "; Data de Inicio: " + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data Prevista Devolução: " + getDataPrevistaDevolucao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data Efetiva Devolução: " + getDataEfetivaDevolucao() +

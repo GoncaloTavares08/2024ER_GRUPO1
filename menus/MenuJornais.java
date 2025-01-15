@@ -26,7 +26,7 @@ public class MenuJornais{
             System.out.println(("5. Procurar Jornal por ISSN"));
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> adicionarJornais();
@@ -44,11 +44,11 @@ public class MenuJornais{
     private void adicionarJornais() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
-        String titulo = scanner.nextLine();
+        String titulo = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Editora: ");
-        String editora = scanner.nextLine();
+        String editora = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Categoria: ");
-        String categoria = scanner.nextLine();
+        String categoria = Leitores.lerStringNaoVazia(scanner);
         System.out.print("ISSN: ");
         String ISSN = Leitores.lerISSN(scanner);
         System.out.print("Data de publicação (dd-MM-yyyy): ");
@@ -62,7 +62,7 @@ public class MenuJornais{
         if (!this.biblioteca.getJornais().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Título do Jornal a editar: ");
-            String titulo = scanner.nextLine();
+            String titulo = Leitores.lerStringNaoVazia(scanner);
             Jornal jornalEditado = null;
             for (Jornal jornal : this.biblioteca.getJornais()) {
                 if (jornal.getTitulo().equals(titulo)) {
@@ -73,30 +73,17 @@ public class MenuJornais{
             if (jornalEditado != null) {
                 System.out.println("\n--- Editar Jornal ---");
                 System.out.print("Novo Título: ");
-                String novoTitulo = scanner.nextLine();
-                if (!novoTitulo.isEmpty()) {
-                    jornalEditado.setTitulo(novoTitulo);
-                } else {
-                    System.out.println("Título não pode estar vazio.");
-                }
+                String novoTitulo = Leitores.lerStringNaoVazia(scanner);
+                jornalEditado.setTitulo(novoTitulo);
                 System.out.print("Nova Editora: ");
-                String novaEditora = scanner.nextLine();
-                if (!novaEditora.isEmpty()) {
-                    jornalEditado.setEditora(novaEditora);
-                } else {
-                    System.out.println("Editora não pode estar vazia.");
-                }
+                String novaEditora = Leitores.lerStringNaoVazia(scanner);
+                jornalEditado.setEditora(novaEditora);
                 System.out.print("Nova Categoria: ");
-                String novaCategoria = scanner.nextLine();
-                if (!novaCategoria.isEmpty()) {
-                    jornalEditado.setCategoria(novaCategoria);
-                } else {
-                    System.out.println("Categoria não pode estar vazia.");
-                }
+                String novaCategoria = Leitores.lerStringNaoVazia(scanner);
+                jornalEditado.setCategoria(novaCategoria);
                 System.out.print("Novo ISSN: ");
                 String novoISSN = Leitores.lerISSN(scanner);
                 jornalEditado.setISSN(novoISSN);
-
                 System.out.print("Nova data de publicação (dd-MM-yyyy): ");
                 LocalDate novaDataPublicacao = Leitores.lerData(scanner);
                 jornalEditado.setDataPublicacao(novaDataPublicacao);
@@ -122,7 +109,7 @@ public class MenuJornais{
         if (!this.biblioteca.getJornais().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("ISSN do Jornal a remover: ");
-            String issn = scanner.nextLine();
+            String issn = Leitores.lerISSN(scanner);
             boolean jornalFoiRemovido = this.biblioteca.removerJornalPorIssn(issn);
             if (jornalFoiRemovido) {
                 System.out.println("Jornal removido com sucesso.");
@@ -135,7 +122,7 @@ public class MenuJornais{
     private void procurarJornalPorISSN(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o ISSN do jornal:");
-        String issn = scanner.nextLine();
+        String issn = Leitores.lerStringNaoVazia(scanner);
         Jornal jornal = this.biblioteca.getJornalPorISSN(issn);
         if (jornal != null) {
             System.out.println(jornal);
