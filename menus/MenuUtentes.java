@@ -59,14 +59,7 @@ public class MenuUtentes{
         System.out.print("Nome: ");
         String nome = scanner.nextLine();
         System.out.print("Género (M/F): ");
-        String generoInput = scanner.nextLine().trim().toUpperCase();
-        char genero;
-        if (generoInput.length() == 1 && (generoInput.charAt(0) == 'M' || generoInput.charAt(0) == 'F')) {
-            genero = generoInput.charAt(0);
-        } else {
-            System.out.println("Erro: O género deve ser apenas 'M' ou 'F'.");
-            return;
-        }
+        char genero = Leitores.lerGenero(scanner);
         System.out.print("Contacto: ");
         String contacto = scanner.nextLine();
 
@@ -103,17 +96,9 @@ public class MenuUtentes{
                     System.out.println("Nome não pode estar vazio.");
                 }
                 System.out.print("Novo Género (M/F): ");
-                String novoGenero = scanner.nextLine();
-                if (!novoGenero.isEmpty() && novoGenero.length() == 1) {
-                    char genero = novoGenero.charAt(0);
-                    if (genero == 'M' || genero == 'F') {
-                        utenteEditado.setGenero(genero);
-                    } else {
-                        System.out.println("Género inválido. Deve ser 'M' ou 'F'.");
-                    }
-                } else {
-                    System.out.println("Género não pode estar vazio.");
-                }
+                char novoGenero = Leitores.lerGenero(scanner);
+                utenteEditado.setGenero(novoGenero);
+
                 System.out.print("Novo Contacto: ");
                 String novoContacto = scanner.nextLine();
                 if (!novoContacto.isEmpty()) {

@@ -85,7 +85,7 @@ public class Leitores {
             if (genero == 'M' || genero == 'F') {
                 eValido = true;
             } else {
-                System.out.println("Erro! O género deve ser apenas 'M' ou 'F'.");
+                System.out.print("Género inválido, introduza novamente:");
             }
         }
         return genero;
