@@ -11,9 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuReservas extends Menu {
-    public MenuReservas(Biblioteca biblioteca, String name) {
-        super(biblioteca,name);
+public class MenuReservas{
+    private Biblioteca biblioteca;
+    public MenuReservas(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     protected void gerirReservas() {

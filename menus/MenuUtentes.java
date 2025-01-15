@@ -10,9 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuUtentes extends Menu {
-    public MenuUtentes(Biblioteca biblioteca, String name) {
-        super(biblioteca,name);
+public class MenuUtentes{
+    private Biblioteca biblioteca;
+    public MenuUtentes(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
         gerirUtentes();
     }
 

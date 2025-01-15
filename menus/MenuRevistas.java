@@ -7,9 +7,10 @@ import utilitarios.Leitores;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class MenuRevistas extends Menu {
-    public MenuRevistas(Biblioteca biblioteca, String name) {
-        super(biblioteca,name);
+public class MenuRevistas {
+    private Biblioteca biblioteca;
+    public MenuRevistas(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
         gerirRevistas();
     }
 
@@ -49,7 +50,7 @@ public class MenuRevistas extends Menu {
         System.out.print("Categoria: ");
         String categoria = scanner.nextLine();
         System.out.print("ISSN: ");
-        String ISSN = scanner.nextLine();
+        String ISSN = Leitores.lerISSN(scanner);
         System.out.print("Data de publicação (dd-MM-yyyy): ");
         LocalDate dataPublicacao = Leitores.lerData(scanner);
 
@@ -62,46 +63,43 @@ public class MenuRevistas extends Menu {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Título da Revista a editar: ");
             String titulo = scanner.nextLine();
-            Revista revistaEditado = null;
+            Revista revistaEditada = null;
             for (Revista revista : this.biblioteca.getRevistas()) {
                 if (revista.getTitulo().equals(titulo)) {
-                    revistaEditado = revista;
+                    revistaEditada = revista;
                     break;
                 }
             }
-            if (revistaEditado != null) {
+            if (revistaEditada != null) {
                 System.out.println("\n--- Editar Revista ---");
                 System.out.print("Novo Título: ");
                 String novoTitulo = scanner.nextLine();
                 if (!novoTitulo.isEmpty()) {
-                    revistaEditado.setTitulo(novoTitulo);
+                    revistaEditada.setTitulo(novoTitulo);
                 } else {
                     System.out.println("Título não pode estar vazio.");
                 }
                 System.out.print("Nova Editora: ");
                 String novaEditora = scanner.nextLine();
                 if (!novaEditora.isEmpty()) {
-                    revistaEditado.setEditora(novaEditora);
+                    revistaEditada.setEditora(novaEditora);
                 } else {
                     System.out.println("Editora não pode estar vazia.");
                 }
                 System.out.print("Nova Categoria: ");
                 String novaCategoria = scanner.nextLine();
                 if (!novaCategoria.isEmpty()) {
-                    revistaEditado.setCategoria(novaCategoria);
+                    revistaEditada.setCategoria(novaCategoria);
                 } else {
                     System.out.println("Categoria não pode estar vazia.");
                 }
                 System.out.print("Novo ISSN: ");
-                String novoISSN = scanner.nextLine();
-                if (!novoISSN.isEmpty()) {
-                    revistaEditado.setISSN(novoISSN);
-                } else {
-                    System.out.println("ISSN não pode estar vazio.");
-                }
+                String novoISSN = Leitores.lerISSN(scanner);
+                revistaEditada.setISSN(novoISSN);
+
                 System.out.print("Nova data de publicação (dd-MM-yyyy): ");
                 LocalDate novaDataPublicacao = Leitores.lerData(scanner);
-                revistaEditado.setDataPublicacao(novaDataPublicacao);
+                revistaEditada.setDataPublicacao(novaDataPublicacao);
                 System.out.println("Revista editada com sucesso");
             } else {
                 System.out.println("Revista não encontrada.");

@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuEmprestimos extends Menu {
-    public MenuEmprestimos(Biblioteca biblioteca, String name) {
-        super(biblioteca, name);
+public class MenuEmprestimos{
+    private Biblioteca biblioteca;
+    public MenuEmprestimos(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     protected void gerirEmprestimos(){

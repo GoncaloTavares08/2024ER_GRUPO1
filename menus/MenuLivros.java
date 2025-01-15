@@ -3,13 +3,16 @@ package menus;
 import modelos.Biblioteca;
 import modelos.Documento;
 import modelos.Livro;
+import utilitarios.Leitores;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MenuLivros extends Menu {
-    public MenuLivros(Biblioteca biblioteca, String name) {
-        super(biblioteca, name);
+public class MenuLivros {
+    private Biblioteca biblioteca;
+
+    public MenuLivros(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
     }
 
     protected void gerirLivros() {
@@ -42,25 +45,26 @@ public class MenuLivros extends Menu {
     private void adicionarLivros() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
-        String titulo = scanner.nextLine();
+        String titulo = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Editora: ");
-        String editora = scanner.nextLine();
+        String editora = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Categoria: ");
-        String categoria = scanner.nextLine();
+        String categoria = Leitores.lerStringNaoVazia(scanner);
         System.out.print("Ano de Edição: ");
-        String anoEdicao = scanner.nextLine();
+        int anoEdicao = scanner.nextInt();
+        scanner.nextLine();
         System.out.print("ISBN: ");
-        String ISBN = scanner.nextLine();
+        String ISBN = Leitores.lerISBN(scanner);
         System.out.print("Número de Autores: ");
         int numAutores = scanner.nextInt();
         ArrayList<String> autores = new ArrayList<>();
         scanner.nextLine(); // consumir o newline do scanner
         for (int i = 0; i < numAutores; i++) {
             System.out.print("Nome do " + (i + 1) + " Autor: ");
-            String autor = scanner.nextLine();
+            String autor = Leitores.lerStringNaoVazia(scanner);
             autores.add(autor);
         }
-        Livro livro = new Livro(titulo, editora, categoria, Integer.parseInt(anoEdicao), ISBN, autores);
+        Livro livro = new Livro(titulo, editora, categoria, anoEdicao, ISBN, autores);
         this.biblioteca.getLivros().add(livro);
 
     }
@@ -69,7 +73,7 @@ public class MenuLivros extends Menu {
         if (!this.biblioteca.getLivros().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Título do Livro a editar: ");
-            String titulo = scanner.nextLine();
+            String titulo = Leitores.lerStringNaoVazia(scanner);
             Livro livroEditado = null;
             for (Livro livro : this.biblioteca.getLivros()) {
                 if (livro.getTitulo().equals(titulo)) {
@@ -80,49 +84,33 @@ public class MenuLivros extends Menu {
             if (livroEditado!= null) {
                 System.out.println("\n--- Editar Livro ---");
                 System.out.print("Novo Título: ");
-                String novoTitulo = scanner.nextLine();
-                if (!novoTitulo.isEmpty()) {
-                    livroEditado.setTitulo(novoTitulo);
-                } else {
-                    System.out.println("Título não pode estar vazio.");
-                }
+                String novoTitulo = Leitores.lerStringNaoVazia(scanner);
+                livroEditado.setTitulo(novoTitulo);
+
                 System.out.print("Nova Editora: ");
-                String novoEditora = scanner.nextLine();
-                if (!novoEditora.isEmpty()) {
-                    livroEditado.setEditora(novoEditora);
-                } else {
-                    System.out.println("Editora não pode estar vazia.");
-                }
+                String novoEditora = Leitores.lerStringNaoVazia(scanner);
+                livroEditado.setEditora(novoEditora);
                 System.out.print("Nova Categoria: ");
-                String novaCategoria = scanner.nextLine();
-                if (!novaCategoria.isEmpty()) {
-                    livroEditado.setCategoria(novaCategoria);
-                } else {
-                    System.out.println("Categoria não pode estar vazia.");
-                }
+                String novaCategoria = Leitores.lerStringNaoVazia(scanner);
+                livroEditado.setCategoria(novaCategoria);
                 System.out.print("Novo Ano de Edição: ");
-                String novoAnoEdicao = scanner.nextLine();
-                if (!novoAnoEdicao.isEmpty()) {
-                    livroEditado.setAnoEdicao(Integer.parseInt(novoAnoEdicao));
-                } else {
-                    System.out.println("Ano de Edição não pode estar vazio.");
-                }
+                int novoAnoEdicao = scanner.nextInt();
+                scanner.nextLine();
+                livroEditado.setAnoEdicao(novoAnoEdicao);
+
                 System.out.print("Novo ISBN: ");
-                String novoISBN = scanner.nextLine();
-                if (!novoISBN.isEmpty()) {
-                    livroEditado.setISBN(novoISBN);
-                } else {
-                    System.out.println("ISBN não pode estar vazio.");
-                }
+                String novoISBN = Leitores.lerISBN(scanner);
+                livroEditado.setISBN(novoISBN);
+
                 System.out.print("Novo Número de Autores: ");
                 int novoNumAutores = scanner.nextInt();
                 if (novoNumAutores > 0) {
                     ArrayList<String> autores = new ArrayList<>();
                     scanner.nextLine(); // consumir o newline do scanner
-                    autores.clear();
+                    livroEditado.getAutores().clear();
                     for (int i = 0; i < novoNumAutores; i++) {
                         System.out.print("Nome do " + (i + 1) + "º Autor: ");
-                        String novoAutor = scanner.nextLine();
+                        String novoAutor = Leitores.lerStringNaoVazia(scanner);
                         autores.add(novoAutor);
                     }
                     livroEditado.setAutores(autores);
@@ -148,7 +136,7 @@ public class MenuLivros extends Menu {
         if (!this.biblioteca.getLivros().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Título do Livro a remover: ");
-            String titulo = scanner.nextLine();
+            String titulo = Leitores.lerStringNaoVazia(scanner);
             Documento documentoRemovido = null;
 
             for (Livro livro : this.biblioteca.getLivros()) {
@@ -173,12 +161,12 @@ public class MenuLivros extends Menu {
     private void procurarLivroPorISBN(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o ISBN do livro:");
-        String isbn = scanner.nextLine();
+        String isbn = Leitores.lerStringNaoVazia(scanner);
         Livro livro = this.biblioteca.getLivroPorIsbn(isbn);
         if (livro != null) {
             System.out.println(livro);
         } else {
-            System.out.println("ISBN inválido");
+            System.out.println("Livro não encontrado.");
         }
     }
 }

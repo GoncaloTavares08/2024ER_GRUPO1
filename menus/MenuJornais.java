@@ -7,10 +7,10 @@ import utilitarios.Leitores;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class MenuJornais extends Menu {
-
-    public MenuJornais(Biblioteca biblioteca, String name) {
-        super(biblioteca,name);
+public class MenuJornais{
+    private Biblioteca biblioteca;
+    public MenuJornais(Biblioteca biblioteca) {
+        this.biblioteca = biblioteca;
         gerirJornais();
     }
 
@@ -50,7 +50,7 @@ public class MenuJornais extends Menu {
         System.out.print("Categoria: ");
         String categoria = scanner.nextLine();
         System.out.print("ISSN: ");
-        String ISSN = scanner.nextLine();
+        String ISSN = Leitores.lerISSN(scanner);
         System.out.print("Data de publicação (dd-MM-yyyy): ");
         LocalDate dataPublicacao = Leitores.lerData(scanner);
 
@@ -94,12 +94,9 @@ public class MenuJornais extends Menu {
                     System.out.println("Categoria não pode estar vazia.");
                 }
                 System.out.print("Novo ISSN: ");
-                String novoISSN = scanner.nextLine();
-                if (!novoISSN.isEmpty()) {
-                    jornalEditado.setISSN(novoISSN);
-                } else {
-                    System.out.println("ISSN não pode estar vazio.");
-                }
+                String novoISSN = Leitores.lerISSN(scanner);
+                jornalEditado.setISSN(novoISSN);
+
                 System.out.print("Nova data de publicação (dd-MM-yyyy): ");
                 LocalDate novaDataPublicacao = Leitores.lerData(scanner);
                 jornalEditado.setDataPublicacao(novaDataPublicacao);
