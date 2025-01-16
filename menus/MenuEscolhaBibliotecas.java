@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe que representa o menu para escolher ou criar bibliotecas.
  * @author [Grupo1]
- * @version 1.0
+ * @version 1.
  */
 public class MenuEscolhaBibliotecas {
     /**
