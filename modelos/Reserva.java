@@ -18,12 +18,15 @@ public class Reserva extends Transacao {
     public LocalDate getDataRegisto() {
         return dataRegisto;
     }
+
     public void setDataRegisto(LocalDate dataRegisto) {
         this.dataRegisto = dataRegisto;
     }
+
     public LocalDate getDataFim() {
         return dataFim;
     }
+
     public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }

@@ -1,6 +1,5 @@
 package modelos;
 
-import javax.print.Doc;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Emprestimo extends Transacao {
     }
 
     public boolean estaAtrasado(int numeroDias) {
-        if (dataPrevistaDevolucao != null) {
+        if (dataEfetivaDevolucao != null) {
             return dataPrevistaDevolucao.plusDays(numeroDias).isBefore(dataEfetivaDevolucao);
         } else {
             return dataPrevistaDevolucao.plusDays(numeroDias).isBefore(LocalDate.now());
@@ -58,7 +57,7 @@ public class Emprestimo extends Transacao {
                 "; ID dos Documentos: " + idDocumentos.toString().replace("[", "").replace("]", "") +
                 "; Data de Inicio: " + getDataInicio().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
                 "; Data Prevista Devolução: " + getDataPrevistaDevolucao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +
-                "; Data Efetiva Devolução: " + getDataEfetivaDevolucao() +
+                "; Data Efetiva Devolução: " + (getDataEfetivaDevolucao() != null ? getDataEfetivaDevolucao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "Não Devolvido") +
                 ']';
     }
 

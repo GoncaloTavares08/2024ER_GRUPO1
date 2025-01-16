@@ -130,7 +130,7 @@ public class Memoria {
         return emprestimos;
     }
 
-    private static Emprestimo carregarEmprestimo(String dados, Biblioteca biblioteca){
+    private static Emprestimo carregarEmprestimo(String dados, Biblioteca biblioteca) {
         String[] partes = dados.split("\\|");
         String numero = partes[0];
         String nif = partes[1];
@@ -153,14 +153,14 @@ public class Memoria {
 
         if (partes[5].equals("Nao Devolvido")) {
             return new Emprestimo(numero, utente, documentos, dataInicio, dataPrevistaDevolucao);
-        }else {
+        } else {
             LocalDate dataEfetivaDevolucao = LocalDate.parse(partes[5], formatter);
             return new Emprestimo(numero, utente, documentos, dataInicio, dataPrevistaDevolucao, dataEfetivaDevolucao);
         }
     }
 
     public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
-            List<Reserva> reservas = new ArrayList<>();
+        List<Reserva> reservas = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
             String linha;
             while ((linha = reader.readLine()) != null) {
@@ -173,7 +173,7 @@ public class Memoria {
         return reservas;
     }
 
-    private static Reserva carregarReserva(String dados, Biblioteca biblioteca){
+    private static Reserva carregarReserva(String dados, Biblioteca biblioteca) {
         String[] partes = dados.split("\\|");
         String numero = partes[0];
         String nif = partes[1];

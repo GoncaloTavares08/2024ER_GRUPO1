@@ -86,7 +86,6 @@ public class MenuLivros {
                 System.out.print("Novo Título: ");
                 String novoTitulo = Leitores.lerStringNaoVazia(scanner);
                 livroEditado.setTitulo(novoTitulo);
-
                 System.out.print("Nova Editora: ");
                 String novoEditora = Leitores.lerStringNaoVazia(scanner);
                 livroEditado.setEditora(novoEditora);
@@ -96,15 +95,12 @@ public class MenuLivros {
                 System.out.print("Novo Ano de Edição: ");
                 int novoAnoEdicao = Leitores.lerNumeroInteiro(scanner);
                 livroEditado.setAnoEdicao(novoAnoEdicao);
-
                 System.out.print("Novo ISBN: ");
                 String novoISBN = Leitores.lerISBN(scanner);
                 livroEditado.setISBN(novoISBN);
-
                 System.out.print("Novo Número de Autores: ");
                 int novoNumAutores = Leitores.lerNumeroInteiro(scanner);
                 ArrayList<String> autores = new ArrayList<>();
-                scanner.nextLine(); // consumir o newline do scanner
                 livroEditado.getAutores().clear();
                 for (int i = 0; i < novoNumAutores; i++) {
                     System.out.print("Nome do " + (i + 1) + "º Autor: ");
@@ -133,12 +129,12 @@ public class MenuLivros {
         mostrarLivros();
         if (!this.biblioteca.getLivros().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Título do Livro a remover: ");
-            String titulo = Leitores.lerStringNaoVazia(scanner);
+            System.out.print("ISBN do Livro a remover: ");
+            String isbn = Leitores.lerStringNaoVazia(scanner);
             Documento documentoRemovido = null;
 
             for (Livro livro : this.biblioteca.getLivros()) {
-                if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+                if (livro.getISBN().equals(isbn)) {
                     documentoRemovido = livro;
                     break;
                 }

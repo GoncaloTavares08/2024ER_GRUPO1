@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuReservas{
+public class MenuReservas {
     private Biblioteca biblioteca;
+
     public MenuReservas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
@@ -42,6 +43,7 @@ public class MenuReservas{
             }
         } while (opcao != 0);
     }
+
     private void adicionarReservas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF do Utente:");
@@ -77,7 +79,7 @@ public class MenuReservas{
                 return;
             }
         }
-        Reserva reserva = new Reserva(String.valueOf(this.biblioteca.getReservas().size()+1), utente, documentosParaReserva, dataInicio, dataRegisto, dataFim);
+        Reserva reserva = new Reserva(String.valueOf(this.biblioteca.getReservas().size() + 1), utente, documentosParaReserva, dataInicio, dataRegisto, dataFim);
         this.biblioteca.getReservas().add(reserva);
 
         System.out.println("Reserva adicionada com sucesso!");
@@ -137,10 +139,11 @@ public class MenuReservas{
             }
         }
     }
+
     private void mostrarReservas() {
         if (this.biblioteca.getReservas().isEmpty()) {
             System.out.println("Não existem reservas registadas.");
-        }else{
+        } else {
             System.out.println("\n--- Lista de Reservas ---");
             for (Reserva reserva : this.biblioteca.getReservas()) {
                 System.out.println(reserva);
@@ -149,7 +152,7 @@ public class MenuReservas{
 
     }
 
-    private void removerReservas(){
+    private void removerReservas() {
         mostrarReservas();
         if (this.biblioteca.getReservas().isEmpty()) {
             System.out.println("Não existem reservas no sistema");

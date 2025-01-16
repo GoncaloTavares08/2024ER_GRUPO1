@@ -3,7 +3,7 @@ package modelos;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Livro extends Documento{
+public class Livro extends Documento {
     private int anoEdicao;
     private String ISBN;
     private List<String> autores;
@@ -15,7 +15,6 @@ public class Livro extends Documento{
         this.ISBN = ISBN;
         this.autores = autores;
     }
-
 
 
     public int getAnoEdicao() {
@@ -54,7 +53,7 @@ public class Livro extends Documento{
                 ']';
     }
 
-    public String toFileString(){
+    public String toFileString() {
         return getTitulo() +
                 "|" + getEditora() +
                 "|" + getCategoria() +

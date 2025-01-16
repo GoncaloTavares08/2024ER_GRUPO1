@@ -10,11 +10,11 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuUtentes{
+public class MenuUtentes {
     private Biblioteca biblioteca;
+
     public MenuUtentes(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
-        gerirUtentes();
     }
 
     protected void gerirUtentes() {
@@ -50,6 +50,7 @@ public class MenuUtentes{
             }
         } while (opcao != 0);
     }
+
     private void adicionarUtentes() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF: ");
@@ -64,6 +65,7 @@ public class MenuUtentes{
         Utente utente = new Utente(nif, nome, genero, contacto);
         this.biblioteca.getUtentes().add(utente);
     }
+
     private void editarUtentes() {
         mostrarUtentes();
         if (!this.biblioteca.getUtentes().isEmpty()) {
@@ -77,7 +79,7 @@ public class MenuUtentes{
                     break;
                 }
             }
-            if (utenteEditado!= null) {
+            if (utenteEditado != null) {
                 System.out.println("\n--- Editar Utente ---");
                 System.out.print("Novo NIF: ");
                 String novoNif = Leitores.lerStringNaoVazia(scanner);
@@ -97,16 +99,18 @@ public class MenuUtentes{
         }
 
     }
+
     public void mostrarUtentes() {
         if (this.biblioteca.getUtentes().isEmpty()) {
             System.out.println("Não existem utentes registados.");
-        }else{
+        } else {
             System.out.println("\n--- Lista de Utentes ---");
             for (Utente utente : this.biblioteca.getUtentes()) {
                 System.out.println(utente);
             }
         }
     }
+
     private void removerUtentes() {
         mostrarUtentes();
         if (!this.biblioteca.getUtentes().isEmpty()) {
@@ -137,10 +141,10 @@ public class MenuUtentes{
         }
     }
 
-    private void listarUtentesAtivos(){
+    private void listarUtentesAtivos() {
         if (this.biblioteca.getUtentesAtivos().isEmpty()) {
             System.out.println("Não existem utentes ativos.");
-        }else{
+        } else {
             System.out.println("\n--- Lista de Utentes ---");
             for (Utente utente : this.biblioteca.getUtentesAtivos()) {
                 System.out.println(utente);
@@ -148,7 +152,7 @@ public class MenuUtentes{
         }
     }
 
-    private void listarUtentesDevolucaoAtrasada(){
+    private void listarUtentesDevolucaoAtrasada() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quantos dias a devolução está atrasada?");
         int diasAtrasados = Leitores.lerNumeroInteiro(scanner);
@@ -161,7 +165,7 @@ public class MenuUtentes{
         }
     }
 
-    private void procurarUtentePorNIF(){
+    private void procurarUtentePorNIF() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o NIF do utente");
         String nif = Leitores.lerStringNaoVazia(scanner);
@@ -173,7 +177,7 @@ public class MenuUtentes{
         }
     }
 
-    private void listarTransacoesPorUtentePorDatas(){
+    private void listarTransacoesPorUtentePorDatas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o NIF do utente:");
         String nif = Leitores.lerStringNaoVazia(scanner);
@@ -183,13 +187,13 @@ public class MenuUtentes{
         LocalDate dataFim = Leitores.lerData(scanner);
 
         List<Emprestimo> emprestimos = this.biblioteca.getEmprestimos();
-        for(Emprestimo emprestimo : emprestimos) {
+        for (Emprestimo emprestimo : emprestimos) {
             if (emprestimo.getUtente().getNif().equals(nif) && emprestimo.getDataInicio().isAfter(dataInicio) && emprestimo.getDataInicio().isBefore(dataFim)) {
                 System.out.println("Empréstimo: " + emprestimo);
             }
         }
         List<Reserva> reservas = this.biblioteca.getReservas();
-        for(Reserva reserva : reservas) {
+        for (Reserva reserva : reservas) {
             if (reserva.getUtente().getNif().equals(nif) && reserva.getDataInicio().isAfter(dataInicio) && reserva.getDataInicio().isBefore(dataFim)) {
                 System.out.println("Reserva: " + reserva);
             }

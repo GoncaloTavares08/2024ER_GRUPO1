@@ -1,10 +1,10 @@
-O Homem que Mordeu o Cão|Objetiva|Ação|2021|9789898775375|Nuno Markl
-As Novas Aventuras de Sherlock Holmes|Porto Editora|Ficção|2023|9788569250111|João Ventura
-A Sociedade Literária da Tarte de Casca de Batata|Editorial Presença|Romance|2020|9789896720155|Mary Ann Shaffer, Annie Barrows
-A Última Festa|Editorial Presença|Suspense|2022|9789897775116|Lucy Foley
-A Casa dos Espíritos|Dom Quixote|Aventura|2024|9789720044457|Isabel Allende
-Os Pilares da Terra|Editorial Presença|Drama|2025|9789722369886|Ken Follett
-O Nome do Vento|Saída de Emergência|Fantasia|2021|9789895576715|Patrick Rothfuss
-D. Maria II: Tudo por um Reino|Planeta|História|2023|9789896263690|Isabel Stilwell
-Assim Falava Zaratustra|Relógio D’Água|Filosofia|2019|9789726656562|Friedrich Nietzsche
-Breves Respostas às Grandes Perguntas|Gradiva|Ciência|2022|9789895322701|Stephen Hawking
+O Homem que Mordeu o Cão|Objetiva|Ação|2021|9789898775375|NunoMarkl
+As Novas Aventuras de Sherlock Holmes|Porto Editora|Ficção|2023|9788569250111|JoãoVentura
+A Sociedade Literária da Tarte de Casca de Batata|Editorial Presença|Romance|2020|9789896720155|MaryAnnShaffer,AnnieBarrows
+A Última Festa|Editorial Presença|Suspense|2022|9789897775116|LucyFoley
+A Casa dos Espíritos|Dom Quixote|Aventura|2024|9789720044457|IsabelAllende
+Os Pilares da Terra|Editorial Presença|Drama|2025|9789722369886|KenFollett
+O Nome do Vento|Saída de Emergência|Fantasia|2021|9789895576715|PatrickRothfuss
+D. Maria II: Tudo por um Reino|Planeta|História|2023|9789896263690|IsabelStilwell
+Assim Falava Zaratustra|Relógio D’Água|Filosofia|2019|9789726656562|FriedrichNietzsche
+Breves Respostas às Grandes Perguntas|Gradiva|Ciência|2022|9789895322701|StephenHawking

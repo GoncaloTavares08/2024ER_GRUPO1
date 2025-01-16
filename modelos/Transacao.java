@@ -19,24 +19,31 @@ public abstract class Transacao {
     public String getNumero() {
         return numero;
     }
+
     public void setNumero(String numero) {
         this.numero = numero;
     }
+
     public Utente getUtente() {
         return utente;
     }
+
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
+
     public List<Documento> getDocumentos() {
         return documentos;
     }
+
     public void setDocumentos(List<Documento> documentos) {
         this.documentos = documentos;
     }
+
     public LocalDate getDataInicio() {
         return dataInicio;
     }
+
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }

@@ -1,6 +1,7 @@
 package menus;
 
 import modelos.Biblioteca;
+import utilitarios.Leitores;
 
 import java.util.Scanner;
 
@@ -25,7 +26,7 @@ public class MenuBiblioteca {
             System.out.println("7. Estatísticas");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
-            opcao = scanner.nextInt();
+            opcao = Leitores.lerNumeroInteiro(scanner);
             System.out.println("");
             switch (opcao) {
                 case 1 -> new MenuLivros(biblioteca).gerirLivros();
@@ -43,5 +44,4 @@ public class MenuBiblioteca {
         } while (opcao != 0);
 
     }
-
 }

@@ -3,7 +3,7 @@ package modelos;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Jornal extends Documento{
+public class Jornal extends Documento {
     private String ISSN;
     private LocalDate dataPublicacao;
 
@@ -40,7 +40,7 @@ public class Jornal extends Documento{
                 ']';
     }
 
-    public String toFileString(){
+    public String toFileString() {
         return getTitulo() +
                 "|" + getEditora() +
                 "|" + getCategoria() +

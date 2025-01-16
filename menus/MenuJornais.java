@@ -7,11 +7,11 @@ import utilitarios.Leitores;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class MenuJornais{
+public class MenuJornais {
     private Biblioteca biblioteca;
+
     public MenuJornais(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
-        gerirJornais();
     }
 
     protected void gerirJornais() {
@@ -35,12 +35,12 @@ public class MenuJornais{
                 case 4 -> removerJornais();
                 case 5 -> procurarJornalPorISSN();
                 case 0 -> {
-                    return;
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
         } while (opcao != 0);
     }
+
     private void adicionarJornais() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
@@ -57,6 +57,7 @@ public class MenuJornais{
         Jornal jornal = new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
         this.biblioteca.getJornais().add(jornal);
     }
+
     private void editarJornais() {
         mostrarJornais();
         if (!this.biblioteca.getJornais().isEmpty()) {
@@ -94,16 +95,18 @@ public class MenuJornais{
         }
 
     }
+
     private void mostrarJornais() {
         if (this.biblioteca.getJornais().isEmpty()) {
             System.out.println("Não existem jornais registados.");
-        }else{
+        } else {
             System.out.println("\n--- Lista de Jornais ---");
             for (Jornal jornal : this.biblioteca.getJornais()) {
                 System.out.println(jornal);
             }
         }
     }
+
     private void removerJornais() {
         mostrarJornais();
         if (!this.biblioteca.getJornais().isEmpty()) {
@@ -119,7 +122,7 @@ public class MenuJornais{
         }
     }
 
-    private void procurarJornalPorISSN(){
+    private void procurarJornalPorISSN() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o ISSN do jornal:");
         String issn = Leitores.lerStringNaoVazia(scanner);

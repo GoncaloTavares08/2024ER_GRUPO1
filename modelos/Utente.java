@@ -16,24 +16,31 @@ public class Utente {
     public String getNif() {
         return nif;
     }
+
     public void setNif(String nif) {
         this.nif = nif;
     }
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public char getGenero() {
         return genero;
     }
+
     public void setGenero(char genero) {
         this.genero = genero;
     }
+
     public String getContacto() {
         return contacto;
     }
+
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
@@ -48,7 +55,7 @@ public class Utente {
                 ']';
     }
 
-    public String toFileString(){
+    public String toFileString() {
         return getNif() +
                 "|" + getNome() +
                 "|" + getGenero() +

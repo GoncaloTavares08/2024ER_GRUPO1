@@ -9,9 +9,9 @@ import java.util.Scanner;
 
 public class MenuRevistas {
     private Biblioteca biblioteca;
+
     public MenuRevistas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
-        gerirRevistas();
     }
 
     protected void gerirRevistas() {
@@ -41,6 +41,7 @@ public class MenuRevistas {
             }
         } while (opcao != 0);
     }
+
     private void adicionarRevistas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
@@ -57,6 +58,7 @@ public class MenuRevistas {
         Revista revista = new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
         this.biblioteca.getRevistas().add(revista);
     }
+
     private void editarRevistas() {
         mostrarRevistas();
         if (!this.biblioteca.getRevistas().isEmpty()) {
@@ -94,21 +96,23 @@ public class MenuRevistas {
         }
 
     }
+
     private void mostrarRevistas() {
         if (this.biblioteca.getRevistas().isEmpty()) {
             System.out.println("Não existem revistas registadas.");
-        }else{
+        } else {
             System.out.println("\n--- Lista de Revistas ---");
             for (Revista revista : this.biblioteca.getRevistas()) {
                 System.out.println(revista);
             }
         }
     }
+
     private void removerRevistas() {
         mostrarRevistas();
         if (!this.biblioteca.getRevistas().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
-            System.out.print("ISSN do Revista a remover: ");
+            System.out.print("ISSN da Revista a remover: ");
             String issn = Leitores.lerStringNaoVazia(scanner);
             boolean revistaFoiRemovido = this.biblioteca.removerRevistaPorIssn(issn);
             if (revistaFoiRemovido) {
@@ -119,7 +123,7 @@ public class MenuRevistas {
         }
     }
 
-    private void procurarRevistaPorISSN(){
+    private void procurarRevistaPorISSN() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o ISSN da revista:");
         String issn = scanner.nextLine();

@@ -86,17 +86,17 @@ public class Biblioteca {
 
     public Documento getDocumentoPorIdentificador(String id) {
         for (Documento documento : this.livros) {
-            if(documento.getIdentificadorDocumento().equals(id)){
+            if (documento.getIdentificadorDocumento().equals(id)) {
                 return documento;
             }
         }
         for (Documento documento : this.revistas) {
-            if(documento.getIdentificadorDocumento().equals(id)){
+            if (documento.getIdentificadorDocumento().equals(id)) {
                 return documento;
             }
         }
         for (Documento documento : this.jornais) {
-            if(documento.getIdentificadorDocumento().equals(id)){
+            if (documento.getIdentificadorDocumento().equals(id)) {
                 return documento;
             }
         }
@@ -244,12 +244,13 @@ public class Biblioteca {
         List<Transacao> transacoes = this.getTransacoes();
         List<Transacao> transacoesNoPeriodo = new ArrayList<>();
         for (Transacao transacao : transacoes) {
-            if(transacao.estaAtivaEntre(dataInicio, dataFim)) {
+            if (transacao.estaAtivaEntre(dataInicio, dataFim)) {
                 transacoesNoPeriodo.add(transacao);
             }
         }
         return transacoesNoPeriodo;
     }
+
     public String getDiretorio() {
         return this.diretorio;
     }

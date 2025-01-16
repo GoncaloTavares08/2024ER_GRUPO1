@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuEstatisticas{
+public class MenuEstatisticas {
     private Biblioteca biblioteca;
 
     public MenuEstatisticas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
 
-    protected void gerirEstatisticas(){
+    protected void gerirEstatisticas() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
         do {
@@ -92,7 +92,7 @@ public class MenuEstatisticas{
         }
     }
 
-    private void mostrarTempoMedioEmprestimos(){
+    private void mostrarTempoMedioEmprestimos() {
         int count = 0;
         long somaDias = 0;
         Scanner scanner = new Scanner(System.in);
@@ -101,20 +101,20 @@ public class MenuEstatisticas{
         System.out.print("Introduza a data de fim:");
         LocalDate dataFim = Leitores.lerData(scanner);
         for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
-            if(dataInicio.isBefore(emprestimo.getDataInicio()) && dataFim.isAfter(emprestimo.getDataInicio())){
+            if (dataInicio.isBefore(emprestimo.getDataInicio()) && dataFim.isAfter(emprestimo.getDataInicio())) {
                 count++;
                 somaDias += ChronoUnit.DAYS.between(emprestimo.getDataInicio(), emprestimo.getDataPrevistaDevolucao());
             }
         }
-        if (count == 0){
+        if (count == 0) {
             System.out.println("Não existem empréstimos nas datas indicadas.");
-        }else{
-            System.out.println("A média em dias dos empréstimos entre as datas indicadas é de " + somaDias/count + " dias.");
+        } else {
+            System.out.println("A média em dias dos empréstimos entre as datas indicadas é de " + somaDias / count + " dias.");
         }
 
     }
 
-    private void mostrarTotalEmprestimos(){
+    private void mostrarTotalEmprestimos() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza a data de início:");
         LocalDate dataInicio = Leitores.lerData(scanner);

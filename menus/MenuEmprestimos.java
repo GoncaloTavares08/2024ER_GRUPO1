@@ -8,18 +8,18 @@ import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuEmprestimos{
+public class MenuEmprestimos {
     private Biblioteca biblioteca;
+
     public MenuEmprestimos(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
 
-    protected void gerirEmprestimos(){
+    protected void gerirEmprestimos() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
         do {
@@ -38,7 +38,7 @@ public class MenuEmprestimos{
                 case 3 -> mostrarEmprestimos();
                 case 4 -> devolverEmprestimos();
                 case 0 -> {
-                   return;
+                    return;
                 }
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -79,7 +79,7 @@ public class MenuEmprestimos{
             }
         }
 
-        Emprestimo emprestimo = new Emprestimo(String.valueOf(this.biblioteca.getEmprestimos().size()+1), utente, documentosParaEmprestimo, dataInicio, dataPrevistaDevolucao);
+        Emprestimo emprestimo = new Emprestimo(String.valueOf(this.biblioteca.getEmprestimos().size() + 1), utente, documentosParaEmprestimo, dataInicio, dataPrevistaDevolucao);
         this.biblioteca.getEmprestimos().add(emprestimo);
 
         System.out.println("Empréstimo adicionado com sucesso!");
@@ -118,7 +118,6 @@ public class MenuEmprestimos{
                 int novoNumDocumentos = Leitores.lerNumeroInteiro(scanner);
                 if (novoNumDocumentos > 0) {
                     List<Documento> documentos = new ArrayList<>();
-                    documentos.clear();
                     for (int i = 0; i < novoNumDocumentos; i++) {
                         System.out.print("ID do " + (i + 1) + "º documento:");
                         String id = Leitores.lerStringNaoVazia(scanner);
@@ -142,7 +141,7 @@ public class MenuEmprestimos{
     private void mostrarEmprestimos() {
         if (this.biblioteca.getEmprestimos().isEmpty()) {
             System.out.println("Não existem empréstimos registados.");
-        }else{
+        } else {
             System.out.println("\n--- Lista de Empréstimos ---");
             for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
                 System.out.println(emprestimo);
@@ -151,19 +150,19 @@ public class MenuEmprestimos{
     }
 
     private void devolverEmprestimos() {
-        if (!this.biblioteca.getEmprestimos().isEmpty()){
+        if (!this.biblioteca.getEmprestimos().isEmpty()) {
             mostrarEmprestimos();
             Scanner scanner = new Scanner(System.in);
             System.out.print("Insira o número do empréstimo:");
             String numero = Leitores.lerStringNaoVazia(scanner);
             Emprestimo emprestimoDevolvido = null;
-            for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()){
-                if(emprestimo.getNumero().equals(numero)){
+            for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
+                if (emprestimo.getNumero().equals(numero)) {
                     emprestimoDevolvido = emprestimo;
                     break;
                 }
             }
-            if (emprestimoDevolvido != null){
+            if (emprestimoDevolvido != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate atual = LocalDate.now();
                 String dataAtual = atual.format(formatter);
