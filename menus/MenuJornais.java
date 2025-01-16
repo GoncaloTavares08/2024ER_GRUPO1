@@ -6,14 +6,26 @@ import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-
+/**
+ * Classe responsável pela gestão de jornais na biblioteca.
+ * Permite adicionar, editar, mostrar, remover e procurar jornais.
+ * @author [João Teixeira]
+ * @version 1.0
+ */
 public class MenuJornais {
     private Biblioteca biblioteca;
-
+    /**
+     * Construtor da classe MenuJornais.
+     *
+     * @param biblioteca A biblioteca onde os jornais serão geridos.
+     */
     public MenuJornais(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
-
+    /**
+     * Metodo que inicia o menu de gestão de jornais.
+     * Permite ao utilizador escolher entre várias opções de gestão de jornais.
+     */
     protected void gerirJornais() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -23,7 +35,7 @@ public class MenuJornais {
             System.out.println("2. Editar Jornais");
             System.out.println("3. Mostrar Jornais");
             System.out.println("4. Remover Jornais");
-            System.out.println(("5. Procurar Jornal por ISSN"));
+            System.out.println("5. Procurar Jornal por ISSN");
             System.out.println("0. Voltar");
             System.out.print("Escolha uma opção: ");
             opcao = Leitores.lerNumeroInteiro(scanner);
@@ -40,7 +52,10 @@ public class MenuJornais {
             }
         } while (opcao != 0);
     }
-
+    /**
+     * Metodo que permite adicionar um novo jornal à biblioteca.
+     * Solicita ao utilizador os dados do jornal e cria um novo objeto Jornal.
+     */
     private void adicionarJornais() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
@@ -57,7 +72,10 @@ public class MenuJornais {
         Jornal jornal = new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
         this.biblioteca.getJornais().add(jornal);
     }
-
+    /**
+     * Metodo que permite editar os dados de um jornal existente.
+     * Solicita ao utilizador o título do jornal a editar e atualiza os seus dados.
+     */
     private void editarJornais() {
         mostrarJornais();
         if (!this.biblioteca.getJornais().isEmpty()) {
@@ -93,9 +111,12 @@ public class MenuJornais {
                 System.out.println("Jornal não encontrado.");
             }
         }
-
     }
-
+    /**
+     * Metodo que mostra todos os jornais registados /**
+     * Metodo que mostra todos os jornais registados na biblioteca.
+     * Se não houver jornais, informa o utilizador que não existem jornais registados.
+     */
     private void mostrarJornais() {
         if (this.biblioteca.getJornais().isEmpty()) {
             System.out.println("Não existem jornais registados.");
@@ -106,7 +127,10 @@ public class MenuJornais {
             }
         }
     }
-
+    /**
+     * Metodo que permite remover um jornal da biblioteca.
+     * Solicita ao utilizador o ISSN do jornal a remover e tenta removê-lo.
+     */
     private void removerJornais() {
         mostrarJornais();
         if (!this.biblioteca.getJornais().isEmpty()) {
@@ -121,10 +145,13 @@ public class MenuJornais {
             }
         }
     }
-
+    /**
+     * Metodo que procura um jornal pelo seu ISSN.
+     * Solicita ao utilizador o ISSN e mostra os detalhes do jornal se encontrado.
+     */
     private void procurarJornalPorISSN() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Introduza o ISSN do jornal:");
+        System.out.print("Introduza o ISSN do jornal: ");
         String issn = Leitores.lerStringNaoVazia(scanner);
         Jornal jornal = this.biblioteca.getJornalPorISSN(issn);
         if (jornal != null) {

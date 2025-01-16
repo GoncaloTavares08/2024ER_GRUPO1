@@ -6,14 +6,26 @@ import utilitarios.Leitores;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-
+/**
+ * Classe responsável pela gestão das revistas na biblioteca.
+ * Permite adicionar, editar, mostrar, remover e procurar revistas.
+ * @author [João Teixeira]
+ * @version 1.0
+ */
 public class MenuRevistas {
     private Biblioteca biblioteca;
-
+    /**
+     * Construtor da classe MenuRevistas.
+     *
+     * @param biblioteca A biblioteca onde as revistas serão geridas.
+     */
     public MenuRevistas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
-
+    /**
+     * Metodo principal para gerir revistas.
+     * Apresenta um menu com opções para o utilizador escolher.
+     */
     protected void gerirRevistas() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -41,7 +53,10 @@ public class MenuRevistas {
             }
         } while (opcao != 0);
     }
-
+    /**
+     * Metodo para adicionar uma nova revista à biblioteca.
+     * Solicita ao utilizador os dados da revista e cria um novo objeto Revista.
+     */
     private void adicionarRevistas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Título: ");
@@ -58,7 +73,10 @@ public class MenuRevistas {
         Revista revista = new Revista(titulo, editora, categoria, ISSN, dataPublicacao);
         this.biblioteca.getRevistas().add(revista);
     }
-
+    /**
+     * Metodo para editar uma revista existente na biblioteca.
+     * Solicita ao utilizador o título da revista a editar e atualiza os seus dados.
+     */
     private void editarRevistas() {
         mostrarRevistas();
         if (!this.biblioteca.getRevistas().isEmpty()) {
@@ -96,7 +114,10 @@ public class MenuRevistas {
         }
 
     }
-
+    /**
+     * Metodo para mostrar todas as revistas registadas na biblioteca.
+     * Se não existirem revistas, informa o utilizador.
+     */
     private void mostrarRevistas() {
         if (this.biblioteca.getRevistas().isEmpty()) {
             System.out.println("Não existem revistas registadas.");
@@ -107,7 +128,10 @@ public class MenuRevistas {
             }
         }
     }
-
+    /**
+     * Metodo para remover uma revista da biblioteca.
+     * Solicita ao utilizador o ISSN da revista a remover e tenta removê-la.
+     */
     private void removerRevistas() {
         mostrarRevistas();
         if (!this.biblioteca.getRevistas().isEmpty()) {
@@ -122,7 +146,10 @@ public class MenuRevistas {
             }
         }
     }
-
+    /**
+     * Metodo para procurar uma revista pelo seu ISSN.
+     * Solicita ao utilizador o ISSN e exibe os detalhes da revista correspondente, se existir.
+     */
     private void procurarRevistaPorISSN() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o ISSN da revista:");

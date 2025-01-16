@@ -1,7 +1,16 @@
 package utilitarios;
-
+/**
+ * A classe Utilitarios fornece métodos utilitários para validação de códigos ISBN e ISSN.
+ * @author [João Teixeira]
+ * @version 1.0
+ */
 public class Utilitarios {
-
+    /**
+     * Verifica se um código ISBN é válido.
+     *
+     * @param isbn O código ISBN a ser verificado. Pode ser um ISBN-10 ou ISBN-13.
+     * @return true se o código ISBN for válido, false caso contrário.
+     */
     public static boolean eValidoISBN(String isbn) {
         if (isbn == null) {
             return false;
@@ -17,7 +26,12 @@ public class Utilitarios {
 
         return false;
     }
-
+    /**
+     * Verifica se um código ISBN-10 é válido.
+     *
+     * @param isbn O código ISBN-10 a ser verificado.
+     * @return true se o código ISBN-10 for válido, false caso contrário.
+     */
     private static boolean eValidoISBN10(String isbn) {
         if (!isbn.matches("\\d{9}[\\dX]")) {
             return false;
@@ -33,7 +47,12 @@ public class Utilitarios {
 
         return sum % 11 == 0;
     }
-
+    /**
+     * Verifica se um código ISBN-13 é válido.
+     *
+     * @param isbn O código ISBN-13 a ser verificado.
+     * @return true se o código ISBN-13 for válido, false caso contrário.
+     */
     private static boolean isValidISBN13(String isbn) {
         if (!isbn.matches("\\d{13}")) {
             return false;
@@ -52,7 +71,12 @@ public class Utilitarios {
 
         return checkDigit == (isbn.charAt(12) - '0');
     }
-
+    /**
+     * Verifica se um código ISSN é válido.
+     *
+     * @param issn O código ISSN a ser verificado.
+     * @return true se o código ISSN for válido, false caso contrário.
+     */
     public static boolean eValidoISSN(String issn) {
         if (issn == null) {
             return false;
