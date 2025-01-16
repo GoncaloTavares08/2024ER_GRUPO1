@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 /**
  * Classe responsável pela gestão de utentes na biblioteca.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuUtentes {
@@ -19,7 +19,7 @@ public class MenuUtentes {
     /**
      * Construtor da classe MenuUtentes.
      *
-     * @param biblioteca A biblioteca onde os utentes serão geridos.
+     * @param biblioteca A instância da biblioteca onde os utentes serão geridos.
      */
     public MenuUtentes(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
@@ -114,7 +114,7 @@ public class MenuUtentes {
 
     }
     /**
-     * Metodo que mostra todos os utentes registados na biblioteca.
+     * Metodo que mostra todos os utentes registados na biblioteca, se não exister nenhum, informa o utilizador.
      */
     public void mostrarUtentes() {
         if (this.biblioteca.getUtentes().isEmpty()) {
@@ -159,7 +159,7 @@ public class MenuUtentes {
         }
     }
     /**
-     * Metodo que lista todos os utentes ativos na biblioteca.
+     * Metodo que lista todos os utentes que tenham reservas ou emprestimos no momento, na biblioteca.
      */
     private void listarUtentesAtivos() {
         if (this.biblioteca.getUtentesAtivos().isEmpty()) {
@@ -172,7 +172,7 @@ public class MenuUtentes {
         }
     }
     /**
-     * Metodo que lista os utentes com devoluções atrasadas.
+     * Metodo que lista os utentes com devoluções atrasadas superior à quantidade de dias inserida pelo utilizador.
      */
     private void listarUtentesDevolucaoAtrasada() {
         Scanner scanner = new Scanner(System.in);
@@ -201,7 +201,7 @@ public class MenuUtentes {
         }
     }
     /**
-     * Metodo que lista as transações de um utente entre duas datas.
+     * Metodo que lista as transações (reservas e/ou emprestimos) de um utente entre duas datas inseridas pelo utilizador.
      */
     private void listarTransacoesPorUtentePorDatas() {
         Scanner scanner = new Scanner(System.in);

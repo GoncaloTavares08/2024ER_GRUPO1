@@ -1,15 +1,15 @@
 package utilitarios;
 /**
- * A classe Utilitarios fornece métodos utilitários para validação de códigos ISBN e ISSN.
- * @author [João Teixeira]
+ * A classe Utilitarios fornece métodos utilitários para validação de códigos ISBN-10/13 e ISSN.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Utilitarios {
     /**
-     * Verifica se um código ISBN é válido.
+     * Verifica se um ISBN é válido.
      *
-     * @param isbn O código ISBN a ser verificado. Pode ser um ISBN-10 ou ISBN-13.
-     * @return true se o código ISBN for válido, false caso contrário.
+     * @param isbn O ISBN a ser verificado. Pode ser um ISBN-10 ou ISBN-13.
+     * @return True se o ISBN for válido, false caso contrário.
      */
     public static boolean eValidoISBN(String isbn) {
         if (isbn == null) {
@@ -27,10 +27,10 @@ public class Utilitarios {
         return false;
     }
     /**
-     * Verifica se um código ISBN-10 é válido.
+     * Verifica se um ISBN-10 é válido.
      *
-     * @param isbn O código ISBN-10 a ser verificado.
-     * @return true se o código ISBN-10 for válido, false caso contrário.
+     * @param isbn O ISBN-10 a ser verificado.
+     * @return True se o ISBN-10 for válido, false caso contrário.
      */
     private static boolean eValidoISBN10(String isbn) {
         if (!isbn.matches("\\d{9}[\\dX]")) {
@@ -48,10 +48,10 @@ public class Utilitarios {
         return sum % 11 == 0;
     }
     /**
-     * Verifica se um código ISBN-13 é válido.
+     * Verifica se um ISBN-13 é válido.
      *
-     * @param isbn O código ISBN-13 a ser verificado.
-     * @return true se o código ISBN-13 for válido, false caso contrário.
+     * @param isbn O ISBN-13 a ser verificado.
+     * @return True se o ISBN-13 for válido, false caso contrário.
      */
     private static boolean isValidISBN13(String isbn) {
         if (!isbn.matches("\\d{13}")) {
@@ -72,10 +72,10 @@ public class Utilitarios {
         return checkDigit == (isbn.charAt(12) - '0');
     }
     /**
-     * Verifica se um código ISSN é válido.
+     * Verifica se um ISSN é válido.
      *
-     * @param issn O código ISSN a ser verificado.
-     * @return true se o código ISSN for válido, false caso contrário.
+     * @param issn O ISSN a ser verificado.
+     * @return True se o ISSN for válido, false caso contrário.
      */
     public static boolean eValidoISSN(String issn) {
         if (issn == null) {

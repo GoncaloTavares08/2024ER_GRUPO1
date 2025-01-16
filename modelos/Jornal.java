@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
  * A classe Jornal representa um documento do tipo jornal, que contém informações
  * como título, editora, categoria, ISSN e data de publicação.
  *
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Jornal extends Documento {
@@ -18,7 +18,7 @@ public class Jornal extends Documento {
      * @param titulo          O título do jornal.
      * @param editora        A editora do jornal.
      * @param categoria      A categoria do jornal.
-     * @param ISSN           O número ISSN do jornal.
+     * @param ISSN           O ISSN do jornal.
      * @param dataPublicacao  A data de publicação do jornal.
      */
     public Jornal(String titulo, String editora, String categoria, String ISSN, LocalDate dataPublicacao) {
@@ -27,17 +27,17 @@ public class Jornal extends Documento {
         this.dataPublicacao = dataPublicacao;
     }
     /**
-     * Obtém o número ISSN do jornal.
+     * Obtém o ISSN do jornal.
      *
-     * @return O número ISSN do jornal.
+     * @return ISSN do jornal.
      */
     public String getISSN() {
         return ISSN;
     }
     /**
-     * Define o número ISSN do jornal.
+     * Define o ISSN do jornal.
      *
-     * @param ISSN O novo número ISSN do jornal.
+     * @param ISSN O novo ISSN do jornal.
      */
     public void setISSN(String ISSN) {
         this.ISSN = ISSN;
@@ -45,7 +45,7 @@ public class Jornal extends Documento {
     /**
      * Obtém a data de publicação do jornal.
      *
-     * @return A data de publicação do jornal.
+     * @return Data de publicação do jornal.
      */
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
@@ -59,9 +59,9 @@ public class Jornal extends Documento {
         this.dataPublicacao = dataPublicacao;
     }
     /**
-     * Retorna uma representação em string do objeto Jornal.
+     * Retorna uma representação em string do objeto do tipo Jornal.
      *
-     * @return Uma string formatada com as informações do jornal.
+     * @return String formatada com as informações do jornal.
      */
     @Override
     public String toString() {
@@ -74,9 +74,9 @@ public class Jornal extends Documento {
                 ']';
     }
     /**
-     * Retorna uma string formatada para ser utilizada em um arquivo.
+     * Retorna uma string formatada para ser utilizada em ficheiro.
      *
-     * @return Uma string com os dados do jornal separados por '|'.
+     * @return String com os dados do jornal separados por '|'.
      */
     public String toFileString() {
         return getTitulo() +
@@ -88,8 +88,8 @@ public class Jornal extends Documento {
     /**
      * Cria um objeto Jornal a partir de uma string com os dados do jornal.
      *
-     * @param dados A string contendo os dados do jornal separados por '|'.
-     * @return Um objeto Jornal com os dados extraídos da string.
+     * @param dados A string que contém os dados do jornal separados por '|'.
+     * @return Objeto do tipo Jornal com os dados extraídos da string.
      */
     public static Jornal fromString(String dados) {
         String[] partes = dados.split("\\|");
@@ -102,9 +102,9 @@ public class Jornal extends Documento {
         return new Jornal(titulo, editora, categoria, ISSN, dataPublicacao);
     }
     /**
-     * Obtém o identificador do documento, que neste caso é o número ISSN.
+     * Obtém o identificador do documento, que neste caso é o ISSN.
      *
-     * @return O número ISSN do jornal.
+     * @return ISSN do jornal.
      */
     @Override
     public String getIdentificadorDocumento() {

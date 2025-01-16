@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.Scanner;
 /**
  * Classe responsável pela gestão das revistas na biblioteca.
- * Permite adicionar, editar, mostrar, remover e procurar revistas.
- * @author [João Teixeira]
+ * Permite adicionar, editar, mostrar, remover e procurar revistas pelo seu ISSN.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuRevistas {
@@ -17,7 +17,7 @@ public class MenuRevistas {
     /**
      * Construtor da classe MenuRevistas.
      *
-     * @param biblioteca A biblioteca onde as revistas serão geridas.
+     * @param biblioteca A instância da biblioteca onde as revistas serão geridas.
      */
     public MenuRevistas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
@@ -55,7 +55,7 @@ public class MenuRevistas {
     }
     /**
      * Metodo para adicionar uma nova revista à biblioteca.
-     * Solicita ao utilizador os dados da revista e cria um novo objeto Revista.
+     * Solicita ao utilizador os dados da revista e cria um novo objeto do tipo Revista.
      */
     private void adicionarRevistas() {
         Scanner scanner = new Scanner(System.in);
@@ -148,7 +148,7 @@ public class MenuRevistas {
     }
     /**
      * Metodo para procurar uma revista pelo seu ISSN.
-     * Solicita ao utilizador o ISSN e exibe os detalhes da revista correspondente, se existir.
+     * Solicita ao utilizador o ISSN e exibe os detalhes da revista correspondente, se a mesma existir.
      */
     private void procurarRevistaPorISSN() {
         Scanner scanner = new Scanner(System.in);

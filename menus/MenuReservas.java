@@ -13,7 +13,7 @@ import java.util.Scanner;
 /**
  * Classe responsável pela gestão de reservas na biblioteca.
  * Permite adicionar, editar, mostrar e remover reservas.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuReservas {
@@ -21,7 +21,7 @@ public class MenuReservas {
     /**
      * Construtor da classe MenuReservas.
      *
-     * @param biblioteca A biblioteca onde as reservas serão geridas.
+     * @param biblioteca A instância da biblioteca onde as reservas serão geridas.
      */
     public MenuReservas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;

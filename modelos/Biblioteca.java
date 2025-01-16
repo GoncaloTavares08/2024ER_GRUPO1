@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * A classe Biblioteca representa uma biblioteca que organiza uma coleção de livros, jornais, revistas,
  * utentes, reservas e empréstimos.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
  public class Biblioteca {
@@ -20,9 +20,10 @@ import java.util.List;
     private List<Emprestimo> emprestimos = new ArrayList<>();
     private String diretorio;
     /**
-     * Constrói uma nova instância de Biblioteca.
+     * Cria uma nova instância de Biblioteca.
+     * Garante que o diretório e os seus ficheiros são existentes, senão cria-os.
      *
-     * @param diretorio diretório onde os ficheiros da biblioteca estão guardados.
+     * @param diretorio Diretório onde os ficheiros da biblioteca estão guardados.
      */
     public Biblioteca(String diretorio) {
         this.diretorio = diretorio;
@@ -37,7 +38,7 @@ import java.util.List;
     /**
      * Retorna a lista de livros disponíveis na biblioteca.
      *
-     * @return De uma lista de documento Livro.
+     * @return Lista de todos os documentos do tipo Livro.
      */
     public List<Livro> getLivros() {
         return this.livros;
@@ -45,7 +46,7 @@ import java.util.List;
     /**
      * Verifica se a biblioteca tem livros.
      *
-     * @return true se a biblioteca tiver livros, false caso contrário.
+     * @return True se a biblioteca tiver livros, False caso contrário.
      */
     public boolean temLivros() {
         return !this.livros.isEmpty();
@@ -53,7 +54,7 @@ import java.util.List;
     /**
      * Adiciona um novo livro à biblioteca.
      *
-     * @param livro livro a ser adicionado.
+     * @param livro Livro a ser adicionado.
      */
     public void adicionarLivro(Livro livro) {
         this.livros.add(livro);
@@ -61,8 +62,8 @@ import java.util.List;
     /**
      * Remove um livro da biblioteca através do seu título.
      *
-     * @param titulo título do livro a ser removido.
-     * @return true se o livro foi removido com sucesso, false caso contrário.
+     * @param titulo Título do livro a ser removido.
+     * @return True se o livro foi removido com sucesso, false caso contrário.
      */
     public boolean removerLivroPorTitulo(String titulo) {
         Livro livroParaRemover = this.getLivroPorTitulo(titulo);
@@ -74,7 +75,7 @@ import java.util.List;
     /**
      * Obtém um livro da biblioteca pelo seu título.
      *
-     * @param titulo título do livro a ser procurado.
+     * @param titulo Título do livro a ser procurado.
      * @return O livro correspondente ao título, ou null se não encontrado.
      */
     public Livro getLivroPorTitulo(String titulo) {
@@ -86,9 +87,9 @@ import java.util.List;
         return null;
     }
     /**
-     * Obtém um livro da biblioteca pelo seu isbn.
+     * Obtém um livro da biblioteca pelo seu ISBN.
      *
-     * @param isbn isbn do livro a ser procurado.
+     * @param isbn ISBN do livro a ser procurado.
      * @return O livro correspondente ao isbn, ou null se não encontrado.
      */
     public Livro getLivroPorIsbn(String isbn) {
@@ -103,7 +104,7 @@ import java.util.List;
      * Verifica se um documento está ativo na biblioteca.
      *
      * @param documento Documento a ser verificado.
-     * @return true se o documento estiver ativo, false caso contrário.
+     * @return True se o documento estiver reservado e/ou emprestado, false caso contrário.
      */
     public boolean documentoEstaAtivo(Documento documento) {
         return this.getDocumentosAtivos().contains(documento);
@@ -111,7 +112,7 @@ import java.util.List;
     /**
      * Devolve a lista de documentos ativos na biblioteca.
      *
-     * @return Da lista de documentos ativos.
+     * @return Lista de documentos reservados e/ou emprestados.
      */
     public List<Documento> getDocumentosAtivos() {
         List<Documento> documentosAtivos = new ArrayList<>();
@@ -124,7 +125,7 @@ import java.util.List;
     /**
      * Retorna a lista de todos os documentos na biblioteca, incluindo livros, jornais e revistas.
      *
-     * @return Uma lista de todos os documentos disponíveis na biblioteca.
+     * @return Lista de todos os documentos existentes na biblioteca.
      */
     public List<Documento> getDocumentos() {
         List<Documento> documentos = new ArrayList<>(this.livros);
@@ -136,7 +137,7 @@ import java.util.List;
      * Obtém um documento da biblioteca pelo seu identificador.
      *
      * @param id Identificador do documento a ser procurado.
-     * @return Do documento correspondente ao identificador, ou null se não encontrado.
+     * @return Documento correspondente ao identificador, ou null se não encontrado.
      */
     public Documento getDocumentoPorIdentificador(String id) {
         for (Documento documento : this.livros) {
@@ -160,7 +161,7 @@ import java.util.List;
      * Verifica se um utente está ativo na biblioteca.
      *
      * @param utente Utente a ser verificado.
-     * @return true se o utente estiver ativo, false caso contrário.
+     * @return True se o utente tiver alguma reserva e/ou emprestimo no momento, false caso contrário.
      */
     public boolean utenteEstaAtivo(Utente utente) {
         return this.getUtentesAtivos().contains(utente);
@@ -168,7 +169,7 @@ import java.util.List;
     /**
      * Retorna a lista de utentes ativos na biblioteca.
      *
-     * @return Uma lista de utentes ativos.
+     * @return Lista de utentes com documentos reservados e/ou emprestados.
      */
     public List<Utente> getUtentesAtivos() {
         List<Utente> utentesAtivos = new ArrayList<>();
@@ -182,7 +183,7 @@ import java.util.List;
      * Obtém um utente da biblioteca pelo seu NIF.
      *
      * @param nif NIF do utente a ser procurado.
-     * @return O utente correspondente ao NIF, ou null se não encontrado.
+     * @return Utente correspondente ao NIF, ou null se não encontrado.
      */
 
     public Utente getUtentePorNif(String nif) {
@@ -197,7 +198,7 @@ import java.util.List;
      * Remove um utente da biblioteca através do seu NIF.
      *
      * @param nif NIF do utente a ser removido.
-     * @return true se o utente foi removido com sucesso, false caso contrário.
+     * @return True se o utente foi removido com sucesso, false caso contrário.
      */
     public boolean removerUtentePorNif(String nif) {
         Utente utenteParaRemover = this.getUtentePorNif(nif);
@@ -207,9 +208,9 @@ import java.util.List;
         return this.utentes.remove(utenteParaRemover);
     }
     /**
-     * Retorna a lista de jornais disponíveis na biblioteca.
+     * Retorna a lista de jornais existentes na biblioteca.
      *
-     * @return Da lista de documentos do tipo Jornal.
+     * @return Lista de documentos do tipo Jornal.
      */
     public List<Jornal> getJornais() {
         return this.jornais;
@@ -218,7 +219,7 @@ import java.util.List;
      * Obtém um jornal da biblioteca pelo seu ISSN.
      *
      * @param issn ISSN do jornal a ser procurado.
-     * @return O jornal correspondente ao ISSN, ou null se não encontrado.
+     * @return Jornal correspondente ao ISSN, ou null se não encontrado.
      */
     public Jornal getJornalPorISSN(String issn) {
         for (Jornal jornal : this.jornais) {
@@ -232,7 +233,7 @@ import java.util.List;
      * Remove um jornal da biblioteca através do seu ISSN.
      *
      * @param issn ISSN do jornal a ser removido.
-     * @return true se o jornal foi removido com sucesso, false caso contrário.
+     * @return True se o jornal foi removido com sucesso, false caso contrário.
      */
 
     public boolean removerJornalPorIssn(String issn) {
@@ -243,9 +244,9 @@ import java.util.List;
         return this.jornais.remove(jornalParaRemover);
     }
     /**
-     * Retorna a lista de revistas disponíveis na biblioteca.
+     * Retorna a lista de revistas existentes na biblioteca.
      *
-     * @return Uma lista de documentos do tipo Revista.
+     * @return Lista de documentos do tipo Revista.
      */
 
     public List<Revista> getRevistas() {
@@ -255,7 +256,7 @@ import java.util.List;
      * Obtém uma revista da biblioteca pelo seu ISSN.
      *
      * @param issn ISSN da revista a ser procurada.
-     * @return A revista correspondente ao ISSN, ou null se não encontrada.
+     * @return Revista correspondente ao ISSN, ou null se não encontrada.
      */
     public Revista getRevistaPorISSN(String issn) {
         for (Revista revista : this.revistas) {
@@ -269,7 +270,7 @@ import java.util.List;
      * Remove uma revista da biblioteca através do seu ISSN.
      *
      * @param issn ISSN da revista a ser removida.
-     * @return true se a revista foi removida com sucesso, false caso contrário.
+     * @return True se a revista foi removida com sucesso, false caso contrário.
      */
     public boolean removerRevistaPorIssn(String issn) {
         Revista revistaParaRemover = this.getRevistaPorISSN(issn);
@@ -279,9 +280,9 @@ import java.util.List;
         return this.revistas.remove(revistaParaRemover);
     }
     /**
-     * Retorna a lista de utentes disponíveis na biblioteca.
+     * Retorna a lista de utentes existentes na biblioteca.
      *
-     * @return Uma lista de utentes.
+     * @return Lista de utentes.
      */
     public List<Utente> getUtentes() {
         return this.utentes;
@@ -289,7 +290,7 @@ import java.util.List;
     /**
      * Retorna a lista de reservas feitas na biblioteca.
      *
-     * @return Uma lista de reservas.
+     * @return Lista de reservas.
      */
     public List<Reserva> getReservas() {
         return this.reservas;
@@ -298,7 +299,7 @@ import java.util.List;
      * Obtém uma reserva da biblioteca pelo seu número.
      *
      * @param numero Número da reserva a ser procurada.
-     * @return A reserva correspondente ao número, ou null se não encontrada.
+     * @return Reserva correspondente ao número, ou null se não encontrada.
      */
     public Reserva getReservasPorNumero(String numero) {
         for (Reserva reserva : this.reservas) {
@@ -311,15 +312,15 @@ import java.util.List;
     /**
      * Retorna a lista de empréstimos feitos na biblioteca.
      *
-     * @return Uma lista de empréstimos.
+     * @return Lista de empréstimos.
      */
     public List<Emprestimo> getEmprestimos() {
         return this.emprestimos;
     }
     /**
-     * Retorna a lista de transações (empréstimos e reservas) na biblioteca.
+     * Retorna a lista de transações (empréstimos e/ou reservas) na biblioteca.
      *
-     * @return Uma lista de transações.
+     * @return Lista de transações (empréstimos e/ou reservas).
      */
     public List<Transacao> getTransacoes() {
         List<Transacao> transacoes = new ArrayList<>(this.emprestimos);
@@ -330,7 +331,7 @@ import java.util.List;
      * Remove uma reserva da biblioteca pelo seu número.
      *
      * @param numeroReserva Número da reserva a ser removida.
-     * @return true se a reserva foi removida com sucesso, false caso contrário.
+     * @return True se a reserva foi removida com sucesso, false caso contrário.
      */
     public boolean removerReservaPorNumero(String numeroReserva) {
         Reserva reserva = this.getReservasPorNumero(numeroReserva);
@@ -362,12 +363,12 @@ import java.util.List;
     }
 
     /**
-     * Verifica se um documento está livre em um determinado período de tempo.
+     * Verifica se um documento está disponivel num determinado período de tempo.
      *
      * @param documento Documento a ser verificado.
-     * @param dataInicio Data de início do período.
-     * @param dataFim Data de fim do período.
-     * @return true se o documento estiver livre no período, false caso contrário.
+     * @param dataInicio Data de início do período a verificar.
+     * @param dataFim Data de fim do período a verificar.
+     * @return True se o documento estiver disponivel no período, false caso contrário.
      */
     public boolean documentoEstaLivreNoPeriodo(Documento documento, LocalDate dataInicio, LocalDate dataFim) {
         List<Transacao> transacoes = this.transacoesNoPeriodo(dataInicio, dataFim);
@@ -379,11 +380,11 @@ import java.util.List;
         return true;
     }
     /**
-     * Retorna uma lista de transações que ocorreram em um determinado período de tempo.
+     * Retorna uma lista de transações (empréstimos e/ou reservas) que ocorreram num determinado período de tempo.
      *
-     * @param dataInicio Data de início do período.
-     * @param dataFim Data de fim do período.
-     * @return Uma lista de transações que ocorreram no período especificado.
+     * @param dataInicio Data de início do período a verificar.
+     * @param dataFim Data de fim do período a verificar.
+     * @return Lista de transações que ocorreram no período especificado.
      */
     private List<Transacao> transacoesNoPeriodo(LocalDate dataInicio, LocalDate dataFim) {
         List<Transacao> transacoes = this.getTransacoes();
@@ -398,7 +399,7 @@ import java.util.List;
     /**
      * Retorna o diretório onde os ficheiros da biblioteca estão guardados.
      *
-     * @return O diretório da biblioteca.
+     * @return Diretório da biblioteca.
      */
     public String getDiretorio() {
         return this.diretorio;

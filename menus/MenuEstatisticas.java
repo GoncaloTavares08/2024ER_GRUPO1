@@ -16,7 +16,7 @@ import java.util.Scanner;
 /**
  * Classe responsável pela gestão das estatísticas da biblioteca.
  * Permite ao utilizador visualizar informações sobre empréstimos e documentos requisitados.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuEstatisticas {
@@ -24,7 +24,7 @@ public class MenuEstatisticas {
     /**
      * Construtor da classe MenuEstatisticas.
      *
-     * @param biblioteca A biblioteca que contém os dados a serem geridos.
+     * @param biblioteca A instância da biblioteca que contém os dados a serem geridos.
      */
     public MenuEstatisticas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
@@ -57,7 +57,7 @@ public class MenuEstatisticas {
         } while (opcao != 0);
     }
     /**
-     * Metodo que exibe o documento mais requisitado dentro de um intervalo de datas especificado pelo utilizador.
+     * Metodo que exibe o documento mais requisitado dentro de um intervalo de datas inserido pelo utilizador.
      * O utilizador deve introduzir uma data de início e uma data de fim.
      */
     private void documentoMaisRequisitado() {
@@ -108,7 +108,7 @@ public class MenuEstatisticas {
         }
     }
     /**
-     * Metodo que calcula e exibe o tempo médio de empréstimos dentro de um intervalo de datas especificado pelo utilizador.
+     * Metodo que calcula e mostra o tempo médio de empréstimos dentro de um intervalo de datas especificado pelo utilizador.
      * O utilizador deve introduzir uma data de início e uma data de fim.
      */
     private void mostrarTempoMedioEmprestimos() {
@@ -132,7 +132,7 @@ public class MenuEstatisticas {
         }
     }
     /**
-     * Metodo que calcula e exibe o total de empréstimos realizados dentro de um intervalo de datas especificado pelo utilizador.
+     * Metodo que calcula e mostra o total de empréstimos realizados dentro de um intervalo de datas inserido pelo utilizador.
      * O utilizador deve introduzir uma data de início e uma data de fim.
      */
     private void mostrarTotalEmprestimos() {

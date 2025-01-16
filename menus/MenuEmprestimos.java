@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  * Classe responsável pela gestão de empréstimos na biblioteca.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuEmprestimos {
@@ -22,7 +22,7 @@ public class MenuEmprestimos {
     /**
      * Construtor da classe MenuEmprestimos.
      *
-     * @param biblioteca A biblioteca onde os empréstimos serão geridos.
+     * @param biblioteca A instância da biblioteca onde os empréstimos serão geridos.
      */
     public MenuEmprestimos(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
@@ -174,7 +174,7 @@ public class MenuEmprestimos {
     /**
      * Metodo que permite devolver um empréstimo.
      * O utilizador deve inserir o número do empréstimo a devolver,
-     * e a data efetiva de devolução será registada.
+     * e a data efetiva de devolução será registada como o dia de hoje.
      */
     private void devolverEmprestimos() {
         if (!this.biblioteca.getEmprestimos().isEmpty()) {

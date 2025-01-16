@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.List;
 /**
  * Classe que representa o menu para escolher ou criar bibliotecas.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuEscolhaBibliotecas {

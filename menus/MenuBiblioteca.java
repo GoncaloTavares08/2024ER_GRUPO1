@@ -1,13 +1,12 @@
 package menus;
-
 import modelos.Biblioteca;
 import utilitarios.Leitores;
 
 import java.util.Scanner;
 /**
- * Classe que representa o menu de gestão da biblioteca.
- * Permite ao utilizador gerir diferentes aspectos da biblioteca, como livros, jornais, revistas, utentes, reservas, empréstimos e estatísticas.
- * @author [João Teixeira]
+ * Classe que representa o menu principal de gestão de uma biblioteca.
+ * Permite ao utilizador aceder aos diferentes menus, correspondentes à opção selecionada.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuBiblioteca {
@@ -23,7 +22,7 @@ public class MenuBiblioteca {
     /**
      * Metodo que inicia o menu de gestão geral da biblioteca.
      * Apresenta as opções disponíveis ao utilizador e executa a ação correspondente à opção escolhida.
-     * O menu continua a ser apresentado até que o utilizador escolha a opção de sair.
+     * O menu continua a ser apresentado até que o utilizador escolha a opção de sair ou selecionar uma opção válida.
      */
     public void gerirGeral() {
         Scanner scanner = new Scanner(System.in);

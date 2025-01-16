@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import java.util.Scanner;
 /**
  * Classe responsável pela gestão de jornais na biblioteca.
- * Permite adicionar, editar, mostrar, remover e procurar jornais.
- * @author [João Teixeira]
+ * Permite adicionar, editar, mostrar, remover e procurar jornais pelo ISSN.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuJornais {
@@ -17,7 +17,7 @@ public class MenuJornais {
     /**
      * Construtor da classe MenuJornais.
      *
-     * @param biblioteca A biblioteca onde os jornais serão geridos.
+     * @param biblioteca A instância da biblioteca onde os jornais serão geridos.
      */
     public MenuJornais(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
@@ -54,7 +54,7 @@ public class MenuJornais {
     }
     /**
      * Metodo que permite adicionar um novo jornal à biblioteca.
-     * Solicita ao utilizador os dados do jornal e cria um novo objeto Jornal.
+     * Solicita ao utilizador os dados do jornal e cria um novo objeto do tipo Jornal.
      */
     private void adicionarJornais() {
         Scanner scanner = new Scanner(System.in);
@@ -113,7 +113,6 @@ public class MenuJornais {
         }
     }
     /**
-     * Metodo que mostra todos os jornais registados /**
      * Metodo que mostra todos os jornais registados na biblioteca.
      * Se não houver jornais, informa o utilizador que não existem jornais registados.
      */
@@ -147,7 +146,7 @@ public class MenuJornais {
     }
     /**
      * Metodo que procura um jornal pelo seu ISSN.
-     * Solicita ao utilizador o ISSN e mostra os detalhes do jornal se encontrado.
+     * Solicita ao utilizador o ISSN e mostra os detalhes do jornal, se o mesmo for encontrado.
      */
     private void procurarJornalPorISSN() {
         Scanner scanner = new Scanner(System.in);

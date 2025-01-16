@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * A classe Livro representa um livro que é um tipo de Documento.
  * Contém informações sobre o título, editora, categoria, ano de edição, ISBN e autores do livro.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Livro extends Documento {
@@ -32,7 +32,7 @@ public class Livro extends Documento {
     /**
      * Obtém o ano de edição do livro.
      *
-     * @return O ano de edição do livro.
+     * @return Ano de edição do livro.
      */
     public int getAnoEdicao() {
         return anoEdicao;
@@ -48,7 +48,7 @@ public class Livro extends Documento {
     /**
      * Obtém o ISBN do livro.
      *
-     * @return O ISBN do livro.
+     * @return ISBN do livro.
      */
     public String getISBN() {
         return ISBN;
@@ -64,7 +64,7 @@ public class Livro extends Documento {
     /**
      * Obtém a lista de autores do livro.
      *
-     * @return A lista de autores do livro.
+     * @return Lista de autores do livro.
      */
     public List<String> getAutores() {
         return autores;
@@ -80,7 +80,7 @@ public class Livro extends Documento {
     /**
      * Retorna uma representação em string do livro.
      *
-     * @return Uma string que representa o livro.
+     * @return String que representa o livro.
      */
     @Override
     public String toString() {
@@ -94,9 +94,9 @@ public class Livro extends Documento {
                 ']';
     }
     /**
-     * Retorna uma representação em string do livro formatada para ser salva em um arquivo.
+     * Retorna uma representação em string do livro formatada para ser salva em ficheiro.
      *
-     * @return Uma string formatada para arquivo.
+     * @return String formatada para ficheiro.
      */
     public String toFileString() {
         return getTitulo() +
@@ -107,10 +107,10 @@ public class Livro extends Documento {
                 "|" + getAutores().toString().replace("[", "").replace("]", "").replace(" ", "");
     }
     /**
-     * Cria um objeto Livro a partir de uma string formatada.
+     * Cria um objeto do tipo Livro a partir de uma string formatada.
      *
      * @param linha A string que contém os dados do livro.
-     * @return Um objeto Livro criado a partir da string.
+     * @return Objeto do tipo Livro criado a partir da string.
      */
     public static Livro fromString(String linha) {
         String[] partes = linha.split("\\|");
@@ -126,7 +126,7 @@ public class Livro extends Documento {
     /**
      * Obtém o identificador do documento, que neste caso é o ISBN.
      *
-     * @return O ISBN do livro como identificador do documento.
+     * @return ISBN do livro como identificador do documento.
      */
     @Override
     public String getIdentificadorDocumento() {

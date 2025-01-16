@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Classe que representa uma reserva de documentos.
- * Esta classe estende a classe Transacao e contém informações sobre a reserva,
+ * Esta classe estende a SuperClasse Transacao e contém informações sobre a reserva,
  * incluindo datas de registo e fim.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Reserva extends Transacao {
@@ -32,7 +32,7 @@ public class Reserva extends Transacao {
     /**
      * Obtém a data de registo da reserva.
      *
-     * @return A data de registo.
+     * @return Data de registo.
      */
     public LocalDate getDataRegisto() {
         return dataRegisto;
@@ -48,7 +48,7 @@ public class Reserva extends Transacao {
     /**
      * Obtém a data de fim da reserva.
      *
-     * @return A data de fim.
+     * @return Data de fim.
      */
     public LocalDate getDataFim() {
         return dataFim;
@@ -64,7 +64,7 @@ public class Reserva extends Transacao {
     /**
      * Retorna uma representação em string da reserva.
      *
-     * @return Uma string que contém informações sobre a reserva.
+     * @return String que contém informações sobre a reserva.
      */
     @Override
     public String toString() {
@@ -82,9 +82,9 @@ public class Reserva extends Transacao {
                 ']';
     }
     /**
-     * Retorna uma representação em string da reserva formatada para ser salva em ficheiro.
+     * Retorna uma representação em string da reserva formatada para ser guardada em ficheiro.
      *
-     * @return Uma string formatada para armazenamento em ficheiro.
+     * @return String formatada para armazenamento em ficheiro.
      */
     public String toFileString() {
         ArrayList<String> idDocumentos = new ArrayList<>();

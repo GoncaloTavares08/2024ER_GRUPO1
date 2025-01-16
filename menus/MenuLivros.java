@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 /**
  * Classe responsável pela gestão de livros na biblioteca.
- * Permite adicionar, editar, mostrar, remover e procurar livros.
- * @author [João Teixeira]
+ * Permite adicionar, editar, mostrar, remover e procurar livros pelo seu ISBN.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class MenuLivros {
@@ -18,7 +18,7 @@ public class MenuLivros {
     /**
      * Construtor da classe MenuLivros.
      *
-     * @param biblioteca A biblioteca onde os livros serão geridos.
+     * @param biblioteca A instância da biblioteca onde os livros serão geridos.
      */
     public MenuLivros(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
@@ -147,7 +147,7 @@ public class MenuLivros {
     }
     /**
      * Metodo para remover um livro da biblioteca.
-     * Solicita ao utilizador o ISBN do livro a remover e o elimina se não estiver ativo.
+     * Solicita ao utilizador o ISBN do livro a remover e elimina-o se nao estiver reservado ou emprestado.
      */
     private void removerLivros() {
         mostrarLivros();
@@ -177,7 +177,7 @@ public class MenuLivros {
     }
     /**
      * Metodo para procurar um livro pelo seu ISBN.
-     * Solicita ao utilizador o ISBN e exibe os detalhes do livro se encontrado.
+     * Solicita ao utilizador o ISBN e exibe os detalhes do livro se o mesmo for encontrado.
      */
     private void procurarLivroPorISBN() {
         Scanner scanner = new Scanner(System.in);

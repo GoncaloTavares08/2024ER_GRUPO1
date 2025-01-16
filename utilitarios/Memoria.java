@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Classe responsável pela gestão de memória e operações relacionadas com bibliotecas,
- * incluindo a criação de diretórios, carregamento e armazenamento de dados.
- * @author [João Teixeira]
+ * incluindo a criação de diretórios, carregar e guardar dados.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Memoria {
@@ -52,7 +52,7 @@ public class Memoria {
     /**
      * Carrega uma lista de bibliotecas a partir do diretório base.
      *
-     * @return Uma lista de objetos Biblioteca carregados.
+     * @return Lista de objetos do tipo Biblioteca carregados.
      */
     public static List<Biblioteca> carregarBibliotecas() {
         List<Biblioteca> bibliotecas = new ArrayList<>();
@@ -81,7 +81,7 @@ public class Memoria {
      * Carrega uma lista de livros a partir do ficheiro correspondente no diretório da biblioteca.
      *
      * @param diretorio O diretório da biblioteca de onde os livros serão carregados.
-     * @return Uma lista de objetos Livro carregados.
+     * @return Lista de objetos do tipo Livro carregados.
      */
     public static List<Livro> carregarLivros(String diretorio) {
         List<Livro> livros = new ArrayList<>();
@@ -100,7 +100,7 @@ public class Memoria {
      * Carrega uma lista de jornais a partir do ficheiro correspondente no diretório da biblioteca.
      *
      * @param diretorio O diretório da biblioteca de onde os jornais serão carregados.
-     * @return Uma lista de objetos Jornal carregados.
+     * @return Lista de objetos do tipo Jornal carregados.
      */
     public static List<Jornal> carregarJornais(String diretorio) {
         List<Jornal> jornais = new ArrayList<>();
@@ -119,7 +119,7 @@ public class Memoria {
      * Carrega uma lista de revistas a partir do ficheiro correspondente no diretório da biblioteca.
      *
      * @param diretorio O diretório da biblioteca de onde as revistas serão carregadas.
-     * @return Uma lista de objetos Revista carregados.
+     * @return Lista de objetos do tipo Revista carregados.
      */
     public static List<Revista> carregarRevistas(String diretorio) {
         List<Revista> revistas = new ArrayList<>();
@@ -138,7 +138,7 @@ public class Memoria {
      * Carrega uma lista de utentes a partir do ficheiro correspondente no diretório da biblioteca.
      *
      * @param diretorio O diretório da biblioteca de onde os utentes serão carregados.
-     * @return Uma lista de objetos Utente carregados.
+     * @return Lista de objetos do tipo objetos Utente carregados.
      */
     public static List<Utente> carregarUtentes(String diretorio) {
         List<Utente> utentes = new ArrayList<>();
@@ -157,7 +157,7 @@ public class Memoria {
      * Carrega uma lista de empréstimos a partir do ficheiro correspondente no diretório da biblioteca.
      *
      * @param biblioteca A biblioteca da qual os empréstimos serão carregados.
-     * @return Uma lista de objetos Emprestimo carregados.
+     * @return Lista de objetos do tipo Emprestimo carregados.
      */
     public static List<Emprestimo> carregarEmprestimos(Biblioteca biblioteca) {
         List<Emprestimo> emprestimos = new ArrayList<>();
@@ -177,7 +177,7 @@ public class Memoria {
      *
      * @param dados A string contendo os dados do empréstimo.
      * @param biblioteca A biblioteca associada ao empréstimo.
-     * @return Um objeto Emprestimo carregado.
+     * @return Objeto do tipo Emprestimo carregado.
      */
     private static Emprestimo carregarEmprestimo(String dados, Biblioteca biblioteca) {
         String[] partes = dados.split("\\|");
@@ -211,7 +211,7 @@ public class Memoria {
      * Carrega uma lista de reservas a partir do ficheiro correspondente no diretório da biblioteca.
      *
      * @param biblioteca A biblioteca da qual as reservas serão carregadas.
-     * @return Uma lista de objetos Reserva carregados.
+     * @return Lista de objetos Reserva carregados.
      */
     public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
         List<Reserva> reservas = new ArrayList<>();
@@ -231,7 +231,7 @@ public class Memoria {
      *
      * @param dados A string contendo os dados da reserva.
      * @param biblioteca A biblioteca associada à reserva.
-     * @return Um objeto Reserva carregado.
+     * @return Objeto do tipo Reserva carregado.
      */
     private static Reserva carregarReserva(String dados, Biblioteca biblioteca) {
         String[] partes = dados.split("\\|");

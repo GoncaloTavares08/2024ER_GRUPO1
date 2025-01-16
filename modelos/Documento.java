@@ -1,8 +1,8 @@
 package modelos;
 /**
  * Classe abstrata que representa um Documento.
- * Esta classe contém as informações básicas sobre um documento, como título, editora e categoria.
- * @author [João Teixeira]
+ * Esta SuperClasse(livros, jornais, revistas) contém as informações básicas, comuns a todos os documentos.
+ * @author [Grupo1]
  * @version 1.0
  */
  public abstract class Documento {
@@ -24,7 +24,7 @@ package modelos;
     /**
      * Obtém o título do documento.
      *
-     * @return O título do documento.
+     * @return Título do documento.
      */
     public String getTitulo() {
         return titulo;
@@ -40,7 +40,7 @@ package modelos;
     /**
      * Obtém a editora do documento.
      *
-     * @return A editora do documento.
+     * @return Editora do documento.
      */
     public String getEditora() {
         return editora;
@@ -57,7 +57,7 @@ package modelos;
     /**
      * Obtém a categoria do documento.
      *
-     * @return A categoria do documento.
+     * @return Categoria do documento.
      */
     public String getCategoria() {
         return categoria;
@@ -73,7 +73,7 @@ package modelos;
     /**
      *Metodo abstrato que deve ser implementado pelas subclasses para obter o identificador do documento.
      *
-     * @return O identificador do documento.
+     * @return Identificador do documento.
      */
     public abstract String getIdentificadorDocumento();
 }

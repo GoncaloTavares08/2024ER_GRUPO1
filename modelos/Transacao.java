@@ -7,7 +7,7 @@ import java.util.List;
  * Classe abstrata que representa uma transação.
  * Esta classe contém informações sobre a transação, incluindo o número, o utente,
  * os documentos associados e a data de início.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public abstract class Transacao {
@@ -32,7 +32,7 @@ public abstract class Transacao {
     /**
      * Obtém o número da transação.
      *
-     * @return O número da transação.
+     * @return Número da transação.
      */
     public String getNumero() {
         return numero;
@@ -48,7 +48,7 @@ public abstract class Transacao {
     /**
      * Obtém o utente associado à transação.
      *
-     * @return O utente associado à transação.
+     * @return Utente associado à transação.
      */
     public Utente getUtente() {
         return utente;
@@ -64,7 +64,7 @@ public abstract class Transacao {
     /**
      * Obtém a lista de documentos associados à transação.
      *
-     * @return A lista de documentos.
+     * @return Lista de documentos.
      */
     public List<Documento> getDocumentos() {
         return documentos;
@@ -80,7 +80,7 @@ public abstract class Transacao {
     /**
      * Obtém a data de início da transação.
      *
-     * @return A data de início da transação.
+     * @return Data de início da transação.
      */
     public LocalDate getDataInicio() {
         return dataInicio;
@@ -96,7 +96,7 @@ public abstract class Transacao {
     /**
      * Metodo abstrato que deve ser implementado pelas subclasses para obter a data de fim da transação.
      *
-     * @return A data de fim da transação.
+     * @return Data de fim da transação.
      */
     public abstract LocalDate getDataFim();
     /**
@@ -104,7 +104,7 @@ public abstract class Transacao {
      *
      * @param periodoInicio A data de início do período a verificar.
      * @param periodoFim   A data de fim do período a verificar.
-     * @return true se a transação estiver ativa entre as duas datas, false caso contrário.
+     * @return True se a transação estiver ativa entre as duas datas, false caso contrário.
      */
     public boolean estaAtivaEntre(LocalDate periodoInicio, LocalDate periodoFim) {
         return (dataInicio.isBefore(periodoFim) || dataInicio.isEqual(periodoFim)) &&

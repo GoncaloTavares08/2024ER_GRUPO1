@@ -5,17 +5,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 /**
  * A classe Leitores fornece métodos utilitários para ler diferentes tipos de dados
- * a partir da entrada do utilizador, garantindo que os dados são válidos.
- * @author [João Teixeira]
+ * a partir do input do utilizador, garantindo que os dados são válidos.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Leitores {
     /**
-     * Lê uma data a partir da entrada do utilizador.
+     * Lê uma data a partir do input do utilizador.
      * O formato esperado é "dd-MM-yyyy".
      *
-     * @param sc o Scanner utilizado para ler a entrada do utilizador
-     * @return a data lida como um objeto LocalDate
+     * @param sc o Scanner utilizado para ler o input do utilizador
+     * @return Data lida como um objeto do tipo LocalDate.
      */
     public static LocalDate lerData(Scanner sc) {
         LocalDate data = null;
@@ -32,11 +32,11 @@ public class Leitores {
         return data;
     }
     /**
-     * Lê um ISBN a partir da entrada do utilizador.
+     * Lê um ISBN a partir do input do utilizador.
      * O metodo valida se o ISBN introduzido é válido.
      *
-     * @param sc o Scanner utilizado para ler a entrada do utilizador
-     * @return o ISBN lido como uma String
+     * @param sc o Scanner utilizado para ler o input do utilizador.
+     * @return ISBN lido como uma String.
      */
     public static String lerISBN(Scanner sc) {
         String isbn = "";
@@ -52,11 +52,11 @@ public class Leitores {
         return isbn;
     }
     /**
-     * Lê um ISSN a partir da entrada do utilizador.
+     * Lê um ISSN a partir do input do utilizador.
      * O metodo valida se o ISSN introduzido é válido.
      *
-     * @param sc o Scanner utilizado para ler a entrada do utilizador
-     * @return o ISSN lido como uma String
+     * @param sc o Scanner utilizado para ler o input do utilizador.
+     * @return ISSN lido como uma String.
      */
     public static String lerISSN(Scanner sc) {
         String issn = "";
@@ -72,11 +72,11 @@ public class Leitores {
         return issn;
     }
     /**
-     * Lê uma string não vazia a partir da entrada do utilizador.
+     * Lê uma string não vazia a partir do input do utilizador.
      * O metodo garante que a string não é apenas espaços em branco.
      *
-     * @param sc o Scanner utilizado para ler a entrada do utilizador
-     * @return a string lida como uma String
+     * @param sc o Scanner utilizado para ler o input do utilizador.
+     * @return String lida como uma String.
      */
     public static String lerStringNaoVazia(Scanner sc) {
         String string = "";
@@ -92,11 +92,11 @@ public class Leitores {
         return string;
     }
     /**
-     * Lê um número inteiro a partir da entrada do utilizador.
+     * Lê um número inteiro a partir do input do utilizador.
      * O metodo garante que o valor introduzido é um número inteiro válido.
      *
-     * @param sc o Scanner utilizado para ler a entrada do utilizador
-     * @return o número inteiro lido
+     * @param sc o Scanner utilizado para ler o input do utilizador
+     * @return Múmero inteiro lido.
      */
     public static int lerNumeroInteiro(Scanner sc) {
         int numero = 0;
@@ -113,11 +113,11 @@ public class Leitores {
         return numero;
     }
     /**
-     * Lê um género a partir da entrada do utilizador.
+     * Lê um género a partir do input do utilizador.
      * O metodo valida se o género introduzido é 'M' (masculino) ou 'F' (feminino).
      *
-     * @param sc o Scanner utilizado para ler a entrada do utilizador
-     * @return o género lido como um carácter
+     * @param sc o Scanner utilizado para ler o input do utilizador.
+     * @return Género lido como um carácter.
      */
     public static char lerGenero(Scanner sc) {
         char genero = ' ';

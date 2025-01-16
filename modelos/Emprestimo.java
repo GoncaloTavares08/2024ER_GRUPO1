@@ -6,15 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 /**
  * Classe que representa um empréstimo de documentos.
- * Extende a classe Transacao e contém informações sobre a data de devolução prevista e efetiva.
- * @author [João Teixeira]
+ * Extende a SuperClasse Transacao e contém informações sobre a data de devolução prevista e efetiva.
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Emprestimo extends Transacao {
     private LocalDate dataPrevistaDevolucao;
     private LocalDate dataEfetivaDevolucao;
     /**
-     * Construtor para criar um empréstimo com data prevista de devolução.
+     * Construtor para criar um empréstimo, sem data de devolução efetiva.
      *
      * @param numero                  O número do empréstimo.
      * @param utente                  O utente que realiza o empréstimo.
@@ -28,7 +28,7 @@ public class Emprestimo extends Transacao {
         this.dataEfetivaDevolucao = null;
     }
     /**
-     * Construtor para criar um empréstimo com data prevista e efetiva de devolução.
+     * Construtor para criar um empréstimo, com data de devolução efetiva.
      *
      * @param numero                  O número do empréstimo.
      * @param utente                  O utente que realiza o empréstimo.
@@ -44,10 +44,10 @@ public class Emprestimo extends Transacao {
     }
 
     /**
-     * Verifica se o empréstimo está atrasado com base no número de dias fornecido.
+     * Verifica se o empréstimo está atrasado com base no número de dias inserido.
      *
      * @param numeroDias O número de dias a considerar para verificar o atraso.
-     * @return true se o empréstimo está atrasado, false caso contrário.
+     * @return True se o empréstimo está atrasado, false caso contrário.
      */
     public boolean estaAtrasado(int numeroDias) {
         if (dataEfetivaDevolucao != null) {
@@ -59,7 +59,7 @@ public class Emprestimo extends Transacao {
     /**
      * Obtém a data prevista de devolução.
      *
-     * @return A data prevista de devolução.
+     * @return Data prevista de devolução.
      */
     public LocalDate getDataPrevistaDevolucao() {
         return dataPrevistaDevolucao;
@@ -75,7 +75,7 @@ public class Emprestimo extends Transacao {
     /**
      * Obtém a data efetiva de devolução.
      *
-     * @return A data efetiva de devolução, ou null se não tiver sido devolvido.
+     * @return Data efetiva de devolução, ou null se não tiver sido devolvido.
      */
     public LocalDate getDataEfetivaDevolucao() {
         return dataEfetivaDevolucao;
@@ -92,7 +92,7 @@ public class Emprestimo extends Transacao {
     /**
      * Retorna uma representação em string do empréstimo.
      *
-     * @return Uma string que representa o empréstimo, incluindo detalhes como número, utente, documentos e datas.
+     * @return String que representa o empréstimo, incluindo detalhes como número, utente, documentos e datas.
      */
     @Override
     public String toString() {
@@ -110,9 +110,9 @@ public class Emprestimo extends Transacao {
                 ']';
     }
     /**
-     * Retorna uma representação em string do empréstimo formatada para ser salva em arquivo.
+     * Retorna uma representação em string do empréstimo formatada para ser guardado em ficheiro.
      *
-     * @return Uma string formatada para armazenamento em arquivo, incluindo número, utente, documentos e datas.
+     * @return String formatada para armazenamento em arquivo, incluindo número, utente, documentos e datas.
      */
     public String toFileString() {
         ArrayList<String> idDocumentos = new ArrayList<>();
@@ -136,7 +136,7 @@ public class Emprestimo extends Transacao {
     /**
      * Obtém a data de fim do empréstimo, que é a data prevista de devolução.
      *
-     * @return A data prevista de devolução.
+     * @return Data prevista de devolução.
      */
     @Override
     public LocalDate getDataFim() {

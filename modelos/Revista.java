@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 /**
  * A classe Revista representa uma revista, que é um tipo de documento.
- * Esta classe estende a classe Documento e contém informações específicas
+ * Esta classe estende a SuperClasse Documento e contém informações específicas
  * sobre revistas, como o ISSN e a data de publicação.
- * @author [João Teixeira]
+ * @author [Grupo1]
  * @version 1.0
  */
 public class Revista extends Documento {
@@ -27,17 +27,17 @@ public class Revista extends Documento {
         this.dataPublicacao = dataPublicacao;
     }
     /**
-     * Obtém o número ISSN da revista.
+     * Obtém o ISSN da revista.
      *
-     * @return O número ISSN da revista.
+     * @return ISSN da revista.
      */
     public String getISSN() {
         return ISSN;
     }
     /**
-     * Define o número ISSN da revista.
+     * Define o ISSN da revista.
      *
-     * @param ISSN O novo número ISSN da revista.
+     * @param ISSN O novo ISSN da revista.
      */
     public void setISSN(String ISSN) {
         this.ISSN = ISSN;
@@ -45,7 +45,7 @@ public class Revista extends Documento {
     /**
      * Obtém a data de publicação da revista.
      *
-     * @return A data de publicação da revista.
+     * @return Data de publicação da revista.
      */
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
@@ -61,7 +61,7 @@ public class Revista extends Documento {
     /**
      * Retorna uma representação em string da revista.
      *
-     * @return Uma string formatada com os detalhes da revista.
+     * @return String formatada com os detalhes da revista.
      */
     @Override
     public String toString() {
@@ -76,7 +76,7 @@ public class Revista extends Documento {
     /**
      * Retorna uma string formatada para ser armazenada em um arquivo.
      *
-     * @return Uma string com os detalhes da revista, separada por '|'.
+     * @return String com os detalhes da revista, separada por '|'.
      */
     public String toFileString() {
         return getTitulo() +
@@ -89,7 +89,7 @@ public class Revista extends Documento {
      * Cria uma instância de Revista a partir de uma string formatada.
      *
      * @param dados A string com os detalhes da revista, separada por '|'.
-     * @return Uma nova instância de Revista.
+     * @return Nova instância de Revista.
      */
     public static Revista fromString(String dados) {
         String[] partes = dados.split("\\|");
@@ -104,7 +104,7 @@ public class Revista extends Documento {
     /**
      * Obtém o identificador do documento, que neste caso é o ISSN.
      *
-     * @return O ISSN da revista.
+     * @return ISSN da revista.
      */
     @Override
     public String getIdentificadorDocumento() {
