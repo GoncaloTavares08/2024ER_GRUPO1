@@ -9,14 +9,24 @@ import utilitarios.Leitores;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * Classe responsável pela gestão de utentes na biblioteca.
+ * @author [Grupo1]
+ * @version 1.0
+ */
 public class MenuUtentes {
     private Biblioteca biblioteca;
-
+    /**
+     * Construtor da classe MenuUtentes.
+     *
+     * @param biblioteca A instância da biblioteca onde os utentes serão geridos.
+     */
     public MenuUtentes(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
-
+    /**
+     * Metodo que apresenta o menu de gestão de utentes e processa as opções escolhidas pelo utilizador.
+     */
     protected void gerirUtentes() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -50,7 +60,9 @@ public class MenuUtentes {
             }
         } while (opcao != 0);
     }
-
+    /**
+     * Metodo que permite adicionar um novo utente à biblioteca.
+     */
     private void adicionarUtentes() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF: ");
@@ -65,7 +77,9 @@ public class MenuUtentes {
         Utente utente = new Utente(nif, nome, genero, contacto);
         this.biblioteca.getUtentes().add(utente);
     }
-
+    /**
+     * Metodo que permite editar os dados de um utente existente.
+     */
     private void editarUtentes() {
         mostrarUtentes();
         if (!this.biblioteca.getUtentes().isEmpty()) {
@@ -99,7 +113,9 @@ public class MenuUtentes {
         }
 
     }
-
+    /**
+     * Metodo que mostra todos os utentes registados na biblioteca, se não exister nenhum, informa o utilizador.
+     */
     public void mostrarUtentes() {
         if (this.biblioteca.getUtentes().isEmpty()) {
             System.out.println("Não existem utentes registados.");
@@ -110,7 +126,9 @@ public class MenuUtentes {
             }
         }
     }
-
+    /**
+     * Metodo que permite remover um utente da biblioteca.
+     */
     private void removerUtentes() {
         mostrarUtentes();
         if (!this.biblioteca.getUtentes().isEmpty()) {
@@ -140,7 +158,9 @@ public class MenuUtentes {
             }
         }
     }
-
+    /**
+     * Metodo que lista todos os utentes que tenham reservas ou emprestimos no momento, na biblioteca.
+     */
     private void listarUtentesAtivos() {
         if (this.biblioteca.getUtentesAtivos().isEmpty()) {
             System.out.println("Não existem utentes ativos.");
@@ -151,7 +171,9 @@ public class MenuUtentes {
             }
         }
     }
-
+    /**
+     * Metodo que lista os utentes com devoluções atrasadas superior à quantidade de dias inserida pelo utilizador.
+     */
     private void listarUtentesDevolucaoAtrasada() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quantos dias a devolução está atrasada?");
@@ -164,7 +186,9 @@ public class MenuUtentes {
             }
         }
     }
-
+    /**
+     * Metodo que procura um utente pelo seu NIF.
+     */
     private void procurarUtentePorNIF() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o NIF do utente");
@@ -176,7 +200,9 @@ public class MenuUtentes {
             System.out.println("NIF inválido");
         }
     }
-
+    /**
+     * Metodo que lista as transações (reservas e/ou emprestimos) de um utente entre duas datas inseridas pelo utilizador.
+     */
     private void listarTransacoesPorUtentePorDatas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza o NIF do utente:");

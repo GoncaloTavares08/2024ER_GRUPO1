@@ -13,13 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe responsável pela gestão das estatísticas da biblioteca.
+ * Permite ao utilizador visualizar informações sobre empréstimos e documentos requisitados.
+ * @author [Grupo1]
+ * @version 1.0
+ */
 public class MenuEstatisticas {
     private Biblioteca biblioteca;
-
+    /**
+     * Construtor da classe MenuEstatisticas.
+     *
+     * @param biblioteca A instância da biblioteca que contém os dados a serem geridos.
+     */
     public MenuEstatisticas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
-
+    /**
+     * Metodo que inicia o menu de gestão de estatísticas.
+     * Permite ao utilizador escolher entre várias opções de visualização de dados.
+     */
     protected void gerirEstatisticas() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -43,7 +56,10 @@ public class MenuEstatisticas {
             }
         } while (opcao != 0);
     }
-
+    /**
+     * Metodo que exibe o documento mais requisitado dentro de um intervalo de datas inserido pelo utilizador.
+     * O utilizador deve introduzir uma data de início e uma data de fim.
+     */
     private void documentoMaisRequisitado() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Introduza a data de início:");
@@ -91,14 +107,17 @@ public class MenuEstatisticas {
             System.out.println("Nenhum item foi requisitado no intervalo de datas especificado.");
         }
     }
-
+    /**
+     * Metodo que calcula e mostra o tempo médio de empréstimos dentro de um intervalo de datas especificado pelo utilizador.
+     * O utilizador deve introduzir uma data de início e uma data de fim.
+     */
     private void mostrarTempoMedioEmprestimos() {
         int count = 0;
         long somaDias = 0;
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Introduza a data de início:");
+        System.out.print("Introduza a data de início : ");
         LocalDate dataInicio = Leitores.lerData(scanner);
-        System.out.print("Introduza a data de fim:");
+        System.out.print("Introduza a data de fim: ");
         LocalDate dataFim = Leitores.lerData(scanner);
         for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
             if (dataInicio.isBefore(emprestimo.getDataInicio()) && dataFim.isAfter(emprestimo.getDataInicio())) {
@@ -111,14 +130,16 @@ public class MenuEstatisticas {
         } else {
             System.out.println("A média em dias dos empréstimos entre as datas indicadas é de " + somaDias / count + " dias.");
         }
-
     }
-
+    /**
+     * Metodo que calcula e mostra o total de empréstimos realizados dentro de um intervalo de datas inserido pelo utilizador.
+     * O utilizador deve introduzir uma data de início e uma data de fim.
+     */
     private void mostrarTotalEmprestimos() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Introduza a data de início:");
+        System.out.print("Introduza a data de início: ");
         LocalDate dataInicio = Leitores.lerData(scanner);
-        System.out.print("Introduza a data de fim:");
+        System.out.print("Introduza a data de fim: ");
         LocalDate dataFim = Leitores.lerData(scanner);
 
         int totalEmprestimos = 0;
@@ -128,6 +149,5 @@ public class MenuEstatisticas {
             }
         }
         System.out.println("Total de empréstimos para o intervalo " + dataInicio.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " e " + dataFim.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + ": " + totalEmprestimos);
-
     }
 }

@@ -10,14 +10,26 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * Classe responsável pela gestão de reservas na biblioteca.
+ * Permite adicionar, editar, mostrar e remover reservas.
+ * @author [Grupo1]
+ * @version 1.0
+ */
 public class MenuReservas {
     private Biblioteca biblioteca;
-
+    /**
+     * Construtor da classe MenuReservas.
+     *
+     * @param biblioteca A instância da biblioteca onde as reservas serão geridas.
+     */
     public MenuReservas(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
-
+    /**
+     * Metodo principal para gerir reservas.
+     * Apresenta um menu com opções para adicionar, editar, mostrar e remover reservas.
+     */
     protected void gerirReservas() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -43,7 +55,11 @@ public class MenuReservas {
             }
         } while (opcao != 0);
     }
-
+    /**
+     * Metodo para adicionar uma nova reserva.
+     * Solicita ao utilizador o NIF do utente, as datas de início e fim,
+     * e os documentos a serem reservados.
+     */
     private void adicionarReservas() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF do Utente:");
@@ -84,7 +100,10 @@ public class MenuReservas {
 
         System.out.println("Reserva adicionada com sucesso!");
     }
-
+    /**
+     * Metodo para editar uma reserva existente.
+     * Permite ao utilizador alterar o NIF do utente, as datas e os documentos da reserva.
+     */
     private void editarReservas() {
         mostrarReservas();
         if (!this.biblioteca.getReservas().isEmpty()) {
@@ -139,7 +158,10 @@ public class MenuReservas {
             }
         }
     }
-
+    /**
+     * Metodo para mostrar todas as reservas registadas.
+     * Exibe uma lista de reservas ou uma mensagem se não houver reservas.
+     */
     private void mostrarReservas() {
         if (this.biblioteca.getReservas().isEmpty()) {
             System.out.println("Não existem reservas registadas.");
@@ -151,7 +173,10 @@ public class MenuReservas {
         }
 
     }
-
+    /**
+     * Metodo para remover uma reserva existente.
+     * Solicita ao utilizador o número da reserva a ser removida.
+     */
     private void removerReservas() {
         mostrarReservas();
         if (this.biblioteca.getReservas().isEmpty()) {

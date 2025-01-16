@@ -9,8 +9,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Classe responsável pela gestão de memória e operações relacionadas com bibliotecas,
+ * incluindo a criação de diretórios, carregar e guardar dados.
+ * @author [Grupo1]
+ * @version 1.0
+ */
 public class Memoria {
+    // Constantes para os ficheiros e diretórios
     private static final String FICHEIROS_BASE = "ficheiros/";
     private static final String FICHEIRO_LIVROS = "livros.txt";
     private static final String FICHEIRO_JORNAIS = "jornais.txt";
@@ -23,7 +29,11 @@ public class Memoria {
             FICHEIRO_LIVROS, FICHEIRO_JORNAIS, FICHEIRO_REVISTAS,
             FICHEIRO_UTENTES, FICHEIRO_RESERVAS, FICHEIRO_EMPRESTIMOS
     };
-
+    /**
+     * Garante que o diretório especificado e os ficheiros obrigatórios existem.
+     *
+     * @param diretorio O nome do diretório a ser verificado e criado, se necessário.
+     */
     public static void garantirDiretorioEficheirosExistem(String diretorio) {
         try {
             // Garante que o diretório existe
@@ -39,7 +49,11 @@ public class Memoria {
             System.out.println("Erro ao criar diretório ou ficheiros: " + e.getMessage());
         }
     }
-
+    /**
+     * Carrega uma lista de bibliotecas a partir do diretório base.
+     *
+     * @return Lista de objetos do tipo Biblioteca carregados.
+     */
     public static List<Biblioteca> carregarBibliotecas() {
         List<Biblioteca> bibliotecas = new ArrayList<>();
         File diretorioBibliotecas = new File(FICHEIROS_BASE);
@@ -52,14 +66,23 @@ public class Memoria {
         }
         return bibliotecas;
     }
-
+    /**
+     * Cria um novo diretório para uma biblioteca com o nome especificado.
+     *
+     * @param nomeBiblioteca O nome da biblioteca a ser criada.
+     */
     public static void criarBiblioteca(String nomeBiblioteca) {
         File diretorioBiblioteca = new File(FICHEIROS_BASE + nomeBiblioteca);
         if (!diretorioBiblioteca.exists()) {
             diretorioBiblioteca.mkdir();
         }
     }
-
+    /**
+     * Carrega uma lista de livros a partir do ficheiro correspondente no diretório da biblioteca.
+     *
+     * @param diretorio O diretório da biblioteca de onde os livros serão carregados.
+     * @return Lista de objetos do tipo Livro carregados.
+     */
     public static List<Livro> carregarLivros(String diretorio) {
         List<Livro> livros = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_LIVROS))) {
@@ -73,7 +96,12 @@ public class Memoria {
         }
         return livros;
     }
-
+    /**
+     * Carrega uma lista de jornais a partir do ficheiro correspondente no diretório da biblioteca.
+     *
+     * @param diretorio O diretório da biblioteca de onde os jornais serão carregados.
+     * @return Lista de objetos do tipo Jornal carregados.
+     */
     public static List<Jornal> carregarJornais(String diretorio) {
         List<Jornal> jornais = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_JORNAIS))) {
@@ -87,7 +115,12 @@ public class Memoria {
         }
         return jornais;
     }
-
+    /**
+     * Carrega uma lista de revistas a partir do ficheiro correspondente no diretório da biblioteca.
+     *
+     * @param diretorio O diretório da biblioteca de onde as revistas serão carregadas.
+     * @return Lista de objetos do tipo Revista carregados.
+     */
     public static List<Revista> carregarRevistas(String diretorio) {
         List<Revista> revistas = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_REVISTAS))) {
@@ -101,7 +134,12 @@ public class Memoria {
         }
         return revistas;
     }
-
+    /**
+     * Carrega uma lista de utentes a partir do ficheiro correspondente no diretório da biblioteca.
+     *
+     * @param diretorio O diretório da biblioteca de onde os utentes serão carregados.
+     * @return Lista de objetos do tipo objetos Utente carregados.
+     */
     public static List<Utente> carregarUtentes(String diretorio) {
         List<Utente> utentes = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + diretorio + "/" + FICHEIRO_UTENTES))) {
@@ -115,7 +153,12 @@ public class Memoria {
         }
         return utentes;
     }
-
+    /**
+     * Carrega uma lista de empréstimos a partir do ficheiro correspondente no diretório da biblioteca.
+     *
+     * @param biblioteca A biblioteca da qual os empréstimos serão carregados.
+     * @return Lista de objetos do tipo Emprestimo carregados.
+     */
     public static List<Emprestimo> carregarEmprestimos(Biblioteca biblioteca) {
         List<Emprestimo> emprestimos = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
@@ -129,7 +172,13 @@ public class Memoria {
         }
         return emprestimos;
     }
-
+    /**
+     * Carrega um empréstimo a partir de uma string de dados.
+     *
+     * @param dados A string contendo os dados do empréstimo.
+     * @param biblioteca A biblioteca associada ao empréstimo.
+     * @return Objeto do tipo Emprestimo carregado.
+     */
     private static Emprestimo carregarEmprestimo(String dados, Biblioteca biblioteca) {
         String[] partes = dados.split("\\|");
         String numero = partes[0];
@@ -158,7 +207,12 @@ public class Memoria {
             return new Emprestimo(numero, utente, documentos, dataInicio, dataPrevistaDevolucao, dataEfetivaDevolucao);
         }
     }
-
+    /**
+     * Carrega uma lista de reservas a partir do ficheiro correspondente no diretório da biblioteca.
+     *
+     * @param biblioteca A biblioteca da qual as reservas serão carregadas.
+     * @return Lista de objetos Reserva carregados.
+     */
     public static List<Reserva> carregarReservas(Biblioteca biblioteca) {
         List<Reserva> reservas = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
@@ -172,7 +226,13 @@ public class Memoria {
         }
         return reservas;
     }
-
+    /**
+     * Carrega uma reserva a partir de uma string de dados.
+     *
+     * @param dados A string contendo os dados da reserva.
+     * @param biblioteca A biblioteca associada à reserva.
+     * @return Objeto do tipo Reserva carregado.
+     */
     private static Reserva carregarReserva(String dados, Biblioteca biblioteca) {
         String[] partes = dados.split("\\|");
         String numero = partes[0];
@@ -196,7 +256,11 @@ public class Memoria {
 
         return new Reserva(numero, utente, documentos, dataRegisto, dataInicio, dataFim);
     }
-
+    /**
+     * Guarda todos os dados da biblioteca, incluindo livros, jornais, revistas, utentes, empréstimos e reservas.
+     *
+     * @param biblioteca A biblioteca cujos dados serão guardados.
+     */
     public static void guardaDados(Biblioteca biblioteca) {
         guardarLivros(biblioteca);
         guardarJornais(biblioteca);
@@ -205,7 +269,11 @@ public class Memoria {
         guardarEmprestimos(biblioteca);
         guardarReservas(biblioteca);
     }
-
+    /**
+     * Guarda a lista de livros da biblioteca no ficheiro correspondente.
+     *
+     * @param biblioteca A biblioteca cujos livros serão guardados.
+     */
     private static void guardarLivros(Biblioteca biblioteca) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_LIVROS))) {
             for (Livro livro : biblioteca.getLivros()) {
@@ -216,7 +284,11 @@ public class Memoria {
             System.out.println("Erro ao guardar os livros: " + e.getMessage());
         }
     }
-
+    /**
+     * Guarda a lista de jornais da biblioteca no ficheiro correspondente.
+     *
+     * @param biblioteca A biblioteca cujos jornais serão guardados.
+     */
     private static void guardarJornais(Biblioteca biblioteca) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_JORNAIS))) {
             for (Jornal jornal : biblioteca.getJornais()) {
@@ -227,7 +299,11 @@ public class Memoria {
             System.out.println("Erro ao guardar os jornais: " + e.getMessage());
         }
     }
-
+    /**
+     * Guarda a lista de revistas da biblioteca no ficheiro correspondente.
+     *
+     * @param biblioteca A biblioteca cujos revistas serão guardadas.
+     */
     private static void guardarRevistas(Biblioteca biblioteca) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_REVISTAS))) {
             for (Revista revista : biblioteca.getRevistas()) {
@@ -238,7 +314,11 @@ public class Memoria {
             System.out.println("Erro ao guardar as revistas: " + e.getMessage());
         }
     }
-
+    /**
+     * Guarda a lista de utentes da biblioteca no ficheiro correspondente.
+     *
+     * @param biblioteca A biblioteca cujos utentes serão guardados.
+     */
     private static void guardarUtentes(Biblioteca biblioteca) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_UTENTES))) {
             for (Utente utente : biblioteca.getUtentes()) {
@@ -249,7 +329,11 @@ public class Memoria {
             System.out.println("Erro ao guardar utentes: " + e.getMessage());
         }
     }
-
+    /**
+     * Guarda a lista de empréstimos da biblioteca no ficheiro correspondente.
+     *
+     * @param biblioteca A biblioteca cujos empréstimos serão guardados.
+     */
     private static void guardarEmprestimos(Biblioteca biblioteca) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_EMPRESTIMOS))) {
             for (Emprestimo emprestimo : biblioteca.getEmprestimos()) {
@@ -260,7 +344,11 @@ public class Memoria {
             System.out.println("Erro ao guardar emprestimos: " + e.getMessage());
         }
     }
-
+    /**
+     * Guarda a lista de reservas da biblioteca no ficheiro correspondente.
+     *
+     * @param biblioteca A biblioteca cujos reservas serão guardadas.
+     */
     private static void guardarReservas(Biblioteca biblioteca) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FICHEIROS_BASE + biblioteca.getDiretorio() + "/" + FICHEIRO_RESERVAS))) {
             for (Reserva reserva : biblioteca.getReservas()) {

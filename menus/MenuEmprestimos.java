@@ -12,13 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Classe responsável pela gestão de empréstimos na biblioteca.
+ * @author [Grupo1]
+ * @version 1.0
+ */
 public class MenuEmprestimos {
     private Biblioteca biblioteca;
-
+    /**
+     * Construtor da classe MenuEmprestimos.
+     *
+     * @param biblioteca A instância da biblioteca onde os empréstimos serão geridos.
+     */
     public MenuEmprestimos(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
     }
-
+    /**
+     * Metodo que inicia o menu de gestão de empréstimos.
+     * Permite ao utilizador escolher entre adicionar, editar, mostrar ou devolver empréstimos.
+     */
     protected void gerirEmprestimos() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
@@ -44,7 +56,11 @@ public class MenuEmprestimos {
             }
         } while (opcao != 0);
     }
-
+    /**
+     * Metodo que permite adicionar um novo empréstimo.
+     * Solicita ao utilizador o NIF do utente, as datas de início e de devolução,
+     * e os documentos a serem emprestados.
+     */
     private void adicionarEmprestimos() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("NIF do Utente: ");
@@ -84,13 +100,17 @@ public class MenuEmprestimos {
 
         System.out.println("Empréstimo adicionado com sucesso!");
     }
-
+    /**
+     * Metodo que permite editar um empréstimo existente.
+     * O utilizador deve escolher o número do empréstimo a editar e pode alterar
+     * o NIF do utente, as datas e os documentos associados ao empréstimo.
+     */
     private void editarEmprestimos() {
         mostrarEmprestimos();
         if (!this.biblioteca.getEmprestimos().isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             System.out.print("Número do Empréstimo a editar: ");
-            String numero = Leitores.lerStringNaoVazia(scanner);
+            String numero = Leitores.lerStringNaoVazia (scanner);
             Emprestimo emprestimoEditado = null;
             for (Emprestimo emprestimo : this.biblioteca.getEmprestimos()) {
                 if (emprestimo.getNumero().equals(numero)) {
@@ -137,7 +157,10 @@ public class MenuEmprestimos {
             }
         }
     }
-
+    /**
+     * Metodo que exibe todos os empréstimos registados na biblioteca.
+     * Se não houver empréstimos, informa o utilizador.
+     */
     private void mostrarEmprestimos() {
         if (this.biblioteca.getEmprestimos().isEmpty()) {
             System.out.println("Não existem empréstimos registados.");
@@ -148,7 +171,11 @@ public class MenuEmprestimos {
             }
         }
     }
-
+    /**
+     * Metodo que permite devolver um empréstimo.
+     * O utilizador deve inserir o número do empréstimo a devolver,
+     * e a data efetiva de devolução será registada como o dia de hoje.
+     */
     private void devolverEmprestimos() {
         if (!this.biblioteca.getEmprestimos().isEmpty()) {
             mostrarEmprestimos();
@@ -173,5 +200,4 @@ public class MenuEmprestimos {
             }
         }
     }
-
 }

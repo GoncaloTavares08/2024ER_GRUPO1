@@ -6,8 +6,17 @@ import modelos.Biblioteca;
 
 import java.util.Scanner;
 import java.util.List;
-
+/**
+ * Classe que representa o menu para escolher ou criar bibliotecas.
+ * @author [Grupo1]
+ * @version 1.0
+ */
 public class MenuEscolhaBibliotecas {
+    /**
+     * Metodo que permite ao utilizador escolher uma biblioteca existente ou criar uma nova.
+     *
+     * @return A biblioteca escolhida ou criada pelo utilizador.
+     */
     public static Biblioteca escolherOuCriarBiblioteca() {
         Scanner scanner = new Scanner(System.in);
         List<Biblioteca> bibliotecasExistentes = Memoria.carregarBibliotecas();
